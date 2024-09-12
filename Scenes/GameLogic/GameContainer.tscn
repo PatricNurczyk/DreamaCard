@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ckdgrkc26r36d"]
+
+[ext_resource type="Script" path="res://Scripts/GameLogic/GameContainer.gd" id="1_jh12l"]
+
+[node name="GameContainer" type="Node2D"]
+script = ExtResource("1_jh12l")
+
+[node name="Camera" type="Camera2D" parent="."]
