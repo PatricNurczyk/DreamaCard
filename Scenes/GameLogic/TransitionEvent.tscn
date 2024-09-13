@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://6yg55gdo1cd7"]
+
+[ext_resource type="Script" path="res://Scripts/GameLogic/TransitionEvent.gd" id="1_tdc4c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_40v15"]
+
+[node name="TransitionEvent" type="Node2D"]
+script = ExtResource("1_tdc4c")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_40v15")
+
+[connection signal="body_entered" from="Area2D" to="." method="transition_trigger"]

@@ -1,5 +1,5 @@
 extends Node
 
-var current_map = "res://Scenes/Maps/Test_Map.tscn"
+var current_map : String = "Test_Map"
 
-var spawn_point = 0
+var spawn_point : int = 0

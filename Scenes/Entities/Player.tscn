@@ -1,13 +1,30 @@
-[gd_scene load_steps=3 format=3 uid="uid://jrkrfd6041tn"]
+[gd_scene load_steps=5 format=3 uid="uid://jrkrfd6041tn"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_546wp"]
 [ext_resource type="SpriteFrames" uid="uid://cb8rvv4yb7tn2" path="res://Assets/SpriteFrames/player.tres" id="1_rt0qv"]
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i50t4"]
+radius = 5.33
+height = 22.69
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yokoc"]
+radius = 3.0
+height = 12.0
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_546wp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -16)
 sprite_frames = ExtResource("1_rt0qv")
-animation = &"hurt"
+animation = &"idle_side"
 
-[node name="MoveCollision" type="CollisionShape2D" parent="."]
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="MoveCollision" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -8)
+shape = SubResource("CapsuleShape2D_i50t4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_yokoc")
