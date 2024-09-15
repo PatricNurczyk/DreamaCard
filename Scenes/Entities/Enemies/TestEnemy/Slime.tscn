@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://ctg0om1inbc80"]
+
+[ext_resource type="Script" path="res://Scripts/Entities/slime.gd" id="1_67kb8"]
+[ext_resource type="SpriteFrames" uid="uid://dimxiwpq5r6og" path="res://Assets/SpriteFrames/slime.tres" id="2_6mysm"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3m0yw"]
+radius = 9.0
+height = 18.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lc8u8"]
+radius = 3.0
+height = 14.0
+
+[node name="Slime" type="CharacterBody2D" groups=["Enemy"]]
+z_index = 2
+z_as_relative = false
+script = ExtResource("1_67kb8")
+maxHP = 5
+maxMP = 1
+speed = 5
+frostBoost = 5
+fireResist = -5
+frostResist = 5
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -6)
+sprite_frames = ExtResource("2_6mysm")
+animation = &"idle_side"
+
+[node name="Area2D" type="Area2D" parent="." groups=["Enemy"]]
+
+[node name="MoveCollision" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -4)
+shape = SubResource("CapsuleShape2D_3m0yw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_lc8u8")

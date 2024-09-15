@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://gh5pmvn8hej"]
+
+[ext_resource type="Script" path="res://Scripts/GameLogic/Initiative.gd" id="1_ucbv5"]
+
+[node name="inititative_ally" type="HBoxContainer"]
+offset_right = 96.11
+offset_bottom = 27.0
+alignment = 2
+script = ExtResource("1_ucbv5")
+
+[node name="name" type="Label" parent="."]
+layout_mode = 2
+text = "Enemy
+"
+
+[node name="init_bar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(127.405, 0)
+layout_mode = 2

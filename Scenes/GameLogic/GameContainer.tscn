@@ -1,21 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://ckdgrkc26r36d"]
+[gd_scene load_steps=7 format=3 uid="uid://ckdgrkc26r36d"]
 
 [ext_resource type="Script" path="res://Scripts/GameLogic/GameContainer.gd" id="1_jh12l"]
-
-[sub_resource type="Animation" id="Animation_yuidj"]
-resource_name = "dim_in"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
-}
+[ext_resource type="Texture2D" uid="uid://dje1a1ne0g4wd" path="res://Assets/Icons/BattleBackground.png" id="2_5b3d7"]
 
 [sub_resource type="Animation" id="Animation_hbl7f"]
 length = 0.001
@@ -30,6 +16,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_yuidj"]
+resource_name = "dim_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_q2xv6"]
@@ -76,3 +77,35 @@ color = Color(0, 0, 0, 1)
 libraries = {
 "": SubResource("AnimationLibrary_hg2ib")
 }
+
+[node name="Initiative Tracker" type="CanvasLayer" parent="."]
+
+[node name="Ally Initiative" type="VBoxContainer" parent="Initiative Tracker"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -60.0
+offset_right = 260.0
+offset_bottom = 60.0
+grow_vertical = 2
+
+[node name="Enemy Initiative" type="VBoxContainer" parent="Initiative Tracker"]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -167.0
+offset_top = -60.0
+offset_bottom = 60.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Battle" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.74902)
+z_index = 1
+z_as_relative = false
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("2_5b3d7")
+
+[node name="CardUI" type="CanvasLayer" parent="."]

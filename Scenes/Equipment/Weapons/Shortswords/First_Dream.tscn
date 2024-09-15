@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bv5bybpv8vo8m"]
+
+[ext_resource type="Script" path="res://Scripts/Equipment/Weapons/Knights_Recruit.gd" id="1_cd745"]
+
+[node name="FirstDream" type="Node"]
+script = ExtResource("1_cd745")
