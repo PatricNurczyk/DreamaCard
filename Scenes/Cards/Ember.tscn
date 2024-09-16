@@ -1,8 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://elabbv0yuudm"]
+[gd_scene load_steps=8 format=3 uid="uid://biiudeijv3vu2"]
 
-[ext_resource type="Texture2D" uid="uid://cau0w5ddygs5f" path="res://Assets/Card/Weapon Cards/Slash (4).png" id="1_ve5tc"]
-[ext_resource type="Script" path="res://Scripts/Cards/Attack Cards/card.gd" id="1_xftq8"]
-[ext_resource type="AudioStream" uid="uid://cmcelkb8gcdpl" path="res://Sounds/Sound_Effects/flipcard.wav" id="3_2wkaa"]
+[ext_resource type="Script" path="res://Scripts/Cards/Attack Cards/card.gd" id="1_gbk3u"]
+[ext_resource type="Texture2D" uid="uid://drlrkcmesam5n" path="res://Assets/Card/Ember.png" id="2_hwcky"]
+[ext_resource type="AudioStream" uid="uid://cmcelkb8gcdpl" path="res://Sounds/Sound_Effects/flipcard.wav" id="3_bpgg0"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8rv6h"]
 
@@ -24,15 +24,15 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_b5epm")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_4tin5")
 action_mode = 0
 icon_alignment = 1
-script = ExtResource("1_xftq8")
+script = ExtResource("1_gbk3u")
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)
 scale = Vector2(0.1, 0.1)
-texture = ExtResource("1_ve5tc")
+texture = ExtResource("2_hwcky")
 
 [node name="hover" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("3_2wkaa")
+stream = ExtResource("3_bpgg0")
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

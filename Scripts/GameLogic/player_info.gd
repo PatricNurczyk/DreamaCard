@@ -10,13 +10,14 @@ var playerData = {
 		"HP" : 10,
 		"MaxMP" : 2,
 		"Speed" : 10,
-		"Deck" : [],
+		"Deck" : ["Ember","Ember","Ember","Ember","Ember","Ember"],
 		"AltDeck" : [],
+		"WeaponTypes": "Shortsword",
 		"Equipment": {
 			"Head" : null,
 			"Body" : null,
 			"Boots": null,
-			"Weapon": "Shortswords/First_Dream"
+			"Weapon": "First_Dream"
 		}
 	}
 }

@@ -3,17 +3,21 @@ const PLAYERTEMPLATE = preload("res://Scenes/Entities/Player.tscn")
 const COMBATCREATOR = preload("res://Scenes/GameLogic/CombatCreator.tscn")
 const INIT_ALLY = preload("res://Scenes/GameLogic/Initiative_ally.tscn")
 const INIT_ENEMY = preload("res://Scenes/GameLogic/Initiative_enemy.tscn")
+const UI_POSITIONS = [Vector2(30,-60)]
 @onready var ally_initiative = $"Initiative Tracker/Ally Initiative"
 @onready var enemy_initiative = $"Initiative Tracker/Enemy Initiative"
 @onready var battle_veil = $Battle
 const SPEED = 7.0
 @onready var screen_dim = $CanvasLayer/AnimationPlayer
 @onready var camera = $Camera
+@onready var animation_player = $CardUI/AnimationPlayer
+
 var player : CharacterBody2D
 var map : MapTemplate
-var camera_zoom : float = 3
+var camera_zoom : float = 5
 var camera_pos : Vector2
 var camera_speed : float = 3
+@onready var card_ui = $CardUI
 
 enum gameStates {explore, combat, cutscene, transition}
 var currState = gameStates.explore
@@ -33,7 +37,7 @@ var currTurn : int = 0
 var veilSize : int = 0
 var deck : Dictionary = {}
 var hand : Dictionary = {}
-
+var hand_ui : Array = []
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	load_map()
@@ -154,18 +158,25 @@ func next_turn():
 	currTurn = find_next()
 	camera_zoom = 5
 	if combatants[currTurn].is_in_group("Ally"):
-		camera.position = combatants[currTurn].position + Vector2(0,-10)
+		camera.position = combatants[currTurn].position + Vector2(0,-20)
 		ally_turn()
 	else:
 		camera.position = combatants[currTurn].position + Vector2(0,-10)
 		enemy_turn()
 		
 func draw_card(character):
-	while deck[character.name] > 0 or hand[character.name] < 6:
+	while len(deck[character.name]) > 0 or len(hand[character.name]) < 6:
 		hand[character.name].push_back(deck[character.name].pop_front())
 func ally_turn():
 	draw_card(combatants[currTurn])
-	
-	
+	var weapon = load("res://Scripts/Equipment/Weapons/" + PlayerInfo.playerData[combatants[currTurn].name]["Equipment"]["Weapon"] + ".gd").new()
+	var weapon_card = weapon.attackCard
+	card_ui.get_child(0).add_child(weapon_card.instantiate())
+	weapon.queue_free()
+	for i in range(len(hand[combatants[currTurn].name])):
+		var cardbutton = load("res://Scenes/Cards/" + hand[combatants[currTurn].name][i] + ".tscn").instantiate()
+		card_ui.get_child(i+1).add_child(cardbutton)
+	await get_tree().create_timer(.5).timeout
+	animation_player.play("CardsFlyOut")
 func enemy_turn():
 	pass

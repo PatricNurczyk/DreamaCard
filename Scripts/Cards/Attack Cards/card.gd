@@ -19,10 +19,13 @@ func _process(delta):
 func _on_mouse_entered():
 	get_parent().move_child(self,-1)
 	$hover.play()
-	cardscale = .14
+	cardscale = .25
+	z_index = 2
 
 func _on_mouse_exited():
 	cardscale = .1
+	z_index = 0
+	
 	
 func _on_gui_input(event):
 	if event is InputEventMouseButton and event.pressed:
