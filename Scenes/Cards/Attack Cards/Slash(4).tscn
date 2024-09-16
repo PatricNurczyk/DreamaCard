@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://elabbv0yuudm"]
+[gd_scene load_steps=12 format=3 uid="uid://elabbv0yuudm"]
 
 [ext_resource type="Texture2D" uid="uid://cau0w5ddygs5f" path="res://Assets/Card/Weapon Cards/Slash (4).png" id="1_ve5tc"]
-[ext_resource type="Script" path="res://Scripts/Cards/Attack Cards/card.gd" id="1_xftq8"]
+[ext_resource type="Script" path="res://Scripts/Cards/card.gd" id="1_xftq8"]
+[ext_resource type="Script" path="res://Scripts/Cards/Attack Cards/slash_4.gd" id="2_wsir3"]
 [ext_resource type="AudioStream" uid="uid://cmcelkb8gcdpl" path="res://Sounds/Sound_Effects/flipcard.wav" id="3_2wkaa"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8rv6h"]
@@ -12,12 +13,49 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4tin5"]
 
+[sub_resource type="Animation" id="Animation_jbqrp"]
+resource_name = "Card Shake"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Card:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0872665, 0.174533, 0.0872665, 0.0, -0.0872665, -0.174533, -0.0872665, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_wb8tk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Card:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cjjkq"]
+_data = {
+"Card Shake": SubResource("Animation_jbqrp"),
+"RESET": SubResource("Animation_wb8tk")
+}
+
 [node name="Slash(4)" type="Button"]
-offset_left = -54.41
-offset_top = -80.96
-offset_right = -23.41
-offset_bottom = -34.96
-scale = Vector2(3.52, 3.52)
+offset_left = -15.495
+offset_top = -23.16
+offset_right = 15.505
+offset_bottom = 22.84
 theme_override_styles/normal = SubResource("StyleBoxEmpty_8rv6h")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_qqn4e")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_b5epm")
@@ -25,6 +63,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_4tin5")
 action_mode = 0
 icon_alignment = 1
 script = ExtResource("1_xftq8")
+card_script = ExtResource("2_wsir3")
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)
@@ -33,6 +72,12 @@ texture = ExtResource("1_ve5tc")
 
 [node name="hover" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_2wkaa")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_cjjkq")
+}
+speed_scale = 3.0
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

@@ -3,7 +3,9 @@ const PLAYERTEMPLATE = preload("res://Scenes/Entities/Player.tscn")
 const COMBATCREATOR = preload("res://Scenes/GameLogic/CombatCreator.tscn")
 const INIT_ALLY = preload("res://Scenes/GameLogic/Initiative_ally.tscn")
 const INIT_ENEMY = preload("res://Scenes/GameLogic/Initiative_enemy.tscn")
-const UI_POSITIONS = [Vector2(30,-60)]
+const UI_POSITIONS = [Vector2(50,-58),Vector2(30,-65),Vector2(5,-70),Vector2(-15,-70),Vector2(-35,-65),Vector2(-55,-58),Vector2(-75,-48)]
+const UI_ROTATIONS = [25.0,17.5,10.0,0,-10.0,-17.5,-25.0]
+const UI_READYBREAK = Vector2(10,-30)
 @onready var ally_initiative = $"Initiative Tracker/Ally Initiative"
 @onready var enemy_initiative = $"Initiative Tracker/Enemy Initiative"
 @onready var battle_veil = $Battle
@@ -17,15 +19,15 @@ var map : MapTemplate
 var camera_zoom : float = 5
 var camera_pos : Vector2
 var camera_speed : float = 3
-@onready var card_ui = $CardUI
+@onready var card_ui = $Cards
 
 enum gameStates {explore, combat, cutscene, transition}
 var currState = gameStates.explore
 
 
 #Combat variables
-enum combatStates {allyTurn, target, enemyTurn}
-var combatState : int
+enum combatStates {idle, allyTurn, target, enemyTurn, animation}
+var combatState : int = combatStates.idle
 var battleground
 var combatants : Array = []
 var combatants_position : Array = []
@@ -38,7 +40,17 @@ var veilSize : int = 0
 var deck : Dictionary = {}
 var hand : Dictionary = {}
 var hand_ui : Array = []
+var card_select : int = -1 
 # Called when the node enters the scene tree for the first time.
+
+
+func _input(event):
+	if Input.is_action_just_pressed("Cancel") and combatState == combatStates.target:
+		hand_ui[card_select].cancel()
+		card_select = 	-1
+		combatState = combatStates.allyTurn
+		camera_zoom = 5
+		camera.position = combatants[currTurn].position
 func _ready():
 	load_map()
 
@@ -56,6 +68,19 @@ func _process(delta):
 		for i in range(len(combatants)):
 			var t = delta * SPEED
 			combatants[i].position = lerp(combatants[i].position, combatants_position[i],t)
+		if combatState == combatStates.allyTurn:
+			for i in range(len(hand_ui)):
+				hand_ui[i].scale = lerp(hand_ui[i].scale, Vector2(1,1), 20 * delta)
+				hand_ui[i].position = lerp(hand_ui[i].position, UI_POSITIONS[i], 20 * delta)
+				hand_ui[i].rotation_degrees = lerp(hand_ui[i].rotation_degrees,float(UI_ROTATIONS[i]),20 * delta)
+		elif combatState == combatStates.target:
+			for i in range(len(hand_ui)):
+				hand_ui[i].rotation_degrees = lerp(hand_ui[i].rotation_degrees,0.0,20 * delta)
+				if i != card_select:
+					hand_ui[i].scale = lerp(hand_ui[i].scale, Vector2.ZERO, 20 * delta)
+					hand_ui[i].position = lerp(hand_ui[i].position, Vector2.ZERO, 20 * delta)
+				else:
+					hand_ui[i].position = lerp(hand_ui[i].position, UI_READYBREAK, 20 * delta)
 	
 	
 func load_map():
@@ -168,15 +193,31 @@ func draw_card(character):
 	while len(deck[character.name]) > 0 or len(hand[character.name]) < 6:
 		hand[character.name].push_back(deck[character.name].pop_front())
 func ally_turn():
+	combatState = combatStates.allyTurn
 	draw_card(combatants[currTurn])
+	card_ui.position = combatants[currTurn].position
 	var weapon = load("res://Scripts/Equipment/Weapons/" + PlayerInfo.playerData[combatants[currTurn].name]["Equipment"]["Weapon"] + ".gd").new()
 	var weapon_card = weapon.attackCard
-	card_ui.get_child(0).add_child(weapon_card.instantiate())
+	hand_ui.push_back(weapon_card.instantiate())
+	
 	weapon.queue_free()
 	for i in range(len(hand[combatants[currTurn].name])):
 		var cardbutton = load("res://Scenes/Cards/" + hand[combatants[currTurn].name][i] + ".tscn").instantiate()
-		card_ui.get_child(i+1).add_child(cardbutton)
+		hand_ui.push_back(cardbutton)
+	for c in hand_ui:
+		c.scale = Vector2.ZERO
+		card_ui.add_child(c)
 	await get_tree().create_timer(.5).timeout
-	animation_player.play("CardsFlyOut")
+	#animation_player.play("CardsFlyOut")
+	
+func select_target(node_index):
+	print(node_index)
+	combatState = combatStates.target
+	camera_zoom = 3
+	camera.position = battleground.position
+	card_select = node_index
+
+
+
 func enemy_turn():
 	pass

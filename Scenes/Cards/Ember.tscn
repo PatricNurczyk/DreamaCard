@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://biiudeijv3vu2"]
+[gd_scene load_steps=9 format=3 uid="uid://biiudeijv3vu2"]
 
-[ext_resource type="Script" path="res://Scripts/Cards/Attack Cards/card.gd" id="1_gbk3u"]
+[ext_resource type="Script" path="res://Scripts/Cards/card.gd" id="1_gbk3u"]
+[ext_resource type="Script" path="res://Scripts/Cards/ember.gd" id="2_05f17"]
 [ext_resource type="Texture2D" uid="uid://drlrkcmesam5n" path="res://Assets/Card/Ember.png" id="2_hwcky"]
 [ext_resource type="AudioStream" uid="uid://cmcelkb8gcdpl" path="res://Sounds/Sound_Effects/flipcard.wav" id="3_bpgg0"]
 
@@ -12,12 +13,11 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4tin5"]
 
-[node name="Slash(4)" type="Button"]
-offset_left = -54.41
-offset_top = -80.96
-offset_right = -23.41
-offset_bottom = -34.96
-scale = Vector2(3.52, 3.52)
+[node name="Ember" type="Button"]
+offset_left = -15.495
+offset_top = -23.16
+offset_right = 15.505
+offset_bottom = 22.84
 theme_override_styles/normal = SubResource("StyleBoxEmpty_8rv6h")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_qqn4e")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_b5epm")
@@ -25,6 +25,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_4tin5")
 action_mode = 0
 icon_alignment = 1
 script = ExtResource("1_gbk3u")
+card_script = ExtResource("2_05f17")
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)
