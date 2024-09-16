@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://ckdgrkc26r36d"]
+[gd_scene load_steps=14 format=3 uid="uid://ckdgrkc26r36d"]
 
 [ext_resource type="Script" path="res://Scripts/GameLogic/GameContainer.gd" id="1_jh12l"]
 [ext_resource type="Texture2D" uid="uid://dje1a1ne0g4wd" path="res://Assets/Icons/BattleBackground.png" id="2_5b3d7"]
 [ext_resource type="PackedScene" uid="uid://hdfik3ks31vv" path="res://Scenes/Cards/Pass.tscn" id="3_3eqr8"]
 [ext_resource type="AudioStream" uid="uid://vardvul8qtwv" path="res://Sounds/Sound_Effects/cancel.wav" id="4_kptjp"]
+[ext_resource type="AudioStream" uid="uid://3wkhpdmjh7vs" path="res://Sounds/Sound_Effects/select.wav" id="5_uuwkk"]
 
 [sub_resource type="Animation" id="Animation_hbl7f"]
 length = 0.001
@@ -1105,3 +1106,6 @@ stream = ExtResource("4_kptjp")
 
 [node name="Cards" type="Node2D" parent="."]
 z_index = 4
+
+[node name="select" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_uuwkk")

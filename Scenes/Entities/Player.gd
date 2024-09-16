@@ -23,7 +23,7 @@ func _physics_process(delta):
 		else:
 			velocity.y = move_toward(velocity.y, 0, SPEED)
 			
-	handle_animation(velocity)
+	handle_animation()
 
 	move_and_slide()
 

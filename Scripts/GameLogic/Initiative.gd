@@ -11,4 +11,4 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	init_bar.value = move_toward(init_bar.value, initiative, delta * 20)
+	init_bar.value = move_toward(init_bar.value, initiative, 300 * delta)

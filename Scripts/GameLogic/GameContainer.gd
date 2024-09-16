@@ -20,6 +20,8 @@ var camera_zoom : float = 5
 var camera_pos : Vector2
 var camera_speed : float = 3
 @onready var card_ui = $Cards
+@onready var cancel = $cancel
+@onready var select = $select
 
 enum gameStates {explore, combat, cutscene, transition}
 var currState = gameStates.explore
@@ -32,7 +34,7 @@ var battleground
 var combatants : Array = []
 var combatants_position : Array = []
 var initiative : Array = []
-var initiative_ui : Array = []
+var init_ui : Array = []
 var allyCount : int = 0
 var enemyCount : int = 0
 var currTurn : int = 0
@@ -51,6 +53,9 @@ func _input(event):
 		combatState = combatStates.allyTurn
 		camera_zoom = 5
 		camera.position = combatants[currTurn].position
+		cancel.play()
+		init_ui[currTurn].get_node("init_bar").modulate = Color("ffffff")
+		init_ui[currTurn].initiative = 100
 func _ready():
 	load_map()
 
@@ -128,11 +133,14 @@ func start_combat():
 	var bodies = space.intersect_shape(search)
 	for body in bodies:
 		if body.collider.is_in_group("Ally"):
+			body.collider.can_walk = false
+			body.collider.velocity = Vector2.ZERO
 			combatants.push_back(body.collider)
 			initiative.push_back(100 - body.collider.speed)
 			var ui = INIT_ALLY.instantiate()
 			ui.barName = body.collider.name
 			ui.initiative = body.collider.speed
+			init_ui.push_back(ui)
 			ally_initiative.add_child(ui)
 			combatants_position.push_back(battleground.get_child(allyCount).global_position)
 			allyCount += 1
@@ -147,6 +155,7 @@ func start_combat():
 			ui.barName = body.collider.name
 			ui.initiative = body.collider.speed
 			enemy_initiative.add_child(ui)
+			init_ui.push_back(ui)
 			combatants_position.push_back(battleground.get_child(enemyCount + 4).global_position)
 			enemyCount += 1
 			body.collider.direction = "left"
@@ -175,7 +184,10 @@ func find_next():
 			min_init = initiative[i]
 	for i in range(len(initiative)):
 		initiative[i] -= min_init
+		init_ui[i].initiative = 100 - initiative[i]
 	initiative[index] = 100 - combatants[index].speed
+	init_ui[index].initiative = 100
+	
 	return index
 	
 	
@@ -211,9 +223,11 @@ func ally_turn():
 	#animation_player.play("CardsFlyOut")
 	
 func select_target(node_index):
-	print(node_index)
+	select.play()
+	init_ui[currTurn].get_node("init_bar").modulate = Color("ffff42")
+	init_ui[currTurn].initiative = min(100, combatants[currTurn].speed + hand_ui[node_index].initiative)
 	combatState = combatStates.target
-	camera_zoom = 3
+	camera_zoom = 4.5
 	camera.position = battleground.position
 	card_select = node_index
 

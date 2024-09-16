@@ -4,6 +4,7 @@ var cardscale: float = .1
 var speed: float = 10
 var mp_cost: int = 0
 @export var card_script : GDScript
+@export var initiative : int = 0
 var card_instance
 var no_hover = false
 @onready var animation_player = $AnimationPlayer
@@ -21,7 +22,7 @@ func _process(delta):
 func _on_mouse_entered():
 	if not no_hover:
 		$hover.play()
-		cardscale = .14
+		cardscale = .18
 		z_index = 2
 
 func _on_mouse_exited():

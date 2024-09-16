@@ -38,7 +38,7 @@ var MP : int
 @export var arcaneResist : int
 
 
-func handle_animation(velocity : Vector2):
+func handle_animation():
 	if velocity.x > 0:
 		direction = "right"
 	elif velocity.x < 0:
