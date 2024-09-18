@@ -43,6 +43,7 @@ var deck : Dictionary = {}
 var hand : Dictionary = {}
 var hand_ui : Array = []
 var card_select : int = -1 
+var target : int = -1
 # Called when the node enters the scene tree for the first time.
 
 
@@ -56,6 +57,16 @@ func _input(event):
 		cancel.play()
 		init_ui[currTurn].get_node("init_bar").modulate = Color("ffffff")
 		init_ui[currTurn].initiative = 100
+	if Input.is_action_just_pressed("Click") and combatState == combatStates.target:
+		var nearest_distance = 20
+		var mouse = get_local_mouse_position()
+		for i in range(len(combatants)):
+			var distance = combatants[i].position.distance_to(mouse)
+			if distance < nearest_distance:
+				nearest_distance = distance
+				target = i
+			
+		print(target)
 func _ready():
 	load_map()
 
