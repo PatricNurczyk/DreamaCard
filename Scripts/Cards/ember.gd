@@ -6,3 +6,6 @@ func select_card(card):
 	
 func discard():
 	print("Cant Discard")
+
+func execute_action(container):
+	print("Ember")

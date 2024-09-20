@@ -5,6 +5,7 @@ var speed: float = 10
 var mp_cost: int = 0
 @export var card_script : GDScript
 @export var initiative : int = 0
+@export var target_type : int
 var card_instance
 var no_hover = false
 @onready var animation_player = $AnimationPlayer
@@ -42,12 +43,15 @@ func cancel():
 	animation_player.stop()
 	disabled = false
 	
+func execute_action(container):
+	card_instance.execute_action(container)
 	
 func _on_gui_input(event):
-	if event is InputEventMouseButton and event.pressed:
-		match event.button_index:
-			MOUSE_BUTTON_LEFT:
-				card_instance.select_card(self)
-			MOUSE_BUTTON_RIGHT:
-				card_instance.discard()
+	if not no_hover:
+		if event is InputEventMouseButton and event.pressed:
+			match event.button_index:
+				MOUSE_BUTTON_LEFT:
+					card_instance.select_card(self)
+				MOUSE_BUTTON_RIGHT:
+					card_instance.discard()
 

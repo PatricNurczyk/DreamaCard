@@ -44,12 +44,14 @@ var hand : Dictionary = {}
 var hand_ui : Array = []
 var card_select : int = -1 
 var target : int = -1
+var target_type : int = -1
 # Called when the node enters the scene tree for the first time.
 
 
 func _input(event):
 	if Input.is_action_just_pressed("Cancel") and combatState == combatStates.target:
-		hand_ui[card_select].cancel()
+		for c in hand_ui:
+			c.cancel()
 		card_select = 	-1
 		combatState = combatStates.allyTurn
 		camera_zoom = 5
@@ -65,8 +67,26 @@ func _input(event):
 			if distance < nearest_distance:
 				nearest_distance = distance
 				target = i
-			
-		print(target)
+		if target >= 0:
+			match(target_type):
+				0:
+					pass
+				1:
+					if combatants[target].is_in_group("Enemy"):
+						hand_ui[card_select].execute_action(self)
+				2:
+					hand_ui[card_select].execute_action(self)
+			target = -1
+			for c in card_ui.get_children():
+				c.queue_free()
+			hand_ui = []
+			print(card_select)
+			if card_select > 0:
+				hand[combatants[currTurn].name].pop_at(card_select - 1)
+			init_ui[currTurn].get_node("init_bar").modulate = Color("ffffff")
+			init_ui[currTurn].initiative = 100
+			combatState = combatStates.animation
+			next_turn()
 func _ready():
 	load_map()
 
@@ -213,7 +233,7 @@ func next_turn():
 		enemy_turn()
 		
 func draw_card(character):
-	while len(deck[character.name]) > 0 or len(hand[character.name]) < 6:
+	while len(deck[character.name]) > 0 and len(hand[character.name]) < 6:
 		hand[character.name].push_back(deck[character.name].pop_front())
 func ally_turn():
 	combatState = combatStates.allyTurn
@@ -234,6 +254,8 @@ func ally_turn():
 	#animation_player.play("CardsFlyOut")
 	
 func select_target(node_index):
+	for c in hand_ui:
+		c.no_hover = true
 	select.play()
 	init_ui[currTurn].get_node("init_bar").modulate = Color("ffff42")
 	init_ui[currTurn].initiative = min(100, combatants[currTurn].speed + hand_ui[node_index].initiative)
@@ -241,8 +263,10 @@ func select_target(node_index):
 	camera_zoom = 4.5
 	camera.position = battleground.position
 	card_select = node_index
+	target_type = hand_ui[node_index].target_type
 
 
 
 func enemy_turn():
-	pass
+	await get_tree().create_timer(2).timeout
+	next_turn()
