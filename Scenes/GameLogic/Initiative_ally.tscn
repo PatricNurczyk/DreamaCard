@@ -7,7 +7,39 @@ offset_right = 96.11
 offset_bottom = 27.0
 script = ExtResource("1_fg322")
 
-[node name="init_bar" type="ProgressBar" parent="."]
+[node name="Bars" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HP" type="ProgressBar" parent="Bars"]
+self_modulate = Color(1, 0, 0, 1)
+layout_mode = 2
+size_flags_stretch_ratio = 3.37
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+
+[node name="Label" type="Label" parent="Bars/HP"]
+layout_mode = 0
+offset_left = 1.0
+offset_right = 126.0
+offset_bottom = 27.0
+text = "5/10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MP" type="ProgressBar" parent="Bars"]
+self_modulate = Color(0, 0.917647, 0.917647, 1)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+max_value = 2.0
+
+[node name="Label" type="Label" parent="Bars/MP"]
+offset_left = 1.0
+offset_right = 126.0
+offset_bottom = 27.0
+text = "1/2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="init_bar" type="ProgressBar" parent="Bars"]
 custom_minimum_size = Vector2(127.405, 0)
 layout_mode = 2
 

@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://ctg0om1inbc80"]
+[gd_scene load_steps=6 format=3 uid="uid://ctg0om1inbc80"]
 
 [ext_resource type="Script" path="res://Scripts/Entities/slime.gd" id="1_67kb8"]
 [ext_resource type="SpriteFrames" uid="uid://dimxiwpq5r6og" path="res://Assets/SpriteFrames/slime.tres" id="2_6mysm"]
+[ext_resource type="AudioStream" uid="uid://cqplmnuvjfh7d" path="res://Sounds/Sound_Effects/hitHurt.wav" id="3_j5qpx"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3m0yw"]
 radius = 9.0
@@ -36,3 +37,6 @@ shape = SubResource("CapsuleShape2D_3m0yw")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_lc8u8")
+
+[node name="hurt" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_j5qpx")

@@ -65,6 +65,7 @@ icon_alignment = 1
 script = ExtResource("1_xftq8")
 card_script = ExtResource("2_wsir3")
 target_type = 1
+SkillName = "Slash"
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)

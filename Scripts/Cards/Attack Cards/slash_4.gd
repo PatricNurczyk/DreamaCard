@@ -9,4 +9,6 @@ func discard():
 
 
 func execute_action(container):
-	print("Slash")
+	container.combatants[container.target].takeDamage(4, "physical")
+	await container.get_tree().create_timer(1).timeout
+	container.action_completed.emit()

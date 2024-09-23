@@ -26,6 +26,7 @@ action_mode = 0
 icon_alignment = 1
 script = ExtResource("1_wyhrv")
 card_script = ExtResource("2_tlg1w")
+SkillName = "Pass"
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)

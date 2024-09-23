@@ -13,7 +13,8 @@ const SPEED = 7.0
 @onready var screen_dim = $CanvasLayer/AnimationPlayer
 @onready var camera = $Camera
 @onready var animation_player = $CardUI/AnimationPlayer
-
+@onready var combat_text = $"Initiative Tracker/CombatText"
+var text_combat : String = ""
 var player : CharacterBody2D
 var map : MapTemplate
 var camera_zoom : float = 5
@@ -46,7 +47,7 @@ var card_select : int = -1
 var target : int = -1
 var target_type : int = -1
 # Called when the node enters the scene tree for the first time.
-
+signal action_completed
 
 func _input(event):
 	if Input.is_action_just_pressed("Cancel") and combatState == combatStates.target:
@@ -57,8 +58,9 @@ func _input(event):
 		camera_zoom = 5
 		camera.position = combatants[currTurn].position
 		cancel.play()
-		init_ui[currTurn].get_node("init_bar").modulate = Color("ffffff")
+		init_ui[currTurn].changeWhite()
 		init_ui[currTurn].initiative = 100
+		text_combat = ""
 	if Input.is_action_just_pressed("Click") and combatState == combatStates.target:
 		var nearest_distance = 20
 		var mouse = get_local_mouse_position()
@@ -68,6 +70,8 @@ func _input(event):
 				nearest_distance = distance
 				target = i
 		if target >= 0:
+			select.play()
+			text_combat = hand_ui[card_select].SkillName
 			match(target_type):
 				0:
 					pass
@@ -75,7 +79,8 @@ func _input(event):
 					if combatants[target].is_in_group("Enemy"):
 						hand_ui[card_select].execute_action(self)
 				2:
-					hand_ui[card_select].execute_action(self)
+					await hand_ui[card_select].execute_action(self)
+			combatState = combatStates.animation
 			target = -1
 			for c in card_ui.get_children():
 				c.queue_free()
@@ -83,17 +88,24 @@ func _input(event):
 			print(card_select)
 			if card_select > 0:
 				hand[combatants[currTurn].name].pop_at(card_select - 1)
-			init_ui[currTurn].get_node("init_bar").modulate = Color("ffffff")
-			init_ui[currTurn].initiative = 100
-			combatState = combatStates.animation
+			init_ui[currTurn].changeWhite()
+			await action_completed
+			text_combat = ""
 			next_turn()
 func _ready():
 	load_map()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	combat_text.text = "[center][font_size=60]" + text_combat + "[/font_size][/center]"
 	camera.zoom = camera.zoom.lerp(Vector2(camera_zoom,camera_zoom), 3 * delta)
 	battle_veil.scale = battle_veil.scale.lerp(Vector2(veilSize,veilSize), .5 * delta)
+	
+	for c in range(len(init_ui)):
+		init_ui[c].maxHP = combatants[c].maxHP
+		init_ui[c].maxMP = combatants[c].maxMP
+		init_ui[c].HP = combatants[c].HP
+		init_ui[c].MP = combatants[c].MP
 	if currState == gameStates.explore:
 		camera.position = player.position
 		player.can_walk = true
@@ -184,7 +196,7 @@ func start_combat():
 			initiative.push_back(100 - body.collider.speed)
 			var ui = INIT_ENEMY.instantiate()
 			ui.barName = body.collider.name
-			ui.initiative = body.collider.speed
+			ui.initiative = body.collider.speed 
 			enemy_initiative.add_child(ui)
 			init_ui.push_back(ui)
 			combatants_position.push_back(battleground.get_child(enemyCount + 4).global_position)
@@ -224,6 +236,7 @@ func find_next():
 	
 func next_turn():
 	currTurn = find_next()
+	combatants[currTurn].MP = min(combatants[currTurn].MP + 1, combatants[currTurn].maxMP)
 	camera_zoom = 5
 	if combatants[currTurn].is_in_group("Ally"):
 		camera.position = combatants[currTurn].position + Vector2(0,-20)
@@ -257,13 +270,22 @@ func select_target(node_index):
 	for c in hand_ui:
 		c.no_hover = true
 	select.play()
-	init_ui[currTurn].get_node("init_bar").modulate = Color("ffff42")
+	init_ui[currTurn].changeYellow()
 	init_ui[currTurn].initiative = min(100, combatants[currTurn].speed + hand_ui[node_index].initiative)
 	combatState = combatStates.target
 	camera_zoom = 4.5
 	camera.position = battleground.position
 	card_select = node_index
 	target_type = hand_ui[node_index].target_type
+	match(target_type):
+		0:
+			text_combat = "Select an Ally"
+		1:
+			text_combat = "Select a Target"
+		2: 
+			text_combat = "Select Target to Confirm"
+		3:
+			text_combat = "Select Ally to Confirm"
 
 
 

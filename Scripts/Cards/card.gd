@@ -6,6 +6,8 @@ var mp_cost: int = 0
 @export var card_script : GDScript
 @export var initiative : int = 0
 @export var target_type : int
+@export var SkillName : String
+@export var mpCost : int
 var card_instance
 var no_hover = false
 @onready var animation_player = $AnimationPlayer

@@ -26,7 +26,7 @@ var MP : int
 @export var earthBoost : int
 @export var voidBoost : int
 @export var lightBoost : int
-@export var arcaneBoost : int
+@export var damageBoost : int
 
 @export_category("Incoming Resistance")
 @export var fireResist : int
@@ -35,8 +35,11 @@ var MP : int
 @export var earthResist : int
 @export var voidResist : int
 @export var lightResist : int
-@export var arcaneResist : int
+@export var defense : int
 
+
+func _ready():
+	HP = maxHP
 
 func handle_animation():
 	if velocity.x > 0:
@@ -72,3 +75,31 @@ func handle_animation():
 				sprite.play("idle_side")
 			else:
 				sprite.play("move_side")
+
+
+func takeDamage(value: int, element: String):
+	$hurt.play()
+	var damage : int
+	match(element):
+		"physical":
+			damage = value * (100 - defense)/100
+		"fire":
+			damage = value * (100 - defense - fireResist)/100
+		"frost":
+			damage = value * (100 - defense - frostResist)/100
+		"lightning":
+			damage = value * (100 - defense - lightningResist)/100
+		"earth":
+			damage = value * (100 - defense - earthResist)/100
+		"void":
+			damage = value * (100 - defense - voidResist)/100
+		"light":
+			damage = value * (100 - defense - lightResist)/100
+		"arcane":
+			damage = value * (100 - defense)/100
+	var d_num = load("res://Scenes/GameLogic/damage_number.tscn")
+	d_num = d_num.instantiate()
+	d_num.number = damage
+	add_child(d_num)
+	HP = max(HP - damage, 0)
+	
