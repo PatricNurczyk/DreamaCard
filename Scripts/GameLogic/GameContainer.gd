@@ -5,6 +5,7 @@ const INIT_ALLY = preload("res://Scenes/GameLogic/Initiative_ally.tscn")
 const INIT_ENEMY = preload("res://Scenes/GameLogic/Initiative_enemy.tscn")
 const UI_POSITIONS = [Vector2(50,-58),Vector2(30,-65),Vector2(5,-70),Vector2(-15,-70),Vector2(-35,-65),Vector2(-55,-58),Vector2(-75,-48)]
 const UI_ROTATIONS = [25.0,17.5,10.0,0,-10.0,-17.5,-25.0]
+const UI_PASS = Vector2(-50,10)
 const UI_READYBREAK = Vector2(10,-30)
 @onready var ally_initiative = $"Initiative Tracker/Ally Initiative"
 @onready var enemy_initiative = $"Initiative Tracker/Enemy Initiative"
@@ -21,6 +22,7 @@ var camera_zoom : float = 5
 var camera_pos : Vector2
 var camera_speed : float = 3
 @onready var card_ui = $Cards
+@onready var pass_ui = $Cards/Pass
 @onready var cancel = $cancel
 @onready var select = $select
 
@@ -51,6 +53,7 @@ signal action_completed
 
 func _input(event):
 	if Input.is_action_just_pressed("Cancel") and combatState == combatStates.target:
+		pass_ui.cancel()
 		for c in hand_ui:
 			c.cancel()
 		card_select = 	-1
@@ -82,8 +85,8 @@ func _input(event):
 					await hand_ui[card_select].execute_action(self)
 			combatState = combatStates.animation
 			target = -1
-			for c in card_ui.get_children():
-				c.queue_free()
+			for c in range(len(card_ui.get_children()) - 1):
+				card_ui.get_child(c).queue_free()
 			hand_ui = []
 			print(card_select)
 			if card_select > 0:
@@ -117,11 +120,15 @@ func _process(delta):
 			var t = delta * SPEED
 			combatants[i].position = lerp(combatants[i].position, combatants_position[i],t)
 		if combatState == combatStates.allyTurn:
+			pass_ui.scale = lerp(pass_ui.scale, Vector2(1,1), 20 * delta)
+			pass_ui.position = lerp(pass_ui.position, UI_PASS, 20 * delta)
 			for i in range(len(hand_ui)):
 				hand_ui[i].scale = lerp(hand_ui[i].scale, Vector2(1,1), 20 * delta)
 				hand_ui[i].position = lerp(hand_ui[i].position, UI_POSITIONS[i], 20 * delta)
 				hand_ui[i].rotation_degrees = lerp(hand_ui[i].rotation_degrees,float(UI_ROTATIONS[i]),20 * delta)
 		elif combatState == combatStates.target:
+			pass_ui.scale = lerp(pass_ui.scale, Vector2.ZERO, 20 * delta)
+			pass_ui.position = lerp(pass_ui.position, Vector2.ZERO, 20 * delta)
 			for i in range(len(hand_ui)):
 				hand_ui[i].rotation_degrees = lerp(hand_ui[i].rotation_degrees,0.0,20 * delta)
 				if i != card_select:
@@ -249,6 +256,7 @@ func draw_card(character):
 	while len(deck[character.name]) > 0 and len(hand[character.name]) < 6:
 		hand[character.name].push_back(deck[character.name].pop_front())
 func ally_turn():
+	pass_ui.cancel()
 	combatState = combatStates.allyTurn
 	draw_card(combatants[currTurn])
 	card_ui.position = combatants[currTurn].position
@@ -263,10 +271,12 @@ func ally_turn():
 	for c in hand_ui:
 		c.scale = Vector2.ZERO
 		card_ui.add_child(c)
+	card_ui.move_child(pass_ui,-1)
 	await get_tree().create_timer(.5).timeout
 	#animation_player.play("CardsFlyOut")
 	
 func select_target(node_index):
+	pass_ui.no_hover = true
 	for c in hand_ui:
 		c.no_hover = true
 	select.play()
@@ -287,7 +297,17 @@ func select_target(node_index):
 		3:
 			text_combat = "Select Ally to Confirm"
 
-
+func pass_turn():
+	combatState = combatStates.animation
+	target = -1
+	pass_ui.scale = Vector2.ZERO
+	pass_ui.position = Vector2.ZERO
+	for c in range(len(card_ui.get_children()) - 1):
+		card_ui.get_child(c).queue_free()
+	hand_ui = []
+	init_ui[currTurn].changeWhite()
+	text_combat = ""
+	next_turn()
 
 func enemy_turn():
 	await get_tree().create_timer(2).timeout

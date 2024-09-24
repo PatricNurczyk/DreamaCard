@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://hdfik3ks31vv"]
+[gd_scene load_steps=8 format=3 uid="uid://hdfik3ks31vv"]
 
-[ext_resource type="Script" path="res://Scripts/Cards/card.gd" id="1_wyhrv"]
+[ext_resource type="Script" path="res://Scripts/Cards/Pass.gd" id="1_suya6"]
 [ext_resource type="Texture2D" uid="uid://y8pt72laxafr" path="res://Assets/Card/Pass.png" id="2_42ueb"]
-[ext_resource type="Script" path="res://Scripts/Cards/pass.gd" id="2_tlg1w"]
 [ext_resource type="AudioStream" uid="uid://cmcelkb8gcdpl" path="res://Sounds/Sound_Effects/flipcard.wav" id="3_637y8"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8rv6h"]
@@ -24,9 +23,7 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_b5epm")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_4tin5")
 action_mode = 0
 icon_alignment = 1
-script = ExtResource("1_wyhrv")
-card_script = ExtResource("2_tlg1w")
-SkillName = "Pass"
+script = ExtResource("1_suya6")
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)
