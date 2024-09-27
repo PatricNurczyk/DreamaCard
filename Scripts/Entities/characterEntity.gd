@@ -37,6 +37,9 @@ var MP : int
 @export var lightResist : int
 @export var defense : int
 
+@export_category("Cards")
+@export var deck : Array[String]
+var hand : Array[String]
 
 func _ready():
 	HP = maxHP
@@ -80,25 +83,41 @@ func handle_animation():
 func takeDamage(value: int, element: String):
 	$hurt.play()
 	var damage : int
+	var d_num = load("res://Scenes/GameLogic/damage_number.tscn")
+	d_num = d_num.instantiate()
 	match(element):
 		"physical":
 			damage = value * (100 - defense)/100
+			d_num.color = "ffffff"
+			d_num.altColor = "000000"
 		"fire":
 			damage = value * (100 - defense - fireResist)/100
+			d_num.color = "d5621f"
+			d_num.altColor = "ff0000"
 		"frost":
 			damage = value * (100 - defense - frostResist)/100
+			d_num.color = "00ffff"
+			d_num.altColor = "0000ff"
 		"lightning":
 			damage = value * (100 - defense - lightningResist)/100
+			d_num.color = "c3d511"
+			d_num.altColor = "ef9926"
 		"earth":
 			damage = value * (100 - defense - earthResist)/100
+			d_num.color = "6e5003"
+			d_num.altColor = "005000"
 		"void":
 			damage = value * (100 - defense - voidResist)/100
+			d_num.color = "#8e43f7"
+			d_num.altColor = "#572f8f"
 		"light":
 			damage = value * (100 - defense - lightResist)/100
+			d_num.color = "#f5ff69"
+			d_num.altColor = "#aab058"
 		"arcane":
 			damage = value * (100 - defense)/100
-	var d_num = load("res://Scenes/GameLogic/damage_number.tscn")
-	d_num = d_num.instantiate()
+			d_num.color = "#4fffbe"
+			d_num.altColor = "#61c780"
 	d_num.number = damage
 	add_child(d_num)
 	HP = max(HP - damage, 0)

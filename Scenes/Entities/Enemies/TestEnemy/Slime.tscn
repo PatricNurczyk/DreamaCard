@@ -19,9 +19,9 @@ script = ExtResource("1_67kb8")
 maxHP = 5
 maxMP = 1
 speed = 5
-frostBoost = 5
 fireResist = -5
 frostResist = 5
+deck = Array[String](["Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost"])
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -6)

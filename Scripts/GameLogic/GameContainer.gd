@@ -42,8 +42,6 @@ var allyCount : int = 0
 var enemyCount : int = 0
 var currTurn : int = 0
 var veilSize : int = 0
-var deck : Dictionary = {}
-var hand : Dictionary = {}
 var hand_ui : Array = []
 var card_select : int = -1 
 var target : int = -1
@@ -90,7 +88,7 @@ func _input(event):
 			hand_ui = []
 			print(card_select)
 			if card_select > 0:
-				hand[combatants[currTurn].name].pop_at(card_select - 1)
+				combatants[currTurn].hand.pop_at(card_select - 1)
 			init_ui[currTurn].changeWhite()
 			await action_completed
 			text_combat = ""
@@ -195,15 +193,23 @@ func start_combat():
 			combatants_position.push_back(battleground.get_child(allyCount).global_position)
 			allyCount += 1
 			body.collider.direction = "right"
-			deck[body.collider.name] = PlayerInfo.playerData[body.collider.name]["Deck"]
-			deck[body.collider.name].shuffle()
-			hand[body.collider.name] = []
+			print(combatants[-1].deck)
+			combatants[-1].deck.clear()
+			for c in PlayerInfo.playerData[body.collider.name]["Deck"]:
+				combatants[-1].deck.push_back(c)
+			#body.collider.deck = PlayerInfo.playerData[body.collider.name]["Deck"]
+			combatants[-1].deck.shuffle()
+			combatants[-1].hand.clear()
+			print(combatants[-1].deck)
 		elif body.collider.is_in_group("Enemy"):
 			combatants.push_back(body.collider)
 			initiative.push_back(100 - body.collider.speed)
 			var ui = INIT_ENEMY.instantiate()
 			ui.barName = body.collider.name
 			ui.initiative = body.collider.speed 
+			print(body.collider.deck)
+			body.collider.deck.shuffle()
+			body.collider.hand.clear()
 			enemy_initiative.add_child(ui)
 			init_ui.push_back(ui)
 			combatants_position.push_back(battleground.get_child(enemyCount + 4).global_position)
@@ -243,6 +249,7 @@ func find_next():
 	
 func next_turn():
 	currTurn = find_next()
+	draw_card(combatants[currTurn])
 	combatants[currTurn].MP = min(combatants[currTurn].MP + 1, combatants[currTurn].maxMP)
 	camera_zoom = 5
 	if combatants[currTurn].is_in_group("Ally"):
@@ -253,20 +260,19 @@ func next_turn():
 		enemy_turn()
 		
 func draw_card(character):
-	while len(deck[character.name]) > 0 and len(hand[character.name]) < 6:
-		hand[character.name].push_back(deck[character.name].pop_front())
+	while len(character.deck) > 0 and len(character.hand) < 6:
+		character.hand.push_back(character.deck.pop_front())
 func ally_turn():
 	pass_ui.cancel()
 	combatState = combatStates.allyTurn
-	draw_card(combatants[currTurn])
 	card_ui.position = combatants[currTurn].position
 	var weapon = load("res://Scripts/Equipment/Weapons/" + PlayerInfo.playerData[combatants[currTurn].name]["Equipment"]["Weapon"] + ".gd").new()
 	var weapon_card = weapon.attackCard
 	hand_ui.push_back(weapon_card.instantiate())
 	
 	weapon.queue_free()
-	for i in range(len(hand[combatants[currTurn].name])):
-		var cardbutton = load("res://Scenes/Cards/" + hand[combatants[currTurn].name][i] + ".tscn").instantiate()
+	for i in range(len(combatants[currTurn].hand)):
+		var cardbutton = load("res://Scenes/Cards/" + combatants[currTurn].hand[i] + ".tscn").instantiate()
 		hand_ui.push_back(cardbutton)
 	for c in hand_ui:
 		c.scale = Vector2.ZERO
@@ -310,5 +316,30 @@ func pass_turn():
 	next_turn()
 
 func enemy_turn():
-	await get_tree().create_timer(2).timeout
+	await get_tree().create_timer(.5).timeout
+	var choice = combatants[currTurn].enemy_choice(combatants)
+	if choice["action"] == "pass":
+		text_combat = "Pass"
+		await get_tree().create_timer(.5).timeout
+		text_combat = ""
+	else:
+		target = choice["target"]
+		text_combat = choice["action"]
+		var card = load("res://Scenes/Cards/" + choice["action"] + ".tscn").instantiate()
+		var t_type = card.target_type
+		card = card.card_script.new()
+		match(t_type):
+			0:
+				pass
+			1:
+				card.execute_action(self)
+			2: 
+				card.execute_action(self)
+			3:
+				pass
+				
+		combatState = combatStates.animation
+		target = -1
+		await action_completed
+		text_combat = ""
 	next_turn()
