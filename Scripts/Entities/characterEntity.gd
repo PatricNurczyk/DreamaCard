@@ -8,6 +8,7 @@ class_name EntityCharacter
 var SPEED = 30.0
 var direction = "right"
 var can_walk = true
+var is_dead = false
 
 
 #Character Stats
@@ -121,4 +122,6 @@ func takeDamage(value: int, element: String):
 	d_num.number = damage
 	add_child(d_num)
 	HP = max(HP - damage, 0)
+	if HP == 0:
+		is_dead = true
 	

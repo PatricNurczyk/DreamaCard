@@ -44,6 +44,7 @@ func cancel():
 	cardscale = .1
 	animation_player.stop()
 	disabled = false
+	z_index = 0
 	
 func execute_action(container):
 	card_instance.execute_action(container)

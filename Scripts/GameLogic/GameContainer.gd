@@ -3,7 +3,7 @@ const PLAYERTEMPLATE = preload("res://Scenes/Entities/Player.tscn")
 const COMBATCREATOR = preload("res://Scenes/GameLogic/CombatCreator.tscn")
 const INIT_ALLY = preload("res://Scenes/GameLogic/Initiative_ally.tscn")
 const INIT_ENEMY = preload("res://Scenes/GameLogic/Initiative_enemy.tscn")
-const UI_POSITIONS = [Vector2(50,-58),Vector2(30,-65),Vector2(5,-70),Vector2(-15,-70),Vector2(-35,-65),Vector2(-55,-58),Vector2(-75,-48)]
+const UI_POSITIONS = [Vector2(50,-58),Vector2(30,-65),Vector2(5,-70),Vector2(-15,-70),Vector2(-35,-65),Vector2(-60,-58),Vector2(-80,-48)]
 const UI_ROTATIONS = [25.0,17.5,10.0,0,-10.0,-17.5,-25.0]
 const UI_PASS = Vector2(-50,10)
 const UI_READYBREAK = Vector2(10,-30)
@@ -46,6 +46,7 @@ var hand_ui : Array = []
 var card_select : int = -1 
 var target : int = -1
 var target_type : int = -1
+var past_positions : Array = []
 # Called when the node enters the scene tree for the first time.
 signal action_completed
 
@@ -100,7 +101,7 @@ func _ready():
 func _process(delta):
 	combat_text.text = "[center][font_size=60]" + text_combat + "[/font_size][/center]"
 	camera.zoom = camera.zoom.lerp(Vector2(camera_zoom,camera_zoom), 3 * delta)
-	battle_veil.scale = battle_veil.scale.lerp(Vector2(veilSize,veilSize), .5 * delta)
+	battle_veil.scale = battle_veil.scale.lerp(Vector2(veilSize,veilSize), 10 * delta)
 	
 	for c in range(len(init_ui)):
 		init_ui[c].maxHP = combatants[c].maxHP
@@ -201,6 +202,7 @@ func start_combat():
 			combatants[-1].deck.shuffle()
 			combatants[-1].hand.clear()
 			print(combatants[-1].deck)
+			past_positions.push_back(combatants[-1].position)
 		elif body.collider.is_in_group("Enemy"):
 			combatants.push_back(body.collider)
 			initiative.push_back(100 - body.collider.speed)
@@ -227,8 +229,7 @@ func start_combat():
 #COMBAT FUNCTIONS
 func battle_veil_on():
 	battle_veil.position = player.position
-	veilSize = 100
-	print_tree()
+	veilSize = 10
 func battle_veil_off():
 	veilSize = 0
 func find_next():
@@ -248,6 +249,28 @@ func find_next():
 	
 	
 func next_turn():
+	#Checking if the fight is over
+	var allies = []
+	var enemies = []
+	for c in combatants:
+		if c.is_in_group("Ally"):
+			allies.push_back(c)
+		else:
+			enemies.push_back(c)
+	var alliesOnField = false
+	var enemiesOnField = false
+	for a in allies:
+		if not a.is_dead:
+			alliesOnField = true
+	for e in enemies:
+		if not e.is_dead:
+			enemiesOnField = true
+	if not enemiesOnField:
+		end_combat(enemies)
+		return
+	if not alliesOnField:
+		print("Game Over")
+		get_tree().quit()
 	currTurn = find_next()
 	draw_card(combatants[currTurn])
 	combatants[currTurn].MP = min(combatants[currTurn].MP + 1, combatants[currTurn].maxMP)
@@ -343,3 +366,22 @@ func enemy_turn():
 		await action_completed
 		text_combat = ""
 	next_turn()
+
+func end_combat(enemies):
+	for e in enemies:
+		combatants.erase(e)
+		e.queue_free()
+	for i in init_ui:
+		i.queue_free()
+	init_ui.clear()
+	combatants_position.clear()
+	for p in past_positions:
+		combatants_position.push_back(p)
+	battle_veil_off()
+	await get_tree().create_timer(1).timeout
+	combatants.clear()
+	initiative.clear()
+	past_positions.clear()
+	combatants_position.clear()
+	battleground.queue_free()
+	currState = gameStates.explore
