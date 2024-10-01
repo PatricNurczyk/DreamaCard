@@ -1,36 +1,30 @@
-[gd_scene load_steps=2 format=3 uid="uid://bga7euvepixjv"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_3y3nc"]
-radius = 9.05539
+[gd_scene format=3 uid="uid://bga7euvepixjv"]
 
 [node name="CombatTracker" type="Node2D"]
 
 [node name="Position1" type="Node2D" parent="."]
-position = Vector2(-6, -5)
+position = Vector2(-56, -48)
 
 [node name="Position2" type="Node2D" parent="."]
-position = Vector2(-7, -2)
+position = Vector2(-90, -22)
 
 [node name="Position3" type="Node2D" parent="."]
-position = Vector2(-7, 2)
+position = Vector2(-91, 21)
 
 [node name="Position4" type="Node2D" parent="."]
-position = Vector2(-6, 5)
+position = Vector2(-63, 56)
 
 [node name="Position5" type="Node2D" parent="."]
-position = Vector2(3, -5)
+position = Vector2(31, -49)
 
 [node name="Position6" type="Node2D" parent="."]
-position = Vector2(5, -3)
+position = Vector2(31, 5)
 
 [node name="Position7" type="Node2D" parent="."]
-position = Vector2(3, 0)
+position = Vector2(29, 59)
 
 [node name="Position8" type="Node2D" parent="."]
-position = Vector2(5, 3)
+position = Vector2(76, -19)
 
 [node name="Position9" type="Node2D" parent="."]
-position = Vector2(3, 5)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_3y3nc")
+position = Vector2(67, 38)

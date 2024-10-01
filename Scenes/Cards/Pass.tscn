@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=3 uid="uid://hdfik3ks31vv"]
+
+[ext_resource type="Script" path="res://Scripts/Cards/Pass.gd" id="1_suya6"]
+[ext_resource type="Texture2D" uid="uid://y8pt72laxafr" path="res://Assets/Card/Pass.png" id="2_42ueb"]
+[ext_resource type="AudioStream" uid="uid://cmcelkb8gcdpl" path="res://Sounds/Sound_Effects/flipcard.wav" id="3_637y8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8rv6h"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qqn4e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b5epm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4tin5"]
+
+[node name="Pass" type="Button"]
+offset_left = -15.495
+offset_top = -23.16
+offset_right = 15.505
+offset_bottom = 22.84
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8rv6h")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_qqn4e")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_b5epm")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4tin5")
+action_mode = 0
+icon_alignment = 1
+script = ExtResource("1_suya6")
+
+[node name="Card" type="Sprite2D" parent="."]
+position = Vector2(15.415, 23.045)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_42ueb")
+
+[node name="hover" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_637y8")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
