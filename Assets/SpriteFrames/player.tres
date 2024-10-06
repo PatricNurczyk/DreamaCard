@@ -1,6 +1,26 @@
-[gd_resource type="SpriteFrames" load_steps=42 format=3 uid="uid://cb8rvv4yb7tn2"]
+[gd_resource type="SpriteFrames" load_steps=49 format=3 uid="uid://cb8rvv4yb7tn2"]
 
 [ext_resource type="Texture2D" uid="uid://b1xjm86g8jffc" path="res://Assets/Character Sprites/player.png" id="1_kelct"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fyw3p"]
+atlas = ExtResource("1_kelct")
+region = Rect2(0, 336, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eg42p"]
+atlas = ExtResource("1_kelct")
+region = Rect2(48, 336, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qucr1"]
+atlas = ExtResource("1_kelct")
+region = Rect2(96, 336, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a0vgr"]
+atlas = ExtResource("1_kelct")
+region = Rect2(144, 336, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3wvk0"]
+atlas = ExtResource("1_kelct")
+region = Rect2(0, 48, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_22m25"]
 atlas = ExtResource("1_kelct")
@@ -162,8 +182,36 @@ region = Rect2(192, 240, 48, 48)
 atlas = ExtResource("1_kelct")
 region = Rect2(240, 240, 48, 48)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_lkcjg"]
+atlas = ExtResource("1_kelct")
+region = Rect2(0, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qg1as"]
+atlas = ExtResource("1_kelct")
+region = Rect2(0, 336, 48, 48)
+
 [resource]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fyw3p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eg42p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qucr1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a0vgr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3wvk0")
+}],
+"loop": false,
+"name": &"attack_break",
+"speed": 10.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_22m25")
@@ -323,4 +371,15 @@ animations = [{
 "loop": true,
 "name": &"move_up",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lkcjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qg1as")
+}],
+"loop": false,
+"name": &"prep_attack",
+"speed": 5.0
 }]

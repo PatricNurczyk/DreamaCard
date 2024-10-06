@@ -991,8 +991,8 @@ anchor_right = 1.0
 offset_bottom = 106.0
 grow_horizontal = 2
 theme_override_colors/default_color = Color(1, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 bbcode_enabled = true
 
 [node name="Battle" type="Sprite2D" parent="."]

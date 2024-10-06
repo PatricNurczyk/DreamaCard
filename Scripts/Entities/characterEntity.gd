@@ -9,8 +9,8 @@ var SPEED = 30.0
 var direction = "right"
 var can_walk = true
 var is_dead = false
-
-
+var in_combat = false
+var is_idle = true
 #Character Stats
 @export_category("Basic Stats")
 @export var maxHP : int
@@ -41,11 +41,15 @@ var MP : int
 @export_category("Cards")
 @export var deck : Array[String]
 var hand : Array[String]
-
 func _ready():
 	HP = maxHP
+	sprite.animation_finished.connect(_on_animation_finished)
 
 func handle_animation():
+	if in_combat:
+		if is_idle:
+			sprite.play("idle_side")
+		return
 	if velocity.x > 0:
 		direction = "right"
 	elif velocity.x < 0:
@@ -125,3 +129,6 @@ func takeDamage(value: int, element: String):
 	if HP == 0:
 		is_dead = true
 	
+func _on_animation_finished():
+	if sprite.animation == "attack_break":
+		is_idle = true

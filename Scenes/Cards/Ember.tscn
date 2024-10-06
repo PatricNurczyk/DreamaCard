@@ -5,13 +5,13 @@
 [ext_resource type="Texture2D" uid="uid://drlrkcmesam5n" path="res://Assets/Card/Ember.png" id="2_hwcky"]
 [ext_resource type="AudioStream" uid="uid://cmcelkb8gcdpl" path="res://Sounds/Sound_Effects/flipcard.wav" id="3_bpgg0"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8rv6h"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4tin5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qqn4e"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b5epm"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4tin5"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8rv6h"]
 
 [sub_resource type="Animation" id="Animation_jbqrp"]
 resource_name = "Card Shake"
@@ -56,10 +56,10 @@ offset_left = -15.495
 offset_top = -23.16
 offset_right = 15.505
 offset_bottom = 22.84
-theme_override_styles/normal = SubResource("StyleBoxEmpty_8rv6h")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4tin5")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_qqn4e")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_b5epm")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_4tin5")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8rv6h")
 action_mode = 0
 icon_alignment = 1
 script = ExtResource("1_gbk3u")
@@ -67,6 +67,7 @@ card_script = ExtResource("2_05f17")
 target_type = 1
 SkillName = "Ember"
 mpCost = 1
+element = "fire"
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)

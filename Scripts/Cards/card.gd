@@ -1,5 +1,4 @@
 extends Button
-
 var cardscale: float = .1
 var speed: float = 10
 var mp_cost: int = 0
@@ -8,6 +7,7 @@ var mp_cost: int = 0
 @export var target_type : int
 @export var SkillName : String
 @export var mpCost : int
+@export var element : String
 var card_instance
 var no_hover = false
 @onready var animation_player = $AnimationPlayer
@@ -36,7 +36,7 @@ func _on_mouse_exited():
 func card_selected():
 	cardscale = .05
 	no_hover = true
-	animation_player.play("Card Shake")
+	#animation_player.play("Card Shake")
 	disabled = true
 	
 func cancel():
@@ -57,4 +57,3 @@ func _on_gui_input(event):
 					card_instance.select_card(self)
 				MOUSE_BUTTON_RIGHT:
 					card_instance.discard()
-

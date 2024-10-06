@@ -3,6 +3,7 @@ const PLAYERTEMPLATE = preload("res://Scenes/Entities/Player.tscn")
 const COMBATCREATOR = preload("res://Scenes/GameLogic/CombatCreator.tscn")
 const INIT_ALLY = preload("res://Scenes/GameLogic/Initiative_ally.tscn")
 const INIT_ENEMY = preload("res://Scenes/GameLogic/Initiative_enemy.tscn")
+const SHATTER = preload("res://Scenes/GameLogic/shattered.tscn")
 const UI_POSITIONS = [Vector2(50,-58),Vector2(30,-65),Vector2(5,-70),Vector2(-15,-70),Vector2(-35,-65),Vector2(-60,-58),Vector2(-80,-48)]
 const UI_ROTATIONS = [25.0,17.5,10.0,0,-10.0,-17.5,-25.0]
 const UI_PASS = Vector2(-50,10)
@@ -47,22 +48,25 @@ var card_select : int = -1
 var target : int = -1
 var target_type : int = -1
 var past_positions : Array = []
+var shatter
 # Called when the node enters the scene tree for the first time.
 signal action_completed
 
 func _input(event):
 	if Input.is_action_just_pressed("Cancel") and combatState == combatStates.target:
+		shatter.queue_free()
 		pass_ui.cancel()
 		for c in hand_ui:
 			c.cancel()
 		card_select = 	-1
-		combatState = combatStates.allyTurn
 		camera_zoom = 5
 		camera.position = combatants[currTurn].position
 		cancel.play()
 		init_ui[currTurn].changeWhite()
 		init_ui[currTurn].initiative = 100
 		text_combat = ""
+		combatants[currTurn].is_idle = true
+		combatState = combatStates.allyTurn
 	if Input.is_action_just_pressed("Click") and combatState == combatStates.target:
 		var nearest_distance = 20
 		var mouse = get_local_mouse_position()
@@ -72,26 +76,35 @@ func _input(event):
 				nearest_distance = distance
 				target = i
 		if target >= 0:
-			select.play()
-			text_combat = hand_ui[card_select].SkillName
 			match(target_type):
 				0:
 					pass
 				1:
-					if combatants[target].is_in_group("Enemy"):
-						hand_ui[card_select].execute_action(self)
+					if combatants[target].is_in_group("Ally"):
+						cancel.play()
+						combatState = combatStates.target
+						return
 				2:
-					await hand_ui[card_select].execute_action(self)
+					if combatants[target].is_in_group("Ally"):
+						cancel.play()
+						combatState = combatStates.target
+						return
+			select.play()
 			combatState = combatStates.animation
-			target = -1
+			text_combat = hand_ui[card_select].SkillName
+			shatter.fire()
+			combatants[currTurn].sprite.play("attack_break")
+			await shatter.done
+			hand_ui[card_select].execute_action(self)
+			init_ui[currTurn].changeWhite()
+			await action_completed
 			for c in range(len(card_ui.get_children()) - 1):
 				card_ui.get_child(c).queue_free()
-			hand_ui = []
 			print(card_select)
 			if card_select > 0:
 				combatants[currTurn].hand.pop_at(card_select - 1)
-			init_ui[currTurn].changeWhite()
-			await action_completed
+			target = -1
+			hand_ui = []
 			text_combat = ""
 			next_turn()
 func _ready():
@@ -222,6 +235,8 @@ func start_combat():
 	camera_zoom = 3.5
 	
 	await get_tree().create_timer(1.5).timeout
+	for c in combatants:
+		c.in_combat = true
 	next_turn()
 	
 	
@@ -302,7 +317,6 @@ func ally_turn():
 		card_ui.add_child(c)
 	card_ui.move_child(pass_ui,-1)
 	await get_tree().create_timer(.5).timeout
-	#animation_player.play("CardsFlyOut")
 	
 func select_target(node_index):
 	pass_ui.no_hover = true
@@ -311,11 +325,14 @@ func select_target(node_index):
 	select.play()
 	init_ui[currTurn].changeYellow()
 	init_ui[currTurn].initiative = min(100, combatants[currTurn].speed + hand_ui[node_index].initiative)
+	combatants[currTurn].is_idle = false
+	combatants[currTurn].sprite.play("prep_attack")
 	combatState = combatStates.target
 	camera_zoom = 4.5
 	camera.position = battleground.position
 	card_select = node_index
 	target_type = hand_ui[node_index].target_type
+	hand_ui[node_index].card_selected()
 	match(target_type):
 		0:
 			text_combat = "Select an Ally"
@@ -325,6 +342,16 @@ func select_target(node_index):
 			text_combat = "Select Target to Confirm"
 		3:
 			text_combat = "Select Ally to Confirm"
+	shatter = SHATTER.instantiate()
+	match (hand_ui[card_select].element):
+		"fire":
+			shatter.shard_color = Color("cc7c08")
+		"frost":
+			shatter.shard_color = Color("11ffff")
+	shatter.position = UI_READYBREAK + Vector2(16,23)
+	card_ui.add_child(shatter)
+	await shatter.shatter_ready
+	hand_ui[card_select].modulate = Color("ffffff00")
 
 func pass_turn():
 	combatState = combatStates.animation
@@ -379,6 +406,8 @@ func end_combat(enemies):
 		combatants_position.push_back(p)
 	battle_veil_off()
 	await get_tree().create_timer(1).timeout
+	for c in combatants:
+		c.in_combat = false
 	combatants.clear()
 	initiative.clear()
 	past_positions.clear()
