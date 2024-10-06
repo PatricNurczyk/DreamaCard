@@ -6,8 +6,7 @@ var spawn_point : int = 0
 #Character Data
 var playerData = {
 	"Player": {
-		"MaxHP" : 100,
-		"HP" : 100,
+		"MaxHP" : 30,
 		"MaxMP" : 2,
 		"Speed" : 10,
 		"Deck" : ["Ember","Ember","Ember","Ember","Ember","Ember","Frost"],

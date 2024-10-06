@@ -13,7 +13,6 @@ radius = 3.0
 height = 12.0
 
 [node name="Player" type="CharacterBody2D" groups=["Ally", "Player"]]
-z_index = 2
 z_as_relative = false
 script = ExtResource("1_sqg0c")
 

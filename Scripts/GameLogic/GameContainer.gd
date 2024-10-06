@@ -27,6 +27,7 @@ var camera_speed : float = 3
 @onready var pass_ui = $Cards/Pass
 @onready var cancel = $cancel
 @onready var select = $select
+@onready var battle_music = $battleMusic
 
 enum gameStates {explore, combat, cutscene, transition}
 var currState = gameStates.explore
@@ -135,10 +136,12 @@ func _process(delta):
 	if currState == gameStates.explore:
 		camera.position = player.position
 		player.can_walk = true
+		battle_music.volume_db = move_toward(battle_music.volume_db, -60, 40 * delta)
 	elif currState == gameStates.transition:
 		if player:
 			player.can_walk = false
 	elif currState == gameStates.combat:
+		battle_music.volume_db = move_toward(battle_music.volume_db, -15, 40 * delta)
 		for i in range(len(combatants)):
 			var t = delta * SPEED
 			combatants[i].position = lerp(combatants[i].position, combatants_position[i],t)
@@ -179,6 +182,8 @@ func load_map():
 	map = map_scene.instantiate()
 	add_child(map)
 	add_child(player)
+	pause_position = 0
+	battle_music.stream = map.battle_music
 	player.position = map.SpawnPoints[PlayerInfo.spawn_point]
 	player.direction = map.Directions[PlayerInfo.spawn_point]
 	camera.position = player.position
@@ -205,6 +210,7 @@ func start_combat():
 	search.shape = shape
 	var bodies = space.intersect_shape(search)
 	for body in bodies:
+		body.collider.z_index = 2
 		if body.collider.is_in_group("Ally"):
 			body.collider.can_walk = false
 			body.collider.velocity = Vector2.ZERO
@@ -228,6 +234,7 @@ func start_combat():
 			combatants[-1].hand.clear()
 			print(combatants[-1].deck)
 			past_positions.push_back(combatants[-1].position)
+			combatants[-1].get_node("CollisionShape2D").visible = false
 		elif body.collider.is_in_group("Enemy"):
 			if enemyCount >= 5:
 				body.collider.queue_free()
@@ -249,7 +256,7 @@ func start_combat():
 	camera.position = battleground.position
 	battle_veil_on()
 	camera_zoom = 3.5
-	map.get_node("bgm").play(pause_position)
+	battle_music.play(pause_position)
 	await get_tree().create_timer(1.5).timeout
 	for c in combatants:
 		c.in_combat = true
@@ -449,12 +456,13 @@ func end_combat(enemies):
 	battle_veil_off()
 	await get_tree().create_timer(1).timeout
 	for c in combatants:
+		c.z_index = 0
 		c.in_combat = false
+		c.get_node("CollisionShape2D").visible = true
 	combatants.clear()
 	initiative.clear()
 	past_positions.clear()
 	combatants_position.clear()
 	battleground.queue_free()
 	currState = gameStates.explore
-	pause_position = map.get_node("bgm").get_playback_position()
-	map.get_node("bgm").stop()
+	pause_position = battle_music.get_playback_position()

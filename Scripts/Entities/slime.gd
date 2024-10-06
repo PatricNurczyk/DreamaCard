@@ -1,5 +1,12 @@
 extends EntityCharacter
 
+@export var deck_template : Array[String]
+
+func _ready():
+	super._ready()
+	for c in deck_template:
+		deck.push_back(c)
+
 func _physics_process(delta):
 	handle_animation()
 

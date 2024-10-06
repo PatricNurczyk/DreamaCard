@@ -38,8 +38,7 @@ var MP : int
 @export var lightResist : int
 @export var defense : int
 
-@export_category("Cards")
-@export var deck : Array[String]
+var deck : Array[String]
 var hand : Array[String]
 func _ready():
 	HP = maxHP
