@@ -21,7 +21,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	hp.max_value = maxHP
-	hp.value = move_toward(hp.value, HP, 20 * delta)
+	hp.value = move_toward(hp.value, HP, 2 * maxHP * delta)
 	hpLabel.text = str(int(hp.value)) + "/" + str(maxHP)
 	
 	mp.max_value = maxMP

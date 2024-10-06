@@ -1,0 +1,63 @@
+[gd_scene load_steps=6 format=3 uid="uid://dnybuylj7rpch"]
+
+[ext_resource type="Script" path="res://Scripts/GameLogic/shattered.gd" id="1_0o0eu"]
+[ext_resource type="AudioStream" uid="uid://cbnkxanfcovqh" path="res://Sounds/Sound_Effects/shatter.mp3" id="2_ujby4"]
+
+[sub_resource type="Animation" id="Animation_anf3q"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_xt4kd"]
+resource_name = "fade"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.517647)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8hudy"]
+_data = {
+"RESET": SubResource("Animation_anf3q"),
+"fade": SubResource("Animation_xt4kd")
+}
+
+[node name="Shattered" type="Node2D"]
+modulate = Color(1, 1, 1, 0)
+z_index = 300
+scale = Vector2(0.6, 0.6)
+script = ExtResource("1_0o0eu")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(15, -23, 15, 23, -15, 23, -15, -23)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_8hudy")
+}
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_ujby4")
+volume_db = -6.753
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="finished" from="AudioStreamPlayer2D" to="." method="_on_audio_stream_player_2d_finished"]

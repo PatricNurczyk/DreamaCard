@@ -26,7 +26,7 @@ deck = Array[String](["Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Fro
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -6)
 sprite_frames = ExtResource("2_6mysm")
-animation = &"idle_side"
+animation = &"hurt"
 
 [node name="Area2D" type="Area2D" parent="." groups=["Enemy"]]
 

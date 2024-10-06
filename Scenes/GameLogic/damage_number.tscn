@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/GameLogic/damage_number.gd" id="1_axamb"]
 
 [node name="DamageNumber" type="CharacterBody2D"]
+z_index = 8
 script = ExtResource("1_axamb")
 
 [node name="Label" type="Label" parent="."]
