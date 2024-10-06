@@ -16,7 +16,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
-"values": [0.0, 0.10472, 0.0, -0.10472, 0.0]
+"values": [0.0, 0.0523599, 0.0, -0.0523599, 0.0]
 }
 
 [sub_resource type="Animation" id="Animation_fdwe3"]
@@ -50,4 +50,4 @@ polygon = PackedVector2Array(-3, -5, 4, -5, 4, 4, -3, 4)
 libraries = {
 "": SubResource("AnimationLibrary_25es7")
 }
-speed_scale = 1.88
+speed_scale = 1.5

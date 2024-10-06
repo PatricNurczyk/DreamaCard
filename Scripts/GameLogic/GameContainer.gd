@@ -8,6 +8,7 @@ const UI_POSITIONS = [Vector2(50,-58),Vector2(30,-65),Vector2(5,-70),Vector2(-15
 const UI_ROTATIONS = [25.0,17.5,10.0,0,-10.0,-17.5,-25.0]
 const UI_PASS = Vector2(-50,10)
 const UI_READYBREAK = Vector2(10,-30)
+const ENEMY_UI_READYBREAK = Vector2(-37.5,-25)
 @onready var ally_initiative = $"Initiative Tracker/Ally Initiative"
 @onready var enemy_initiative = $"Initiative Tracker/Enemy Initiative"
 @onready var battle_veil = $Battle
@@ -49,6 +50,7 @@ var target : int = -1
 var target_type : int = -1
 var past_positions : Array = []
 var shatter
+var pause_position  : float = 0
 # Called when the node enters the scene tree for the first time.
 signal action_completed
 
@@ -84,8 +86,16 @@ func _input(event):
 						cancel.play()
 						combatState = combatStates.target
 						return
+					if combatants[target].is_dead:
+						cancel.play()
+						combatState = combatStates.target
+						return
 				2:
 					if combatants[target].is_in_group("Ally"):
+						cancel.play()
+						combatState = combatStates.target
+						return
+					if combatants[target].is_dead:
 						cancel.play()
 						combatState = combatStates.target
 						return
@@ -198,6 +208,7 @@ func start_combat():
 		if body.collider.is_in_group("Ally"):
 			body.collider.can_walk = false
 			body.collider.velocity = Vector2.ZERO
+			body.collider.HP = body.collider.maxHP
 			combatants.push_back(body.collider)
 			initiative.push_back(100 - body.collider.speed)
 			var ui = INIT_ALLY.instantiate()
@@ -218,6 +229,10 @@ func start_combat():
 			print(combatants[-1].deck)
 			past_positions.push_back(combatants[-1].position)
 		elif body.collider.is_in_group("Enemy"):
+			if enemyCount >= 5:
+				body.collider.queue_free()
+				continue
+			body.collider.speed += randi_range(-3,3)
 			combatants.push_back(body.collider)
 			initiative.push_back(100 - body.collider.speed)
 			var ui = INIT_ENEMY.instantiate()
@@ -234,7 +249,7 @@ func start_combat():
 	camera.position = battleground.position
 	battle_veil_on()
 	camera_zoom = 3.5
-	
+	map.get_node("bgm").play(pause_position)
 	await get_tree().create_timer(1.5).timeout
 	for c in combatants:
 		c.in_combat = true
@@ -253,14 +268,17 @@ func find_next():
 	var index = 0
 	for i in range(len(initiative)):
 		if initiative[i] < min_init:
-			index = i
-			min_init = initiative[i]
+			if not combatants[i].is_dead:
+				index = i
+				min_init = initiative[i]
 	for i in range(len(initiative)):
-		initiative[i] -= min_init
+		if combatants[i].is_dead:
+			initiative[i] = 100
+		else:
+			initiative[i] -= min_init
 		init_ui[i].initiative = 100 - initiative[i]
 	initiative[index] = 100 - combatants[index].speed
 	init_ui[index].initiative = 100
-	
 	return index
 	
 	
@@ -346,10 +364,10 @@ func select_target(node_index):
 	shatter = SHATTER.instantiate()
 	match (hand_ui[card_select].element):
 		"fire":
-			shatter.shard_color = Color("cc7c08")
+			shatter.shard_color = Color("ff5b17")
 		"frost":
 			shatter.shard_color = Color("11ffff")
-	shatter.position = UI_READYBREAK + Vector2(16,23)
+	shatter.position = UI_READYBREAK + Vector2(15.5,23)
 	card_ui.add_child(shatter)
 	await shatter.shatter_ready
 	hand_ui[card_select].modulate = Color("ffffff00")
@@ -375,27 +393,50 @@ func enemy_turn():
 		text_combat = ""
 	else:
 		target = choice["target"]
-		text_combat = choice["action"]
 		var card = load("res://Scenes/Cards/" + choice["action"] + ".tscn").instantiate()
+		card.get_node("Card").scale = Vector2.ZERO
+		card.card_selected()
+		card.position = ENEMY_UI_READYBREAK
+		shatter = SHATTER.instantiate()
+		match (card.element):
+			"fire":
+				shatter.shard_color = Color("ff5b17")
+			"frost":
+				shatter.shard_color = Color("11ffff")
+		shatter.position = Vector2(15.5,23)
+		shatter.invert = true
+		combatants[currTurn].add_child(card)
+		await get_tree().create_timer(.2).timeout
+		card.add_child(shatter)
+		combatants[currTurn].is_idle = false
+		combatants[currTurn].sprite.play("prep_attack")
+		await combatants[currTurn].sprite.animation_finished
+		card.get_node("Card").modulate = Color("ffffff00")
+		shatter.fire()
+		combatants[currTurn].sprite.play("attack_break")
+		await shatter.done
+		text_combat = choice["action"]
 		var t_type = card.target_type
-		card = card.card_script.new()
+		var card_script = card.card_script.new()
 		match(t_type):
 			0:
 				pass
 			1:
-				card.execute_action(self)
+				card_script.execute_action(self)
 			2: 
-				card.execute_action(self)
+				card_script.execute_action(self)
 			3:
 				pass
 				
 		combatState = combatStates.animation
-		target = -1
 		await action_completed
+		target = -1
 		text_combat = ""
+		card.queue_free()
 	next_turn()
 
 func end_combat(enemies):
+	camera.position = battleground.position
 	for e in enemies:
 		combatants.erase(e)
 		e.queue_free()
@@ -415,3 +456,5 @@ func end_combat(enemies):
 	combatants_position.clear()
 	battleground.queue_free()
 	currState = gameStates.explore
+	pause_position = map.get_node("bgm").get_playback_position()
+	map.get_node("bgm").stop()

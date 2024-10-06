@@ -10,7 +10,7 @@ var shooting = false
 func _ready():
 	x_force = randf_range(200, 300)
 	y_force = randf_range(-100,100)
-	if flip: x_force * -1
+	if flip: x_force = x_force * -1
 	await get_tree().create_timer(randf_range(0,.5)).timeout
 	$AnimationPlayer.play("shake")
 	
