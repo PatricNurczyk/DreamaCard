@@ -32,7 +32,10 @@ func fire():
 		s.shoot()
 	await get_tree().create_timer(.5).timeout
 	done.emit()
-	queue_free()
 
 func _on_animation_player_animation_finished(anim_name):
 	pass
+
+
+func _on_audio_stream_player_2d_finished():
+	queue_free()

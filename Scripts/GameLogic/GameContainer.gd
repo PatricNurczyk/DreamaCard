@@ -98,8 +98,9 @@ func _input(event):
 			hand_ui[card_select].execute_action(self)
 			init_ui[currTurn].changeWhite()
 			await action_completed
-			for c in range(len(card_ui.get_children()) - 1):
-				card_ui.get_child(c).queue_free()
+			for c in range(len(card_ui.get_children())):
+				if not card_ui.get_child(c).is_in_group("pass_card"):
+					card_ui.get_child(c).queue_free()
 			print(card_select)
 			if card_select > 0:
 				combatants[currTurn].hand.pop_at(card_select - 1)
