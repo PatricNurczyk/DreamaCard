@@ -37,12 +37,10 @@ func card_selected():
 	cardscale = .05
 	no_hover = true
 	#animation_player.play("Card Shake")
-	disabled = true
 	
 func cancel():
 	no_hover = false
 	cardscale = .1
-	animation_player.stop()
 	disabled = false
 	z_index = 0
 	

@@ -374,6 +374,16 @@ func select_target(node_index):
 			shatter.shard_color = Color("ff5b17")
 		"frost":
 			shatter.shard_color = Color("11ffff")
+		"earth":
+			shatter.shard_color = Color('3a5f00')
+		"lightning":
+			shatter.shard_color = Color("c8ba00")
+		"void":
+			shatter.shard_color = Color("#8e43f7")
+		"light":
+			shatter.shard_color = Color("#f5ff69")
+		"arcane":
+			shatter.shard_color = Color("#4fffbe")
 	shatter.position = UI_READYBREAK + Vector2(15.5,23)
 	card_ui.add_child(shatter)
 	await shatter.shatter_ready
@@ -410,6 +420,16 @@ func enemy_turn():
 				shatter.shard_color = Color("ff5b17")
 			"frost":
 				shatter.shard_color = Color("11ffff")
+			"earth":
+				shatter.shard_color = Color('3a5f00')
+			"lightning":
+				shatter.shard_color = Color("c8ba00")
+			"void":
+				shatter.shard_color = Color("#8e43f7")
+			"light":
+				shatter.shard_color = Color("#f5ff69")
+			"arcane":
+				shatter.shard_color = Color("#4fffbe")
 		shatter.position = Vector2(15.5,23)
 		shatter.invert = true
 		combatants[currTurn].add_child(card)

@@ -9,7 +9,7 @@ var playerData = {
 		"MaxHP" : 30,
 		"MaxMP" : 2,
 		"Speed" : 10,
-		"Deck" : ["Ember","Ember","Ember","Ember","Ember","Ember","Frost"],
+		"Deck" : ["Ember","Blast","Dark","Ray","Bolt","Stone","Frost"],
 		"AltDeck" : [],
 		"WeaponTypes": "Shortsword",
 		"Equipment": {

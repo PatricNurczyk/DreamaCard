@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://jrkrfd6041tn"]
 
 [ext_resource type="SpriteFrames" uid="uid://cb8rvv4yb7tn2" path="res://Assets/SpriteFrames/player.tres" id="1_rt0qv"]
-[ext_resource type="Script" path="res://Scenes/Entities/Player.gd" id="1_sqg0c"]
+[ext_resource type="Script" path="res://Scripts/Entities/Player.gd" id="1_sqg0c"]
 [ext_resource type="AudioStream" uid="uid://cqplmnuvjfh7d" path="res://Sounds/Sound_Effects/hitHurt.wav" id="3_aw5ii"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i50t4"]
