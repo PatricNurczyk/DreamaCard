@@ -657,10 +657,7 @@ position = Vector2(396, 147)
 map = "Test_Map2"
 
 [node name="Slime" parent="." instance=ExtResource("4_d1j5l")]
-position = Vector2(110, 128)
-
-[node name="Slime2" parent="." instance=ExtResource("4_d1j5l")]
-position = Vector2(144, 209)
+position = Vector2(76, 203)
 
 [node name="Slime3" parent="." instance=ExtResource("4_d1j5l")]
 position = Vector2(192, 68)

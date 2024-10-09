@@ -6,10 +6,10 @@ var spawn_point : int = 0
 #Character Data
 var playerData = {
 	"Player": {
-		"MaxHP" : 30,
+		"MaxHP" : 300,
 		"MaxMP" : 2,
 		"Speed" : 10,
-		"Deck" : ["Ember","Blast","Dark","Ray","Bolt","Stone","Frost"],
+		"Deck" : ["Ember","Blast","Dark","Ray","Bolt","Heat Up","Heat Up","Heat Up"],
 		"AltDeck" : [],
 		"WeaponTypes": "Shortsword",
 		"Equipment": {

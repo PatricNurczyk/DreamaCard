@@ -6,13 +6,15 @@ var flip = false
 @onready var polygon = $Polygon
 var alpha : float = 1.0
 var shooting = false
+var modifier = false
 
 func _ready():
 	x_force = randf_range(200, 300)
 	y_force = randf_range(-100,100)
 	if flip: x_force = x_force * -1
 	await get_tree().create_timer(randf_range(0,.5)).timeout
-	$AnimationPlayer.play("shake")
+	if not modifier:
+		$AnimationPlayer.play("shake")
 	
 		
 func _physics_process(delta):

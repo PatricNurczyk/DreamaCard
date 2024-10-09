@@ -39,3 +39,9 @@ shape = SubResource("CapsuleShape2D_lc8u8")
 
 [node name="hurt" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_j5qpx")
+
+[node name="buffs" type="Node2D" parent="."]
+position = Vector2(-6.665, 10.965)
+
+[node name="debuffs" type="Node2D" parent="."]
+position = Vector2(-6.665, 18.875)

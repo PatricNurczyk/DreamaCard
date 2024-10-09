@@ -11,6 +11,12 @@ var can_walk = true
 var is_dead = false
 var in_combat = false
 var is_idle = true
+
+#effects UI
+var effects : Array 
+var buff_offset = 0
+var debuff_offset = 0
+
 #Character Stats
 @export_category("Basic Stats")
 @export var maxHP : int
@@ -131,6 +137,32 @@ func takeDamage(value: int, element: String):
 	if HP == 0:
 		is_dead = true
 		sprite.play("death") 
+	
+func add_effect(type : String, value, element : String, turns : int):
+	match type:
+		"modifier attack":
+			var mod = preload("res://Scenes/GameLogic/modifier.tscn").instantiate()
+			mod.element = element
+			mod.value = value
+			mod.turns = turns	
+			effects.push_back(mod)
+			if value > 0:
+				mod.position.x += buff_offset
+				$buffs.add_child(mod)
+				buff_offset += 8
+			else:
+				mod.position.x += debuff_offset
+				$debuffs.add_child(mod)
+				debuff_offset += 8
+			
+func check_effect_offense(damage: int, element: String):
+	for e in effects:
+		if e == null:
+			continue
+		if e.element == element:
+			damage = e.trigger_effect(damage)
+			await get_tree().create_timer(.3).timeout
+	return damage
 	
 func _on_animation_finished():
 	if sprite.animation == "attack_break":

@@ -232,7 +232,7 @@ func start_combat():
 			#body.collider.deck = PlayerInfo.playerData[body.collider.name]["Deck"]
 			combatants[-1].deck.shuffle()
 			combatants[-1].hand.clear()
-			print(combatants[-1].deck)
+			combatants[-1].MP = 0
 			past_positions.push_back(combatants[-1].position)
 			combatants[-1].get_node("CollisionShape2D").visible = false
 		elif body.collider.is_in_group("Enemy"):
@@ -474,6 +474,13 @@ func end_combat(enemies):
 	for p in past_positions:
 		combatants_position.push_back(p)
 	battle_veil_off()
+	for c in combatants:
+		for e in c.effects:
+			if e != null:
+				e.fire()
+		c.effects.clear()
+		c.buff_offset = 0
+		c.debuff_offset = 0
 	await get_tree().create_timer(1).timeout
 	for c in combatants:
 		c.z_index = 0
