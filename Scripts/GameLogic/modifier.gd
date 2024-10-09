@@ -17,7 +17,8 @@ var element : String
 var turns : int
 var modifier : String
 var value
-
+@onready var icon = $icon
+var icon_img
 
 func trigger_effect(damage : int):
 	turns -= 1
@@ -62,7 +63,8 @@ func _ready():
 		shard_scenes.push_back(shard)
 	polygon_2d.queue_free()
 	$AnimationPlayer.play("fade")
-	$repair.play()
+	$repair.play() 
+	icon.texture = icon_img
 	
 func _process(delta):
 	if is_repairing:
@@ -75,6 +77,7 @@ func fire():
 		is_firing = true
 		shatter_ready.emit()
 		$break.play()
+		icon.queue_free()
 		for s in shard_scenes:
 			s.shoot()
 

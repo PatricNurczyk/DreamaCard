@@ -15,7 +15,7 @@ height = 14.0
 [node name="Slime" type="CharacterBody2D" groups=["Enemy"]]
 z_as_relative = false
 script = ExtResource("1_67kb8")
-deck_template = Array[String](["Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost"])
+deck_template = Array[String](["Frost", "Frost", "Frost", "Frost", "Chill", "Chill"])
 maxHP = 5
 maxMP = 1
 speed = 5

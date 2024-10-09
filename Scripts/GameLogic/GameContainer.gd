@@ -81,7 +81,10 @@ func _input(event):
 		if target >= 0:
 			match(target_type):
 				0:
-					pass
+					if combatants[target].is_in_group("Enemy"):
+						cancel.play()
+						combatState = combatStates.target
+						return
 				1:
 					if combatants[target].is_in_group("Ally"):
 						cancel.play()
@@ -475,12 +478,7 @@ func end_combat(enemies):
 		combatants_position.push_back(p)
 	battle_veil_off()
 	for c in combatants:
-		for e in c.effects:
-			if e != null:
-				e.fire()
-		c.effects.clear()
-		c.buff_offset = 0
-		c.debuff_offset = 0
+		c.clean_effects()
 	await get_tree().create_timer(1).timeout
 	for c in combatants:
 		c.z_index = 0

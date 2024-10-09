@@ -14,8 +14,9 @@ var is_idle = true
 
 #effects UI
 var effects : Array 
-var buff_offset = 0
-var debuff_offset = 0
+@onready var buffs = $buffs
+@onready var debuffs = $debuffs
+var effect_offset = 10
 
 #Character Stats
 @export_category("Basic Stats")
@@ -49,6 +50,12 @@ var hand : Array[String]
 func _ready():
 	HP = maxHP
 	sprite.animation_finished.connect(_on_animation_finished)
+	
+func _process(delta):
+	for buff in buffs.get_children():
+		buff.position.x = effect_offset * buff.get_index()
+	for debuff in debuffs.get_children():
+		debuff.position.x = effect_offset * debuff.get_index()
 
 func handle_animation():
 	if in_combat:
@@ -144,25 +151,36 @@ func add_effect(type : String, value, element : String, turns : int):
 			var mod = preload("res://Scenes/GameLogic/modifier.tscn").instantiate()
 			mod.element = element
 			mod.value = value
-			mod.turns = turns	
-			effects.push_back(mod)
+			mod.turns = turns
+			var texture	
+			#effects.push_back(mod)
 			if value > 0:
-				mod.position.x += buff_offset
+				#mod.position.x += effect_offset * len($buffs.get_children())
+				texture = load("res://Assets/Icons/" + ("attack" if element == "universal" else element)  + "_Good.png")
+				mod.icon_img = texture
 				$buffs.add_child(mod)
-				buff_offset += 8
 			else:
-				mod.position.x += debuff_offset
+				#mod.position.x += effect_offset * len($debuffs.get_children())
+				texture = load("res://Assets/Icons/" + ("attack" if element == "universal" else element)  + "_Bad.png")
+				mod.icon_img = texture
 				$debuffs.add_child(mod)
-				debuff_offset += 8
 			
 func check_effect_offense(damage: int, element: String):
-	for e in effects:
-		if e == null:
-			continue
-		if e.element == element:
+	for e in buffs.get_children():
+		if e.element == element or e.element == "universal":
+			damage = e.trigger_effect(damage)
+			await get_tree().create_timer(.3).timeout
+	for e in debuffs.get_children():
+		if e.element == element or e.element == "universal":
 			damage = e.trigger_effect(damage)
 			await get_tree().create_timer(.3).timeout
 	return damage
+	
+func clean_effects():
+	for e in buffs.get_children():
+		e.fire()
+	for e in debuffs.get_children():
+		e.fire()
 	
 func _on_animation_finished():
 	if sprite.animation == "attack_break":
