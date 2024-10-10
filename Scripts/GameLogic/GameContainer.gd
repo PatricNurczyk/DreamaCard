@@ -15,7 +15,6 @@ const ENEMY_UI_READYBREAK = Vector2(-37.5,-25)
 const SPEED = 7.0
 @onready var screen_dim = $CanvasLayer/AnimationPlayer
 @onready var camera = $Camera
-@onready var animation_player = $CardUI/AnimationPlayer
 @onready var combat_text = $"Initiative Tracker/CombatText"
 var text_combat : String = ""
 var player : CharacterBody2D
@@ -147,7 +146,7 @@ func _process(delta):
 		battle_music.volume_db = move_toward(battle_music.volume_db, -15, 40 * delta)
 		for i in range(len(combatants)):
 			var t = delta * SPEED
-			combatants[i].position = lerp(combatants[i].position, combatants_position[i],t)
+			combatants[i].global_position = lerp(combatants[i].global_position, combatants_position[i],t)
 		if combatState == combatStates.allyTurn:
 			pass_ui.scale = lerp(pass_ui.scale, Vector2(1,1), 20 * delta)
 			pass_ui.position = lerp(pass_ui.position, UI_PASS, 20 * delta)

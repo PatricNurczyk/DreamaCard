@@ -20,11 +20,10 @@ var value
 @onready var icon = $icon
 var icon_img
 
-func trigger_effect(damage : int):
-	var mod = 1 + value
+func trigger_effect():
 	if turns <= 0:
 		fire()
-	return damage * mod
+	return value
 
 
 func _ready():

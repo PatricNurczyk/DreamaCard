@@ -180,12 +180,13 @@ func add_effect(type : String, value, element : String, turns : int, custom_icon
 			
 func check_effect_offense(damage: int, element: String):
 	effect_check = true
+	var totalMod = 1
 	for e in buffs.get_children():
 		if e.element == element or e.element == "universal":
-			damage = e.trigger_effect(damage)
+			totalMod += e.trigger_effect()
 			await get_tree().create_timer(.2).timeout
 	effect_check = false
-	return damage
+	return damage * totalMod
 	
 func clean_effects():
 	for e in buffs.get_children():
