@@ -23,6 +23,11 @@ func enemy_choice(combatants):
 					choice["action"] = "Chill"
 					discard = c
 					break
+			"Cooldown":
+				if randi()%2 == 0:
+					choice["action"] = "Cooldown"
+					discard = c
+					break
 			"Frost":
 				if MP > 0:
 					choice["action"] = "Frost"
@@ -46,6 +51,9 @@ func enemy_choice(combatants):
 					if combatants[c].HP > highHP:
 						choice["target"] = c
 						highHP = combatants[c].HP
+			"Cooldown":
+				if combatants[c].is_in_group("Enemy") and not combatants[c].is_dead:
+					choice["target"] = c
 	if discard >= 0:
 		hand.pop_at(discard)
 	return choice

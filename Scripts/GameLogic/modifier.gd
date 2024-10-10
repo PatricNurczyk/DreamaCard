@@ -21,9 +21,8 @@ var value
 var icon_img
 
 func trigger_effect(damage : int):
-	turns -= 1
 	var mod = 1 + value
-	if turns < 0:
+	if turns <= 0:
 		fire()
 	return damage * mod
 
@@ -63,7 +62,7 @@ func _ready():
 		shard_scenes.push_back(shard)
 	polygon_2d.queue_free()
 	$AnimationPlayer.play("fade")
-	$repair.play() 
+	$repair.play(.4) 
 	icon.texture = icon_img
 	await get_tree().create_timer(.1).timeout
 	is_repairing = true

@@ -9,7 +9,7 @@ var playerData = {
 		"MaxHP" : 300,
 		"MaxMP" : 2,
 		"Speed" : 10,
-		"Deck" : ["Ember","Bolt","Heat Up","Heat Up","Heat Up","Heat Up","Heat Up","Heat Up","Heat Up","Heat Up","Heat Up","Heat Up","Heat Up","Heat Up","Heat Up"],
+		"Deck" : ["Ember","Dark","Frost","Stone", "Heat Up","Antimatter","Cooldown","Growth","Heat Up"],
 		"AltDeck" : [],
 		"WeaponTypes": "Shortsword",
 		"Equipment": {

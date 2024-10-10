@@ -150,6 +150,8 @@ func takeDamage(value: int, element: String):
 	if HP == 0:
 		is_dead = true
 		sprite.play("death") 
+		for e in buffs.get_children():
+			e.fire()
 	
 func add_effect(type : String, value, element : String, turns : int, custom_icon : String = ""):
 	match type:

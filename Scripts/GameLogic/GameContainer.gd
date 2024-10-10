@@ -450,7 +450,7 @@ func enemy_turn():
 		var card_script = card.card_script.new()
 		match(t_type):
 			0:
-				pass
+				card_script.execute_action(self)
 			1:
 				card_script.execute_action(self)
 			2: 

@@ -9,6 +9,6 @@ func discard():
 func execute_action(container):
 	container.camera.position = container.battleground.position
 	container.camera_zoom = 4.5
-	container.combatants[container.target].add_effect("modifier attack", -.25, "universal", 0)
+	container.combatants[container.target].add_effect("modifier attack", .35, "void", 0)
 	await container.get_tree().create_timer(.75).timeout
 	container.action_completed.emit()
