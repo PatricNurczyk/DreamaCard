@@ -10,7 +10,6 @@ var mp_cost: int = 0
 @export var element : String
 var card_instance
 var no_hover = false
-@onready var animation_player = $AnimationPlayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

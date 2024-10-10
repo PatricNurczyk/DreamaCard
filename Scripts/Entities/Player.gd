@@ -30,4 +30,6 @@ func _physics_process(delta):
 
 func _on_area_2d_area_entered(area):
 	if area.is_in_group("Enemy"):
+		velocity = Vector2.ZERO
+		sprite.speed_scale = 1
 		get_parent().start_combat()

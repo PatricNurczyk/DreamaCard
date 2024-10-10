@@ -35,9 +35,6 @@ shape = SubResource("CapsuleShape2D_yokoc")
 stream = ExtResource("3_aw5ii")
 
 [node name="buffs" type="Node2D" parent="."]
-position = Vector2(-6.665, 9.555)
-
-[node name="debuffs" type="Node2D" parent="."]
-position = Vector2(-6.665, 16.3)
+position = Vector2(-14.52, 9.555)
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

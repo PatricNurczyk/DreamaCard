@@ -44,4 +44,4 @@ stream = ExtResource("3_j5qpx")
 position = Vector2(-6.665, 10.965)
 
 [node name="debuffs" type="Node2D" parent="."]
-position = Vector2(-6.665, 18.875)
+position = Vector2(-7, 26)

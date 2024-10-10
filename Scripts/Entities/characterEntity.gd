@@ -15,7 +15,7 @@ var is_idle = true
 #effects UI
 var effects : Array 
 @onready var buffs = $buffs
-@onready var debuffs = $debuffs
+var effect_check = false
 var effect_offset = 10
 
 #Character Stats
@@ -52,10 +52,16 @@ func _ready():
 	sprite.animation_finished.connect(_on_animation_finished)
 	
 func _process(delta):
-	for buff in buffs.get_children():
-		buff.position.x = effect_offset * buff.get_index()
-	for debuff in debuffs.get_children():
-		debuff.position.x = effect_offset * debuff.get_index()
+	if not effect_check:
+		for buff in buffs.get_children():
+			if buff.get_index() < 12:
+				buff.new_pos.x = effect_offset * (buff.get_index()%4)
+				buff.new_pos.y = 15 * floor(buff.get_index()/4)
+			else:
+				buff.new_pos.x = effect_offset * 3
+				buff.new_pos.y = 15 * 2
+	#for debuff in debuffs.get_children():
+		#debuff.position.x = effect_offset * debuff.get_index()
 
 func handle_animation():
 	if in_combat:
@@ -145,7 +151,7 @@ func takeDamage(value: int, element: String):
 		is_dead = true
 		sprite.play("death") 
 	
-func add_effect(type : String, value, element : String, turns : int):
+func add_effect(type : String, value, element : String, turns : int, custom_icon : String = ""):
 	match type:
 		"modifier attack":
 			var mod = preload("res://Scenes/GameLogic/modifier.tscn").instantiate()
@@ -156,30 +162,31 @@ func add_effect(type : String, value, element : String, turns : int):
 			#effects.push_back(mod)
 			if value > 0:
 				#mod.position.x += effect_offset * len($buffs.get_children())
-				texture = load("res://Assets/Icons/" + ("attack" if element == "universal" else element)  + "_Good.png")
-				mod.icon_img = texture
-				$buffs.add_child(mod)
+				texture = load("res://Assets/Icons/attack_Good.png")
 			else:
 				#mod.position.x += effect_offset * len($debuffs.get_children())
-				texture = load("res://Assets/Icons/" + ("attack" if element == "universal" else element)  + "_Bad.png")
-				mod.icon_img = texture
-				$debuffs.add_child(mod)
+				texture = load("res://Assets/Icons/attack_Bad.png")
+			mod.icon_img = texture
+			var length = len(buffs.get_children())
+			if length < 12:
+				mod.position.x = effect_offset * (length%4)
+				mod.position.y = 15 * floor(length/4)
+			else:
+				mod.position.x = effect_offset * 3 
+				mod.position.y = 15 * 2
+			$buffs.add_child(mod)
 			
 func check_effect_offense(damage: int, element: String):
+	effect_check = true
 	for e in buffs.get_children():
 		if e.element == element or e.element == "universal":
 			damage = e.trigger_effect(damage)
-			await get_tree().create_timer(.3).timeout
-	for e in debuffs.get_children():
-		if e.element == element or e.element == "universal":
-			damage = e.trigger_effect(damage)
-			await get_tree().create_timer(.3).timeout
+			await get_tree().create_timer(.2).timeout
+	effect_check = false
 	return damage
 	
 func clean_effects():
 	for e in buffs.get_children():
-		e.fire()
-	for e in debuffs.get_children():
 		e.fire()
 	
 func _on_animation_finished():

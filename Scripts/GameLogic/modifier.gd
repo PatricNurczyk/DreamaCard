@@ -5,14 +5,14 @@ var shatter : PolygonFracture
 var shards : Array
 var shard_scenes : Array
 var shardScene = preload("res://Scenes/GameLogic/Shard.tscn")
-var shard_color : Color = Color(1,1,1,1)
+var shard_color : Color = Color(.6,.6,.6,1)
 var invert = false
 signal shatter_ready
 signal done
-var is_repairing = true
+var is_repairing = false
 var is_firing = false
 
-
+var new_pos : Vector2
 var element : String
 var turns : int
 var modifier : String
@@ -32,7 +32,7 @@ func _ready():
 	$break.pitch_scale = randf_range(1.5,2)
 	$repair.pitch_scale = randf_range(1.0,1.5)
 	shatter = PolygonFracture.new()
-	shards = shatter.fractureDelaunayRectangle(polygon_2d.polygon,polygon_2d.global_transform,20,1)
+	shards = shatter.fractureDelaunay(polygon_2d.polygon,polygon_2d.global_transform,20,1)
 	var color_shard
 	match (element):
 		"fire":
@@ -65,13 +65,17 @@ func _ready():
 	$AnimationPlayer.play("fade")
 	$repair.play() 
 	icon.texture = icon_img
+	await get_tree().create_timer(.1).timeout
+	is_repairing = true
 	
 func _process(delta):
+	position.x = move_toward(position.x, new_pos.x, delta * 100)
+	position.y = move_toward(position.y, new_pos.y, delta * 100)
 	if is_repairing:
 		for s in shard_scenes:
 			#s.position = lerp(s.position, Vector2.ZERO, delta * 6.5)
-			s.position.x = move_toward(s.position.x,0,delta * 150)
-			s.position.y = move_toward(s.position.y,0,delta * 150)
+			s.position.x = move_toward(s.position.x,0,delta * 200)
+			s.position.y = move_toward(s.position.y,0,delta * 200)
 func fire():
 	if not is_firing:
 		is_firing = true
@@ -84,9 +88,10 @@ func fire():
 func _on_animation_player_animation_finished(anim_name):
 	pass
 
-func _on_audio_stream_player_2d_finished():
-	queue_free()
-
 
 func _on_repair_finished():
 	is_repairing = false
+
+
+func _on_break_finished():
+	queue_free()
