@@ -18,6 +18,16 @@ func enemy_choice(combatants):
 	#Choosing Card
 	for c in range(len(hand)):
 		match(hand[c]):
+			"Chill":
+				if randi()%2 == 0:
+					choice["action"] = "Chill"
+					discard = c
+					break
+			"Cooldown":
+				if randi()%2 == 0:
+					choice["action"] = "Cooldown"
+					discard = c
+					break
 			"Frost":
 				if MP > 0:
 					choice["action"] = "Frost"
@@ -25,15 +35,29 @@ func enemy_choice(combatants):
 					break
 	
 	#Choosing Target
-	for c in range(len(combatants)):
-		match(choice["action"]):
-			"Frost":
+	match(choice["action"]):
+		"Frost":
+			for c in range(len(combatants)):
 				#Enemy will find the character with the highest HP and attack them
 				var highHP = 0
 				if combatants[c].is_in_group("Ally"):
 					if combatants[c].HP > highHP:
 						choice["target"] = c
 						highHP = combatants[c].HP
+		"Chill":
+			for c in range(len(combatants)):
+				#Enemy will find the character with the highest HP and attack them
+				var highHP = 0
+				if combatants[c].is_in_group("Ally"):
+					if combatants[c].HP > highHP:
+						choice["target"] = c
+						highHP = combatants[c].HP
+		"Cooldown":
+			var target = []
+			for c in range(len(combatants)):
+				if combatants[c].is_in_group("Enemy") and not combatants[c].is_dead:
+					target.push_back(c)
+			choice["target"] = target[randi_range(0,len(target) - 1)]
 	if discard >= 0:
 		hand.pop_at(discard)
 	return choice

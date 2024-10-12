@@ -15,7 +15,7 @@ height = 14.0
 [node name="Slime" type="CharacterBody2D" groups=["Enemy"]]
 z_as_relative = false
 script = ExtResource("1_67kb8")
-deck_template = Array[String](["Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost"])
+deck_template = Array[String](["Frost", "Frost", "Frost", "Cooldown", "Chill", "Chill", "Cooldown"])
 maxHP = 5
 maxMP = 1
 speed = 5
@@ -39,3 +39,9 @@ shape = SubResource("CapsuleShape2D_lc8u8")
 
 [node name="hurt" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_j5qpx")
+
+[node name="buffs" type="Node2D" parent="."]
+position = Vector2(-6.665, 10.965)
+
+[node name="debuffs" type="Node2D" parent="."]
+position = Vector2(-7, 26)

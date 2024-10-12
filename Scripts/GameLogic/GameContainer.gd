@@ -15,7 +15,6 @@ const ENEMY_UI_READYBREAK = Vector2(-37.5,-25)
 const SPEED = 7.0
 @onready var screen_dim = $CanvasLayer/AnimationPlayer
 @onready var camera = $Camera
-@onready var animation_player = $CardUI/AnimationPlayer
 @onready var combat_text = $"Initiative Tracker/CombatText"
 var text_combat : String = ""
 var player : CharacterBody2D
@@ -51,6 +50,7 @@ var target : int = -1
 var target_type : int = -1
 var past_positions : Array = []
 var shatter
+var acc_result
 var pause_position  : float = 0
 # Called when the node enters the scene tree for the first time.
 signal action_completed
@@ -81,7 +81,10 @@ func _input(event):
 		if target >= 0:
 			match(target_type):
 				0:
-					pass
+					if combatants[target].is_in_group("Enemy"):
+						cancel.play()
+						combatState = combatStates.target
+						return
 				1:
 					if combatants[target].is_in_group("Ally"):
 						cancel.play()
@@ -114,6 +117,8 @@ func _input(event):
 					card_ui.get_child(c).queue_free()
 			print(card_select)
 			if card_select > 0:
+				if not acc_result:
+					combatants[currTurn].deck.push_back(combatants[currTurn].hand[card_select - 1])
 				combatants[currTurn].hand.pop_at(card_select - 1)
 			target = -1
 			hand_ui = []
@@ -124,10 +129,12 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+
 	combat_text.text = "[center][font_size=60]" + text_combat + "[/font_size][/center]"
 	camera.zoom = camera.zoom.lerp(Vector2(camera_zoom,camera_zoom), 3 * delta)
 	battle_veil.scale = battle_veil.scale.lerp(Vector2(veilSize,veilSize), 10 * delta)
-	
+	for c in combatants:
+		c.velocity = Vector2.ZERO
 	for c in range(len(init_ui)):
 		init_ui[c].maxHP = combatants[c].maxHP
 		init_ui[c].maxMP = combatants[c].maxMP
@@ -144,7 +151,7 @@ func _process(delta):
 		battle_music.volume_db = move_toward(battle_music.volume_db, -15, 40 * delta)
 		for i in range(len(combatants)):
 			var t = delta * SPEED
-			combatants[i].position = lerp(combatants[i].position, combatants_position[i],t)
+			combatants[i].global_position = lerp(combatants[i].global_position, combatants_position[i],t)
 		if combatState == combatStates.allyTurn:
 			pass_ui.scale = lerp(pass_ui.scale, Vector2(1,1), 20 * delta)
 			pass_ui.position = lerp(pass_ui.position, UI_PASS, 20 * delta)
@@ -232,7 +239,7 @@ func start_combat():
 			#body.collider.deck = PlayerInfo.playerData[body.collider.name]["Deck"]
 			combatants[-1].deck.shuffle()
 			combatants[-1].hand.clear()
-			print(combatants[-1].deck)
+			combatants[-1].MP = 0
 			past_positions.push_back(combatants[-1].position)
 			combatants[-1].get_node("CollisionShape2D").visible = false
 		elif body.collider.is_in_group("Enemy"):
@@ -281,6 +288,8 @@ func find_next():
 	for i in range(len(initiative)):
 		if combatants[i].is_dead:
 			initiative[i] = 100
+			for e in combatants[i].buffs.get_children():
+				e.fire()
 		else:
 			initiative[i] -= min_init
 		init_ui[i].initiative = 100 - initiative[i]
@@ -340,6 +349,8 @@ func ally_turn():
 		hand_ui.push_back(cardbutton)
 	for c in hand_ui:
 		c.scale = Vector2.ZERO
+		if combatants[currTurn].MP < c.mpCost:
+			c.grey_out()
 		card_ui.add_child(c)
 	card_ui.move_child(pass_ui,-1)
 	await get_tree().create_timer(.5).timeout
@@ -374,6 +385,16 @@ func select_target(node_index):
 			shatter.shard_color = Color("ff5b17")
 		"frost":
 			shatter.shard_color = Color("11ffff")
+		"earth":
+			shatter.shard_color = Color('3a5f00')
+		"lightning":
+			shatter.shard_color = Color("c8ba00")
+		"void":
+			shatter.shard_color = Color("#8e43f7")
+		"light":
+			shatter.shard_color = Color("#f5ff69")
+		"arcane":
+			shatter.shard_color = Color("#4fffbe")
 	shatter.position = UI_READYBREAK + Vector2(15.5,23)
 	card_ui.add_child(shatter)
 	await shatter.shatter_ready
@@ -410,6 +431,16 @@ func enemy_turn():
 				shatter.shard_color = Color("ff5b17")
 			"frost":
 				shatter.shard_color = Color("11ffff")
+			"earth":
+				shatter.shard_color = Color('3a5f00')
+			"lightning":
+				shatter.shard_color = Color("c8ba00")
+			"void":
+				shatter.shard_color = Color("#8e43f7")
+			"light":
+				shatter.shard_color = Color("#f5ff69")
+			"arcane":
+				shatter.shard_color = Color("#4fffbe")
 		shatter.position = Vector2(15.5,23)
 		shatter.invert = true
 		combatants[currTurn].add_child(card)
@@ -427,7 +458,7 @@ func enemy_turn():
 		var card_script = card.card_script.new()
 		match(t_type):
 			0:
-				pass
+				card_script.execute_action(self)
 			1:
 				card_script.execute_action(self)
 			2: 
@@ -444,6 +475,8 @@ func enemy_turn():
 
 func end_combat(enemies):
 	camera.position = battleground.position
+	camera_zoom = 5
+	await get_tree().create_timer(.5).timeout
 	for e in enemies:
 		combatants.erase(e)
 		e.queue_free()
@@ -454,6 +487,8 @@ func end_combat(enemies):
 	for p in past_positions:
 		combatants_position.push_back(p)
 	battle_veil_off()
+	for c in combatants:
+		c.clean_effects()
 	await get_tree().create_timer(1).timeout
 	for c in combatants:
 		c.z_index = 0

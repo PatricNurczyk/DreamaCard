@@ -11,6 +11,13 @@ var can_walk = true
 var is_dead = false
 var in_combat = false
 var is_idle = true
+
+#effects UI
+var effects : Array 
+@onready var buffs = $buffs
+var effect_check = false
+var effect_offset = 10
+
 #Character Stats
 @export_category("Basic Stats")
 @export var maxHP : int
@@ -43,6 +50,18 @@ var hand : Array[String]
 func _ready():
 	HP = maxHP
 	sprite.animation_finished.connect(_on_animation_finished)
+	
+func _process(delta):
+	if not effect_check:
+		for buff in buffs.get_children():
+			if buff.get_index() < 12:
+				buff.new_pos.x = effect_offset * (buff.get_index()%4)
+				buff.new_pos.y = 15 * floor(buff.get_index()/4)
+			else:
+				buff.new_pos.x = effect_offset * 3
+				buff.new_pos.y = 15 * 2
+	#for debuff in debuffs.get_children():
+		#debuff.position.x = effect_offset * debuff.get_index()
 
 func handle_animation():
 	if in_combat:
@@ -131,6 +150,57 @@ func takeDamage(value: int, element: String):
 	if HP == 0:
 		is_dead = true
 		sprite.play("death") 
+		for e in buffs.get_children():
+			e.fire()
+	
+func add_effect(type : String, value, element : String, turns : int, custom_icon : String = ""):
+	match type:
+		"modifier attack":
+			var mod = preload("res://Scenes/GameLogic/modifier.tscn").instantiate()
+			mod.element = element
+			mod.value = value
+			mod.turns = turns
+			mod.type = "offense"
+			var texture	
+			#effects.push_back(mod)
+			if value > 0:
+				#mod.position.x += effect_offset * len($buffs.get_children())
+				texture = load("res://Assets/Icons/attack_Good.png")
+			else:
+				#mod.position.x += effect_offset * len($debuffs.get_children())
+				texture = load("res://Assets/Icons/attack_Bad.png")
+			mod.icon_img = texture
+			var length = len(buffs.get_children())
+			if length < 12:
+				mod.position.x = effect_offset * (length%4)
+				mod.position.y = 15 * floor(length/4)
+			else:
+				mod.position.x = effect_offset * 3 
+				mod.position.y = 15 * 2
+			$buffs.add_child(mod)
+			
+func check_accuracy(accuracy : int, element: String):
+	effect_check = true
+	for e in buffs.get_children():
+		if e.type == "accuracy" and (e.element == element or e.element == "universal"):
+			accuracy += e.trigger_effect()
+			await get_tree().create_timer(.2).timeout
+	effect_check = false
+	return accuracy
+			
+func check_effect_offense(damage: int, element: String):
+	effect_check = true
+	var totalMod = 1
+	for e in buffs.get_children():
+		if e.type == "offense" and (e.element == element or e.element == "universal"):
+			totalMod += e.trigger_effect()
+			await get_tree().create_timer(.2).timeout
+	effect_check = false
+	return damage * totalMod
+	
+func clean_effects():
+	for e in buffs.get_children():
+		e.fire()
 	
 func _on_animation_finished():
 	if sprite.animation == "attack_break":

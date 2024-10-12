@@ -10,6 +10,7 @@ var invert = false
 signal shatter_ready
 signal done
 
+
 func _ready():
 	$AudioStreamPlayer2D.pitch_scale = randf_range(1,1.2)
 	shatter = PolygonFracture.new()
@@ -39,7 +40,6 @@ func fire():
 
 func _on_animation_player_animation_finished(anim_name):
 	pass
-
 
 func _on_audio_stream_player_2d_finished():
 	queue_free()
