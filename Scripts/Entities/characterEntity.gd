@@ -160,6 +160,7 @@ func add_effect(type : String, value, element : String, turns : int, custom_icon
 			mod.element = element
 			mod.value = value
 			mod.turns = turns
+			mod.type = "offense"
 			var texture	
 			#effects.push_back(mod)
 			if value > 0:
@@ -178,11 +179,20 @@ func add_effect(type : String, value, element : String, turns : int, custom_icon
 				mod.position.y = 15 * 2
 			$buffs.add_child(mod)
 			
+func check_accuracy(accuracy : int, element: String):
+	effect_check = true
+	for e in buffs.get_children():
+		if e.type == "accuracy" and (e.element == element or e.element == "universal"):
+			accuracy += e.trigger_effect()
+			await get_tree().create_timer(.2).timeout
+	effect_check = false
+	return accuracy
+			
 func check_effect_offense(damage: int, element: String):
 	effect_check = true
 	var totalMod = 1
 	for e in buffs.get_children():
-		if e.element == element or e.element == "universal":
+		if e.type == "offense" and (e.element == element or e.element == "universal"):
 			totalMod += e.trigger_effect()
 			await get_tree().create_timer(.2).timeout
 	effect_check = false

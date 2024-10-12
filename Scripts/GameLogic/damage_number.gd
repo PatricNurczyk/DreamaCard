@@ -13,7 +13,10 @@ var color : Color
 var altColor : Color
 
 func _ready():
-	label.text = str(number)
+	if number == -1:
+		label.text = "Miss"
+	else:
+		label.text = str(number)
 	velocity.y = JUMP_VELOCITY
 	velocity.x = rng.randf_range(-50.0, 50.0)
 	label.set("theme_override_colors/font_color",Color(color))

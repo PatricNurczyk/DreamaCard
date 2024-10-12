@@ -17,6 +17,7 @@ var element : String
 var turns : int
 var modifier : String
 var value
+var type
 @onready var icon = $icon
 var icon_img
 

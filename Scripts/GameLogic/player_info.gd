@@ -6,10 +6,11 @@ var spawn_point : int = 0
 #Character Data
 var playerData = {
 	"Player": {
-		"MaxHP" : 300,
+		"MaxHP" : 30,
 		"MaxMP" : 2,
 		"Speed" : 10,
-		"Deck" : ["Ember","Dark","Frost","Stone", "Heat Up","Antimatter","Cooldown","Growth","Heat Up"],
+		"Deck" : ["Ember","Dark","Frost","Stone","Quake", "Heat Up","Antimatter","Cooldown","Growth","Heat Up"],
+		#"Deck" : ["Dark","Dark","Dark","Antimatter","Antimatter","Antimatter"],
 		#"Deck" : ["Ember","Dark","Frost","Stone", "Heat Up","Heat Up", "Heat Up","Heat Up", "Heat Up","Heat Up", "Heat Up","Heat Up", "Heat Up","Heat Up", "Heat Up","Heat Up"],
 		"AltDeck" : [],
 		"WeaponTypes": "Shortsword",

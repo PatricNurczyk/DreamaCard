@@ -50,6 +50,7 @@ var target : int = -1
 var target_type : int = -1
 var past_positions : Array = []
 var shatter
+var acc_result
 var pause_position  : float = 0
 # Called when the node enters the scene tree for the first time.
 signal action_completed
@@ -116,6 +117,8 @@ func _input(event):
 					card_ui.get_child(c).queue_free()
 			print(card_select)
 			if card_select > 0:
+				if not acc_result:
+					combatants[currTurn].deck.push_back(combatants[currTurn].hand[card_select - 1])
 				combatants[currTurn].hand.pop_at(card_select - 1)
 			target = -1
 			hand_ui = []
@@ -126,10 +129,12 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+
 	combat_text.text = "[center][font_size=60]" + text_combat + "[/font_size][/center]"
 	camera.zoom = camera.zoom.lerp(Vector2(camera_zoom,camera_zoom), 3 * delta)
 	battle_veil.scale = battle_veil.scale.lerp(Vector2(veilSize,veilSize), 10 * delta)
-	
+	for c in combatants:
+		c.velocity = Vector2.ZERO
 	for c in range(len(init_ui)):
 		init_ui[c].maxHP = combatants[c].maxHP
 		init_ui[c].maxMP = combatants[c].maxMP
@@ -283,6 +288,8 @@ func find_next():
 	for i in range(len(initiative)):
 		if combatants[i].is_dead:
 			initiative[i] = 100
+			for e in combatants[i].buffs.get_children():
+				e.fire()
 		else:
 			initiative[i] -= min_init
 		init_ui[i].initiative = 100 - initiative[i]
@@ -342,6 +349,8 @@ func ally_turn():
 		hand_ui.push_back(cardbutton)
 	for c in hand_ui:
 		c.scale = Vector2.ZERO
+		if combatants[currTurn].MP < c.mpCost:
+			c.grey_out()
 		card_ui.add_child(c)
 	card_ui.move_child(pass_ui,-1)
 	await get_tree().create_timer(.5).timeout
@@ -466,6 +475,8 @@ func enemy_turn():
 
 func end_combat(enemies):
 	camera.position = battleground.position
+	camera_zoom = 5
+	await get_tree().create_timer(.5).timeout
 	for e in enemies:
 		combatants.erase(e)
 		e.queue_free()

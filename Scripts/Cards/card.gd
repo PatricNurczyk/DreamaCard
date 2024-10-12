@@ -10,6 +10,7 @@ var mp_cost: int = 0
 @export var element : String
 var card_instance
 var no_hover = false
+var greyed = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -43,6 +44,14 @@ func cancel():
 	disabled = false
 	z_index = 0
 	
+func grey_out():
+	$Card.modulate = Color("3b3b3b")
+	greyed = true
+	
+func color_in():
+	$Card.modulate = Color("ffffff")
+	greyed = false
+	
 func execute_action(container):
 	card_instance.execute_action(container)
 	
@@ -51,6 +60,7 @@ func _on_gui_input(event):
 		if event is InputEventMouseButton and event.pressed:
 			match event.button_index:
 				MOUSE_BUTTON_LEFT:
-					card_instance.select_card(self)
+					if not greyed:
+						card_instance.select_card(self)
 				MOUSE_BUTTON_RIGHT:
 					card_instance.discard()
