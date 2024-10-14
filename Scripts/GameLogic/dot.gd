@@ -94,7 +94,7 @@ func fire():
 		shatter_ready.emit()
 		$break.play()
 		for s in shard_scenes:
-			s.shoot()
+			s.flare()
 
 
 
