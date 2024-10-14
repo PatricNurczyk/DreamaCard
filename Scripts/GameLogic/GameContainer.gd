@@ -290,6 +290,8 @@ func find_next():
 			initiative[i] = 100
 			for e in combatants[i].buffs.get_children():
 				e.fire()
+			for e in combatants[i].dots.get_children():
+				e.fire()
 		else:
 			initiative[i] -= min_init
 		init_ui[i].initiative = 100 - initiative[i]
@@ -327,9 +329,17 @@ func next_turn():
 	camera_zoom = 5
 	if combatants[currTurn].is_in_group("Ally"):
 		camera.position = combatants[currTurn].position + Vector2(0,-20)
+		await combatants[currTurn].check_turn()
+		if combatants[currTurn].is_dead:
+			next_turn()
+			return
 		ally_turn()
 	else:
 		camera.position = combatants[currTurn].position + Vector2(0,-10)
+		await combatants[currTurn].check_turn()
+		if combatants[currTurn].is_dead:
+			next_turn()
+			return
 		enemy_turn()
 		
 func draw_card(character):

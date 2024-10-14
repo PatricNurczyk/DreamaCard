@@ -7,6 +7,7 @@ var flip = false
 var alpha : float = 1.0
 var shooting = false
 var modifier = false
+var speed : float = 5.0
 
 func _ready():
 	x_force = randf_range(200, 300)
@@ -18,13 +19,24 @@ func _ready():
 	
 		
 func _physics_process(delta):
-	if shooting: alpha = move_toward(alpha, 0, 5 * delta)
+	if shooting: alpha = move_toward(alpha, 0, speed * delta)
 	modulate = Color(modulate, alpha)
 	if alpha == 0:
 		queue_free()
 	move_and_slide()
+	
+func flare():
+	#$AnimationPlayer.play("flare")
+	$AnimationPlayer.stop()
+	velocity += Vector2(0,-abs(y_force))
+	shooting = true
 
 func shoot():
 	$AnimationPlayer.stop()
 	velocity += Vector2(x_force,y_force)
 	shooting = true
+
+
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name == "flare":
+		$AnimationPlayer.play("shake")
