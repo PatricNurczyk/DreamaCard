@@ -15,6 +15,7 @@ var is_idle = true
 #effects UI
 var effects : Array 
 @onready var buffs = $buffs
+@onready var dots = $dots
 var effect_check = false
 var effect_offset = 10
 
@@ -152,6 +153,16 @@ func takeDamage(value: int, element: String):
 		sprite.play("death") 
 		for e in buffs.get_children():
 			e.fire()
+		for d in dots.get_children():
+			d.fire()
+			
+func heal(value: int):
+	var h_num = load("res://Scenes/GameLogic/heal_number.tscn")
+	h_num = h_num.instantiate()
+	h_num.number = value
+	h_num.position += Vector2(0,-5)
+	add_child(h_num)
+	HP = min(HP + value, maxHP)
 	
 func add_effect(type : String, value, element : String, turns : int, custom_icon : String = ""):
 	match type:
@@ -178,6 +189,25 @@ func add_effect(type : String, value, element : String, turns : int, custom_icon
 				mod.position.x = effect_offset * 3 
 				mod.position.y = 15 * 2
 			$buffs.add_child(mod)
+
+func add_dot(damage : int, element: String, turns : int):
+	var mod = preload("res://Scenes/GameLogic/dot.tscn").instantiate()
+	mod.element = element
+	mod.value = damage
+	mod.turns = turns
+	$dots.add_child(mod)
+	
+func check_turn():
+	effect_check = true
+	for d in dots.get_children():
+		d.trigger_effect()
+		await get_tree().create_timer(.2).timeout
+	for e in buffs.get_children():
+		if e.turns > 0:
+			e.turns -= 1
+			await get_tree().create_timer(.2).timeout
+	effect_check = false
+	await get_tree().create_timer(.1).timeout
 			
 func check_accuracy(accuracy : int, element: String):
 	effect_check = true
@@ -197,10 +227,22 @@ func check_effect_offense(damage: int, element: String):
 			await get_tree().create_timer(.2).timeout
 	effect_check = false
 	return damage * totalMod
+
+func check_effect_heal(heal: int):
+	effect_check = true
+	var totalMod = 1
+	for e in buffs.get_children():
+		if e.type == "heal":
+			totalMod += e.trigger_effect()
+			await get_tree().create_timer(.2).timeout
+	effect_check = false
+	return heal * totalMod
 	
 func clean_effects():
 	for e in buffs.get_children():
 		e.fire()
+	for d in dots.get_children():
+		d.fire()
 	
 func _on_animation_finished():
 	if sprite.animation == "attack_break":

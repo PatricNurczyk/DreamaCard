@@ -1,0 +1,43 @@
+[gd_scene load_steps=9 format=3 uid="uid://c31g4dovi375v"]
+
+[ext_resource type="Script" path="res://Scripts/Cards/card.gd" id="1_0u056"]
+[ext_resource type="Script" path="res://Scripts/Cards/heal.gd" id="2_yvbet"]
+[ext_resource type="Texture2D" uid="uid://q22jgxbwr4vj" path="res://Assets/Card/Heal.png" id="3_c5nbl"]
+[ext_resource type="AudioStream" uid="uid://cmcelkb8gcdpl" path="res://Sounds/Sound_Effects/flipcard.wav" id="4_miqbx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4tin5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qqn4e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b5epm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8rv6h"]
+
+[node name="Heal" type="Button"]
+offset_left = -15.495
+offset_top = -23.16
+offset_right = 15.505
+offset_bottom = 22.84
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4tin5")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_qqn4e")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_b5epm")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8rv6h")
+action_mode = 0
+icon_alignment = 1
+script = ExtResource("1_0u056")
+card_script = ExtResource("2_yvbet")
+SkillName = "Heal"
+mpCost = 1
+element = "light"
+
+[node name="Card" type="Sprite2D" parent="."]
+position = Vector2(15.415, 23.045)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_c5nbl")
+
+[node name="hover" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_miqbx")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
