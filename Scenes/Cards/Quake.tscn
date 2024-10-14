@@ -30,6 +30,7 @@ target_type = 2
 SkillName = "Quake"
 mpCost = 2
 element = "earth"
+discardable = true
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)

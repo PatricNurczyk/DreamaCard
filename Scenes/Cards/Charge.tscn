@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://1cxygkxmvfa3"]
+[gd_scene load_steps=9 format=3 uid="uid://1cxygkxmvfa3"]
 
 [ext_resource type="Script" path="res://Scripts/Cards/card.gd" id="1_fif24"]
 [ext_resource type="Script" path="res://Scripts/Cards/charge.gd" id="2_i5vmw"]
@@ -12,44 +12,6 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b5epm"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8rv6h"]
-
-[sub_resource type="Animation" id="Animation_jbqrp"]
-resource_name = "Card Shake"
-length = 3.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Card:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [0.0, 0.0872665, 0.174533, 0.0872665, 0.0, -0.0872665, -0.174533, -0.0872665, 0.0]
-}
-
-[sub_resource type="Animation" id="Animation_wb8tk"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Card:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_cjjkq"]
-_data = {
-"Card Shake": SubResource("Animation_jbqrp"),
-"RESET": SubResource("Animation_wb8tk")
-}
 
 [node name="Charge" type="Button"]
 offset_left = -15.495
@@ -66,6 +28,7 @@ script = ExtResource("1_fif24")
 card_script = ExtResource("2_i5vmw")
 SkillName = "Charge"
 element = "lightning"
+discardable = true
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)
@@ -74,12 +37,6 @@ texture = ExtResource("3_8cwxj")
 
 [node name="hover" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_46eba")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_cjjkq")
-}
-speed_scale = 3.0
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

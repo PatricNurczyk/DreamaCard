@@ -155,6 +155,14 @@ func _process(delta):
 		if combatState == combatStates.allyTurn:
 			pass_ui.scale = lerp(pass_ui.scale, Vector2(1,1), 20 * delta)
 			pass_ui.position = lerp(pass_ui.position, UI_PASS, 20 * delta)
+			var idx = 0
+			while idx < len(hand_ui):
+				if hand_ui[idx].discarded:
+					hand_ui.pop_at(idx)
+					combatants[currTurn].hand.pop_at(idx - 1)
+					print(combatants[currTurn].hand)
+				else:
+					idx += 1
 			for i in range(len(hand_ui)):
 				hand_ui[i].scale = lerp(hand_ui[i].scale, Vector2(1,1), 20 * delta)
 				hand_ui[i].position = lerp(hand_ui[i].position, UI_POSITIONS[i], 20 * delta)

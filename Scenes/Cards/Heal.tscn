@@ -29,6 +29,7 @@ card_script = ExtResource("2_yvbet")
 SkillName = "Heal"
 mpCost = 1
 element = "light"
+discardable = true
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)
