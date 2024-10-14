@@ -30,7 +30,7 @@ func trigger_effect():
 
 func _ready():
 	$break.pitch_scale = randf_range(1.5,2)
-	$flare.pitch_scale = randf_range(1.5,2)
+	$flare.pitch_scale = 1.5
 	$repair.pitch_scale = randf_range(1.0,1.5)
 	shatter = PolygonFracture.new()
 	shards = shatter.fractureDelaunay(polygon_2d.polygon,polygon_2d.global_transform,40,1)
@@ -79,6 +79,7 @@ func _process(delta):
 			
 func flare():
 	if not is_firing:
+		$flare.play(.5)
 		is_firing = true
 		var shards_fly = ceil(len(shard_scenes)/turns)
 		for s in shards_fly:
@@ -86,7 +87,6 @@ func flare():
 			shard_scenes[0].scale = Vector2(2,2)
 			shard_scenes.pop_front()
 	is_firing = false
-	$flare.play()
 
 func fire():
 	if not is_firing:
