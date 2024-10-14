@@ -202,6 +202,8 @@ func check_turn():
 	for d in dots.get_children():
 		d.trigger_effect()
 		await get_tree().create_timer(.2).timeout
+		if is_dead:
+			return
 	for e in buffs.get_children():
 		if e.turns > 0:
 			e.turns -= 1

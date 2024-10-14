@@ -44,4 +44,3 @@ stream = ExtResource("3_j5qpx")
 position = Vector2(-6.665, 10.965)
 
 [node name="dots" type="Node2D" parent="."]
-position = Vector2(0, 3.22)
