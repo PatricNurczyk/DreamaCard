@@ -8,6 +8,9 @@ var mp_cost: int = 0
 @export var SkillName : String
 @export var mpCost : int
 @export var element : String
+@export var discardable : bool
+var discarded : bool = false
+var alpha : float = 1
 var card_instance
 var no_hover = false
 var greyed = false
@@ -21,6 +24,11 @@ func _ready():
 func _process(delta):
 	$Card.scale.x = lerp($Card.scale.x, cardscale, speed * delta)
 	$Card.scale.y = lerp($Card.scale.y,cardscale, speed * delta)
+	if discarded:
+		alpha = move_toward(alpha, 0, speed * delta)
+		modulate = Color(modulate, alpha)
+		if alpha == 0:
+			queue_free()
 	
 func _on_mouse_entered():
 	if not no_hover:
@@ -63,4 +71,5 @@ func _on_gui_input(event):
 					if not greyed:
 						card_instance.select_card(self)
 				MOUSE_BUTTON_RIGHT:
-					card_instance.discard()
+					if discardable:
+						discarded = true
