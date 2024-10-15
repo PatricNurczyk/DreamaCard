@@ -155,6 +155,7 @@ func takeDamage(value: int, element: String):
 			e.fire()
 		for d in dots.get_children():
 			d.fire()
+	return damage
 			
 func heal(value: int):
 	var h_num = load("res://Scenes/GameLogic/heal_number.tscn")
