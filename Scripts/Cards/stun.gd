@@ -2,24 +2,17 @@ extends Node
 
 func select_card(card):
 	card.get_parent().get_parent().select_target(card.get_index())
-	
-func discard():
-	print("Cant Discard")
 
 func execute_action(container):
-	var acc_check = await randi_range(1,100) <= container.combatants[container.currTurn].check_accuracy(80, "void")
+	var acc_check = await randi_range(1,100) <= container.combatants[container.currTurn].check_accuracy(70, "lightning")
 	if acc_check:
-		var damage = await container.combatants[container.currTurn].check_effect_offense(5, "void")
+		var damage = await container.combatants[container.currTurn].check_effect_offense(3, "lightning")
 		container.camera.position = container.combatants[container.target].position
 		container.camera_zoom = 6
 		await container.get_tree().create_timer(.5).timeout
 		container.combatants[container.currTurn].MP -= 1
-		damage = container.combatants[container.target].takeDamage(damage, "void")
-		await container.get_tree().create_timer(.3).timeout
-		container.camera.position = container.battleground.position
-		container.camera_zoom = 4.5
-		await container.get_tree().create_timer(.3).timeout
-		container.combatants[container.currTurn].heal(damage * 1.5)
+		container.combatants[container.target].takeDamage(damage, "lightning")
+		container.combatants[container.target].add_effect("stun", 0, "lightning", 1)
 	else:
 		container.camera.position = container.combatants[container.target].position
 		container.camera_zoom = 6

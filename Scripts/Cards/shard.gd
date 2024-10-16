@@ -7,19 +7,18 @@ func discard():
 	print("Cant Discard")
 
 func execute_action(container):
-	var acc_check = await randi_range(1,100) <= container.combatants[container.currTurn].check_accuracy(80, "void")
+	var acc_check = await randi_range(1,100) <= container.combatants[container.currTurn].check_accuracy(75, "earth")
 	if acc_check:
-		var damage = await container.combatants[container.currTurn].check_effect_offense(5, "void")
+		var damage = await container.combatants[container.currTurn].check_effect_offense(8, "earth")
 		container.camera.position = container.combatants[container.target].position
 		container.camera_zoom = 6
 		await container.get_tree().create_timer(.5).timeout
 		container.combatants[container.currTurn].MP -= 1
-		damage = container.combatants[container.target].takeDamage(damage, "void")
-		await container.get_tree().create_timer(.3).timeout
+		container.combatants[container.target].takeDamage(damage, "earth")
+		await container.get_tree().create_timer(.5).timeout
 		container.camera.position = container.battleground.position
 		container.camera_zoom = 4.5
-		await container.get_tree().create_timer(.3).timeout
-		container.combatants[container.currTurn].heal(damage * 1.5)
+		container.combatants[container.currTurn].add_effect("modifier attack", .5, "earth", 0)
 	else:
 		container.camera.position = container.combatants[container.target].position
 		container.camera_zoom = 6
@@ -31,6 +30,6 @@ func execute_action(container):
 		d_num.color = "ffffff"
 		d_num.altColor = "000000"
 		container.combatants[container.target].add_child(d_num)
-	await container.get_tree().create_timer(.5).timeout
+	await container.get_tree().create_timer(.75).timeout
 	container.acc_result = acc_check
 	container.action_completed.emit()

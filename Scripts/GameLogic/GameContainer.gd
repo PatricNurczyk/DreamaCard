@@ -341,11 +341,19 @@ func next_turn():
 		if combatants[currTurn].is_dead:
 			next_turn()
 			return
+		if combatants[currTurn].is_stun:
+			combatants[currTurn].is_stun = false
+			next_turn()
+			return
 		ally_turn()
 	else:
 		camera.position = combatants[currTurn].position + Vector2(0,-10)
 		await combatants[currTurn].check_turn()
 		if combatants[currTurn].is_dead:
+			next_turn()
+			return
+		if combatants[currTurn].is_stun:
+			combatants[currTurn].is_stun = false
 			next_turn()
 			return
 		enemy_turn()

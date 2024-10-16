@@ -7,7 +7,7 @@ func discard():
 	print("Cant Discard")
 
 func execute_action(container):
-	var acc_check = await randi_range(1,100) <= container.combatants[container.currTurn].check_accuracy(100, "frost")
+	var acc_check = await randi_range(1,100) <= container.combatants[container.currTurn].check_accuracy(90, "frost")
 	container.camera.position = container.battleground.position
 	container.camera_zoom = 4.5
 	if acc_check:
