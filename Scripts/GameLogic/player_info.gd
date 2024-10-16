@@ -9,7 +9,7 @@ var playerData = {
 		"MaxHP" : 50,
 		"MaxMP" : 2,
 		"Speed" : 10,
-		"Deck" : ["Burn","Dark","Heal","Heal", "Frost","Stone","Quake", "Heat Up","Antimatter","Cooldown","Growth","Heat Up","Shard","Stun","Drain"],
+		"Deck" : ["Focus","Focus","Burn","Dark","Heal","Heal", "Frost","Stone","Quake", "Heat Up","Antimatter","Cooldown","Growth","Heat Up","Shard","Stun","Drain"],
 		#"Deck" : ["Drain","Shard","Shard","Burn","Burn","Antimatter","Antimatter","Stun","Stun"],
 		#"Deck" : ["Ember","Dark","Frost","Stone", "Heat Up","Heat Up", "Heat Up","Heat Up", "Heat Up","Heat Up", "Heat Up","Heat Up", "Heat Up","Heat Up", "Heat Up","Heat Up"],
 		"AltDeck" : [],

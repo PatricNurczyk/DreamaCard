@@ -15,7 +15,9 @@ func execute_action(container):
 	container.camera_zoom = 5
 	for c in container.combatants:
 		if target_enemy and c.is_in_group("Enemy") and not c.is_dead:
-			var acc_check = randi_range(1,100) <= accuracy
+			var roll = randi_range(1,100)
+			print(roll)
+			var acc_check = roll <= accuracy
 			if acc_check:
 				if not firstHit:
 					damage = await container.combatants[container.currTurn].check_effect_offense(10, "earth")

@@ -186,6 +186,21 @@ func add_effect(type : String, value, element : String, turns : int, custom_icon
 				#mod.position.x += effect_offset * len($debuffs.get_children())
 				texture = load("res://Assets/Icons/attack_Bad.png")
 			mod.icon_img = texture
+		"accuracy":
+			mod = preload("res://Scenes/GameLogic/modifier.tscn").instantiate()
+			mod.element = element
+			mod.value = value
+			mod.turns = turns
+			mod.type = "accuracy"
+			var texture	
+			#effects.push_back(mod)
+			if value > 0:
+				#mod.position.x += effect_offset * len($buffs.get_children())
+				texture = load("res://Assets/Icons/accuracy_Good.png")
+			else:
+				#mod.position.x += effect_offset * len($debuffs.get_children())
+				texture = load("res://Assets/Icons/accuracy_Bad.png")
+			mod.icon_img = texture
 		"stun":
 			mod = preload("res://Scenes/GameLogic/modifier.tscn").instantiate()
 			mod.element = element

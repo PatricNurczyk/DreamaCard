@@ -7,7 +7,9 @@ func discard():
 	print("Cant Discard")
 
 func execute_action(container):
-	var acc_check = await randi_range(1,100) <= container.combatants[container.currTurn].check_accuracy(75, "earth")
+	var roll = randi_range(1,100)
+	print(roll)
+	var acc_check = roll <= await container.combatants[container.currTurn].check_accuracy(75, "earth")
 	if acc_check:
 		var damage = await container.combatants[container.currTurn].check_effect_offense(8, "earth")
 		container.camera.position = container.combatants[container.target].position

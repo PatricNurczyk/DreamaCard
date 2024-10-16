@@ -9,7 +9,7 @@ func discard():
 func execute_action(container):
 	container.camera.position = container.battleground.position
 	container.camera_zoom = 4.5
-	var acc_check = await randi_range(1,100) <= container.combatants[container.currTurn].check_accuracy(100, "void")
+	var acc_check = randi_range(1,100) <= await container.combatants[container.currTurn].check_accuracy(100, "void")
 	if acc_check:
 		container.combatants[container.target].add_effect("modifier attack", .35, "void", 0)
 	else:
