@@ -201,6 +201,21 @@ func add_effect(type : String, value, element : String, turns : int, custom_icon
 				#mod.position.x += effect_offset * len($debuffs.get_children())
 				texture = load("res://Assets/Icons/accuracy_Bad.png")
 			mod.icon_img = texture
+		"accuracy attack":
+			mod = preload("res://Scenes/GameLogic/modifier.tscn").instantiate()
+			mod.element = element
+			mod.value = value
+			mod.turns = turns
+			mod.type = "accuracy attack"
+			var texture	
+			#effects.push_back(mod)
+			if value > 0:
+				#mod.position.x += effect_offset * len($buffs.get_children())
+				texture = load("res://Assets/Icons/accuracy_Good.png")
+			else:
+				#mod.position.x += effect_offset * len($debuffs.get_children())
+				texture = load("res://Assets/Icons/accuracy_Bad.png")
+			mod.icon_img = texture
 		"stun":
 			mod = preload("res://Scenes/GameLogic/modifier.tscn").instantiate()
 			mod.element = element
@@ -253,16 +268,23 @@ func check_turn():
 	effect_check = false
 	await get_tree().create_timer(.1).timeout
 			
-func check_accuracy(accuracy : int, element: String):
+func check_accuracy(accuracy : int, element: String, attack: bool = false):
+	while effect_check:
+		pass
 	effect_check = true
 	for e in buffs.get_children():
-		if e.type == "accuracy" and (e.element == element or e.element == "universal"):
+		if e.type == "accuracy attack" and attack and (e.element == element or e.element == "universal"):
+			accuracy += e.trigger_effect()
+			await get_tree().create_timer(.2).timeout
+		elif e.type == "accuracy" and (e.element == element or e.element == "universal"):
 			accuracy += e.trigger_effect()
 			await get_tree().create_timer(.2).timeout
 	effect_check = false
 	return accuracy
 			
 func check_effect_offense(damage: int, element: String):
+	while effect_check:
+		pass
 	effect_check = true
 	var totalMod = 1
 	for e in buffs.get_children():

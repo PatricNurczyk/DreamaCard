@@ -31,6 +31,8 @@ SkillName = "Ray"
 mpCost = 1
 element = "light"
 discardable = true
+accuracy = 90
+is_attack = true
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)

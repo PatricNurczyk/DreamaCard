@@ -6,14 +6,12 @@ func select_card(card):
 func discard():
 	print("Cant Discard")
 
-func execute_action(container):
+func execute_action(container,acc):
 	container.camera.position = container.battleground.position
 	container.camera_zoom = 4.5
-	var roll = randi_range(1,100)
-	print(roll)
-	var acc_check = roll <= await container.combatants[container.currTurn].check_accuracy(100, "arcane")
+	var acc_check = randi_range(1,100) <= acc
 	if acc_check:
-		container.combatants[container.target].add_effect("accuracy", 30, "universal", 0)
+		container.combatants[container.target].add_effect("accuracy attack", 30, "universal", 0)
 		await container.get_tree().create_timer(.2).timeout
 		container.combatants[container.target].add_effect("modifier attack", .25, "universal", 0)
 	else:

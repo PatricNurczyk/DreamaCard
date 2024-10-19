@@ -6,12 +6,10 @@ func select_card(card):
 func discard():
 	print("Cant Discard")
 
-func execute_action(container):
+func execute_action(container,acc):
 	container.camera.position = container.battleground.position
 	container.camera_zoom = 4.5
-	var roll = randi_range(1,100)
-	print(roll)
-	var acc_check = roll <= await container.combatants[container.currTurn].check_accuracy(100, "light")
+	var acc_check = randi_range(1,100) <= acc
 	if acc_check:
 		container.combatants[container.currTurn].MP -= 1
 		var heal = await container.combatants[container.currTurn].check_effect_heal(10)

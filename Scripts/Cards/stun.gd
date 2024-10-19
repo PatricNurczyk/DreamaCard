@@ -3,10 +3,8 @@ extends Node
 func select_card(card):
 	card.get_parent().get_parent().select_target(card.get_index())
 
-func execute_action(container):
-	var roll = randi_range(1,100)
-	print(roll)
-	var acc_check = roll <= await container.combatants[container.currTurn].check_accuracy(70, "lightning")
+func execute_action(container,acc):
+	var acc_check = randi_range(1,100) <= acc
 	if acc_check:
 		var damage = await container.combatants[container.currTurn].check_effect_offense(3, "lightning")
 		container.camera.position = container.combatants[container.target].position

@@ -109,7 +109,8 @@ func _input(event):
 			shatter.fire()
 			combatants[currTurn].sprite.play("attack_break")
 			await shatter.done
-			hand_ui[card_select].execute_action(self)
+			var accuracy = await combatants[currTurn].check_accuracy(hand_ui[card_select].accuracy, hand_ui[card_select].element, hand_ui[card_select].is_attack)
+			hand_ui[card_select].execute_action(self, accuracy)
 			init_ui[currTurn].changeWhite()
 			await action_completed
 			for c in range(len(card_ui.get_children())):
@@ -482,13 +483,14 @@ func enemy_turn():
 		text_combat = choice["action"]
 		var t_type = card.target_type
 		var card_script = card.card_script.new()
+		var accuracy = await combatants[currTurn].check_accuracy(card.accuracy, card.element, card.is_attack)
 		match(t_type):
 			0:
-				card_script.execute_action(self)
+				card_script.execute_action(self,accuracy)
 			1:
-				card_script.execute_action(self)
+				card_script.execute_action(self,accuracy)
 			2: 
-				card_script.execute_action(self)
+				card_script.execute_action(self,accuracy)
 			3:
 				pass
 				
