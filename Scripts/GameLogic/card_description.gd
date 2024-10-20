@@ -44,7 +44,8 @@ func _input(event):
 			select = true
 			get_parent()._on_mouse_exited()
 			get_parent().get_parent().reset()
-			get_parent().get_node("Card").modulate = Color("ffffff")
+			if not get_parent().greyed:
+				get_parent().get_node("Card").modulate = Color("ffffff")
 			queue_free()
 
 func _process(delta):

@@ -33,7 +33,7 @@ element = "fire"
 discardable = true
 accuracy = 80
 is_attack = true
-description = "Deals 8 Fire damage to a target"
+description = "Deal 8 Fire damage to a target"
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)

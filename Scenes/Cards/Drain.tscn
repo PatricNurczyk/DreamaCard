@@ -33,7 +33,7 @@ element = "void"
 discardable = true
 accuracy = 80
 is_attack = true
-description = "Deals 5 Void damage to a target
+description = "Deal 5 Void damage to a target
 +
 Heal 150% of the damage dealt"
 
