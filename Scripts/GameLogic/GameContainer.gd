@@ -61,6 +61,8 @@ func _input(event):
 		pass_ui.cancel()
 		for c in hand_ui:
 			c.cancel()
+		for c in combatants:
+			c.name_ui.visible = false
 		card_select = 	-1
 		camera_zoom = 5
 		camera.position = combatants[currTurn].position
@@ -81,7 +83,7 @@ func _input(event):
 		if target >= 0:
 			match(target_type):
 				0:
-					if combatants[target].is_in_group("Enemy"):
+					if combatants[target].is_in_group("Enemy") or combatants[target].is_dead:
 						cancel.play()
 						combatState = combatStates.target
 						return
@@ -103,7 +105,14 @@ func _input(event):
 						cancel.play()
 						combatState = combatStates.target
 						return
+				3:
+					if combatants[target].is_in_group("Enemy"):
+						cancel.play()
+						combatState = combatStates.target
+						return
 			select.play()
+			for c in combatants:
+				c.name_ui.visible = false
 			combatState = combatStates.animation
 			text_combat = hand_ui[card_select].SkillName
 			shatter.fire()
@@ -196,6 +205,7 @@ func load_map():
 		remove_child(player)
 		player.queue_free()
 	player = PLAYERTEMPLATE.instantiate()
+	player.name = PlayerInfo.player_name
 	PlayerInfo.load_player_data(player)
 	var map_scene = load("res://Scenes/Maps/" + PlayerInfo.current_map + ".tscn")
 	map = map_scene.instantiate()
@@ -405,12 +415,25 @@ func select_target(node_index):
 	match(target_type):
 		0:
 			text_combat = "Select an Ally"
+			for c in combatants:
+				if c.is_in_group("Ally") and not c.is_dead:
+					c.name_ui.visible = true
 		1:
 			text_combat = "Select a Target"
+			for c in combatants:
+				if c.is_in_group("Enemy") and not c.is_dead:
+					c.name_ui.visible = true
 		2: 
 			text_combat = "Select Target to Confirm"
+			for c in combatants:
+				if c.is_in_group("Enemy") and not c.is_dead:
+					c.name_ui.visible = true
 		3:
-			text_combat = "Select Ally to Confirm"
+			text_combat = "Select an Ally"
+			for c in combatants:
+				if c.is_in_group("Ally"):
+					c.name_ui.visible = true
+					
 	shatter = SHATTER.instantiate()
 	match (hand_ui[card_select].element):
 		"fire":

@@ -2,10 +2,11 @@ extends Node
 
 var current_map : String = "Test_Map"
 var spawn_point : int = 0
+var player_name = "Patty"
 
 #Character Data
 var playerData = {
-	"Player": {
+	"Patty": {
 		"MaxHP" : 50,
 		"MaxMP" : 2,
 		"Speed" : 10,

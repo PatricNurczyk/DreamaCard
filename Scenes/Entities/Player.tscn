@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://jrkrfd6041tn"]
+[gd_scene load_steps=7 format=3 uid="uid://jrkrfd6041tn"]
 
 [ext_resource type="SpriteFrames" uid="uid://cb8rvv4yb7tn2" path="res://Assets/SpriteFrames/player.tres" id="1_rt0qv"]
 [ext_resource type="Script" path="res://Scripts/Entities/Player.gd" id="1_sqg0c"]
 [ext_resource type="AudioStream" uid="uid://cqplmnuvjfh7d" path="res://Sounds/Sound_Effects/hitHurt.wav" id="3_aw5ii"]
+[ext_resource type="FontFile" uid="uid://ctyag1opnfvyl" path="res://Assets/Fonts/name_font.fnt" id="4_5vl7h"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i50t4"]
 radius = 5.33
@@ -38,5 +39,16 @@ stream = ExtResource("3_aw5ii")
 position = Vector2(-14, 9.555)
 
 [node name="dots" type="Node2D" parent="."]
+
+[node name="name" type="RichTextLabel" parent="."]
+visible = false
+offset_left = -45.0
+offset_top = -34.0
+offset_right = 45.0
+offset_bottom = -20.0
+theme_override_fonts/normal_font = ExtResource("4_5vl7h")
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

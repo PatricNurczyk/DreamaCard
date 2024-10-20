@@ -12,6 +12,7 @@ var is_dead = false
 var in_combat = false
 var is_idle = true
 var is_stun = false
+@onready var name_ui = $name
 
 #effects UI
 var effects : Array 
@@ -52,6 +53,7 @@ var hand : Array[String]
 func _ready():
 	HP = maxHP
 	sprite.animation_finished.connect(_on_animation_finished)
+	name_ui.text = "[center][font_size=10]" + name + "[/font_size][/center]"
 	
 func _process(delta):
 	if not effect_check:
