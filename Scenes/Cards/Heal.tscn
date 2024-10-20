@@ -26,6 +26,7 @@ action_mode = 0
 icon_alignment = 1
 script = ExtResource("1_0u056")
 card_script = ExtResource("2_yvbet")
+target_type = 3
 SkillName = "Heal"
 mpCost = 1
 element = "light"

@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://ctg0om1inbc80"]
+[gd_scene load_steps=7 format=3 uid="uid://ctg0om1inbc80"]
 
 [ext_resource type="Script" path="res://Scripts/Entities/slime.gd" id="1_67kb8"]
 [ext_resource type="SpriteFrames" uid="uid://dimxiwpq5r6og" path="res://Assets/SpriteFrames/slime.tres" id="2_6mysm"]
 [ext_resource type="AudioStream" uid="uid://cqplmnuvjfh7d" path="res://Sounds/Sound_Effects/hitHurt.wav" id="3_j5qpx"]
+[ext_resource type="FontFile" uid="uid://ctyag1opnfvyl" path="res://Assets/Fonts/name_font.fnt" id="4_kklxn"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3m0yw"]
 radius = 9.0
@@ -44,3 +45,14 @@ stream = ExtResource("3_j5qpx")
 position = Vector2(-6.665, 10.965)
 
 [node name="dots" type="Node2D" parent="."]
+
+[node name="name" type="RichTextLabel" parent="."]
+visible = false
+offset_left = -52.0
+offset_top = -27.0
+offset_right = 52.0
+offset_bottom = -13.0
+theme_override_fonts/normal_font = ExtResource("4_kklxn")
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
