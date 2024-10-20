@@ -167,7 +167,10 @@ func _process(delta):
 			for i in range(len(hand_ui)):
 				hand_ui[i].scale = lerp(hand_ui[i].scale, Vector2(1,1), 20 * delta)
 				hand_ui[i].position = lerp(hand_ui[i].position, UI_POSITIONS[i], 20 * delta)
-				hand_ui[i].rotation_degrees = lerp(hand_ui[i].rotation_degrees,float(UI_ROTATIONS[i]),20 * delta)
+				if hand_ui[i].centered:
+					hand_ui[i].rotation_degrees = lerp(hand_ui[i].rotation_degrees,0.0,20 * delta)
+				else:
+					hand_ui[i].rotation_degrees = lerp(hand_ui[i].rotation_degrees,float(UI_ROTATIONS[i]),20 * delta)
 		elif combatState == combatStates.target:
 			pass_ui.scale = lerp(pass_ui.scale, Vector2.ZERO, 20 * delta)
 			pass_ui.position = lerp(pass_ui.position, Vector2.ZERO, 20 * delta)
