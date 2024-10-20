@@ -33,6 +33,9 @@ element = "fire"
 discardable = true
 accuracy = 80
 is_attack = true
+description = "Deal 4 Fire damage to a target
++
+Apply a Damage over Time effect dealing 12 Fire damage over 2 Rounds"
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)

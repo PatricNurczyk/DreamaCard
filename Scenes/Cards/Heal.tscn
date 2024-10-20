@@ -30,6 +30,7 @@ SkillName = "Heal"
 mpCost = 1
 element = "light"
 discardable = true
+description = "Restore 10 HP to a target"
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)

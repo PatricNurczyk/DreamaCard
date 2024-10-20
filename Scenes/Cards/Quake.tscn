@@ -13,7 +13,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8rv6h"]
 
-[node name="Stone" type="Button"]
+[node name="Quake" type="Button"]
 offset_left = -15.495
 offset_top = -23.16
 offset_right = 15.505
@@ -33,6 +33,7 @@ element = "earth"
 discardable = true
 accuracy = 75
 is_attack = true
+description = "Deal 10 Earth damage to all targets"
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)

@@ -29,6 +29,7 @@ card_script = ExtResource("2_0rxx0")
 SkillName = "Growth"
 element = "earth"
 discardable = true
+description = "Increases the next outgoing Earth attack by 50%"
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)

@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://ckdgrkc26r36d"]
+[gd_scene load_steps=11 format=3 uid="uid://ckdgrkc26r36d"]
 
 [ext_resource type="Script" path="res://Scripts/GameLogic/GameContainer.gd" id="1_jh12l"]
 [ext_resource type="Texture2D" uid="uid://dje1a1ne0g4wd" path="res://Assets/Icons/BattleBackground.png" id="2_5b3d7"]
 [ext_resource type="PackedScene" uid="uid://hdfik3ks31vv" path="res://Scenes/Cards/Pass.tscn" id="3_3eqr8"]
+[ext_resource type="Script" path="res://Scripts/GameLogic/cards.gd" id="3_c8208"]
 [ext_resource type="AudioStream" uid="uid://vardvul8qtwv" path="res://Sounds/Sound_Effects/cancel.wav" id="4_kptjp"]
 [ext_resource type="AudioStream" uid="uid://3wkhpdmjh7vs" path="res://Sounds/Sound_Effects/select.wav" id="5_uuwkk"]
 
@@ -154,7 +155,6 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 bbcode_enabled = true
 
 [node name="Battle" type="Sprite2D" parent="."]
-modulate = Color(1, 1, 1, 0.74902)
 z_index = 1
 z_as_relative = false
 scale = Vector2(1e-05, 1e-05)
@@ -162,6 +162,7 @@ texture = ExtResource("2_5b3d7")
 
 [node name="Cards" type="Node2D" parent="."]
 z_index = 4
+script = ExtResource("3_c8208")
 
 [node name="Pass" parent="Cards" groups=["pass_card"] instance=ExtResource("3_3eqr8")]
 scale = Vector2(1e-05, 1e-05)

@@ -68,6 +68,7 @@ target_type = 1
 SkillName = "Slash"
 element = "physical"
 is_attack = true
+description = "Deal 4 Physical damage to a target"
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)

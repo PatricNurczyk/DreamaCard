@@ -5,7 +5,7 @@ var speed: float = 10
 var mp_cost: int = 0
 @export var initiative : int = 0
 var no_hover = false
-
+var centered : bool
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

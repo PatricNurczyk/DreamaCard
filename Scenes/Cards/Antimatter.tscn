@@ -29,6 +29,7 @@ card_script = ExtResource("2_hlpnr")
 SkillName = "Antimatter"
 element = "void"
 discardable = true
+description = "Increases the next outgoing Void attack by 35%"
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)

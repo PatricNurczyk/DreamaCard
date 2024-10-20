@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://btsfrg4ypmpkl"]
+
+[ext_resource type="Script" path="res://Scripts/GameLogic/card_description.gd" id="1_r216h"]
+[ext_resource type="AudioStream" uid="uid://bcaqimhb22igy" path="res://Sounds/Sound_Effects/open_desc.wav" id="2_sfdvj"]
+[ext_resource type="AudioStream" uid="uid://ctuapbahnrhkd" path="res://Sounds/Sound_Effects/close_desc.mp3" id="3_d8gy1"]
+
+[node name="Description" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.4, 0.4)
+mouse_filter = 2
+script = ExtResource("1_r216h")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+z_index = 145
+z_as_relative = false
+layout_mode = 0
+offset_left = -57.0
+offset_top = -106.0
+offset_right = 60.0
+offset_bottom = 105.0
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="open" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_sfdvj")
+
+[node name="close" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_d8gy1")

@@ -29,6 +29,7 @@ card_script = ExtResource("2_7o0hr")
 SkillName = "Cooldown"
 element = "frost"
 discardable = true
+description = "Increases the next outgoing Frost attack by 35%"
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)

@@ -27,12 +27,15 @@ icon_alignment = 1
 script = ExtResource("1_nsg3m")
 card_script = ExtResource("2_oavu5")
 target_type = 1
-SkillName = "Bolt"
+SkillName = "Stun"
 mpCost = 1
 element = "lightning"
 discardable = true
 accuracy = 70
 is_attack = true
+description = "Deal 3 Lightning damage to a target
++
+Stun the target for 1 Round"
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)

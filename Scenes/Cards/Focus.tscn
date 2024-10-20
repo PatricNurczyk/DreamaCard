@@ -29,6 +29,9 @@ card_script = ExtResource("2_ygtls")
 SkillName = "Focus"
 element = "arcane"
 discardable = true
+description = "Increases the next outgoing attack by 25%
++
+Increases the accuracy of the next outgoing attack by 30%"
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)

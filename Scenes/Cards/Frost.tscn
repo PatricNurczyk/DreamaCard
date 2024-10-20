@@ -33,6 +33,7 @@ element = "frost"
 discardable = true
 accuracy = 90
 is_attack = true
+description = "Deal 7 Frost damage to a target"
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)
