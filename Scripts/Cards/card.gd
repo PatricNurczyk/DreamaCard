@@ -89,6 +89,7 @@ func _on_gui_input(event):
 			match event.button_index:
 				MOUSE_BUTTON_LEFT:
 					if not greyed:
+						#print("selectCard")
 						get_parent().get_parent().select_target(get_index())
 				MOUSE_BUTTON_RIGHT:
 					if discardable:

@@ -386,6 +386,9 @@ func ally_turn():
 	await get_tree().create_timer(.5).timeout
 	
 func select_target(node_index):
+	if combatState == combatStates.target:
+		return
+	combatState = combatStates.target
 	pass_ui.no_hover = true
 	for c in hand_ui:
 		c.no_hover = true
@@ -394,7 +397,6 @@ func select_target(node_index):
 	init_ui[currTurn].initiative = min(100, combatants[currTurn].speed + hand_ui[node_index].initiative)
 	combatants[currTurn].is_idle = false
 	combatants[currTurn].sprite.play("prep_attack")
-	combatState = combatStates.target
 	camera_zoom = 4.5
 	camera.position = battleground.position
 	card_select = node_index

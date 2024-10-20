@@ -155,7 +155,6 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 bbcode_enabled = true
 
 [node name="Battle" type="Sprite2D" parent="."]
-modulate = Color(1, 1, 1, 0.74902)
 z_index = 1
 z_as_relative = false
 scale = Vector2(1e-05, 1e-05)

@@ -1,13 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://btsfrg4ypmpkl"]
 
 [ext_resource type="Script" path="res://Scripts/GameLogic/card_description.gd" id="1_r216h"]
-
-[sub_resource type="Gradient" id="Gradient_0d7ic"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_ws7vq"]
-gradient = SubResource("Gradient_0d7ic")
+[ext_resource type="AudioStream" uid="uid://bcaqimhb22igy" path="res://Sounds/Sound_Effects/open_desc.wav" id="2_sfdvj"]
+[ext_resource type="AudioStream" uid="uid://ctuapbahnrhkd" path="res://Sounds/Sound_Effects/close_desc.mp3" id="3_d8gy1"]
 
 [node name="Description" type="Control"]
 layout_mode = 3
@@ -22,21 +17,21 @@ scale = Vector2(0.4, 0.4)
 mouse_filter = 2
 script = ExtResource("1_r216h")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-modulate = Color(1, 1, 1, 0.843137)
-offset_left = -72.0
-offset_top = -110.0
-offset_right = 70.0
-offset_bottom = 110.0
-texture = SubResource("GradientTexture2D_ws7vq")
-
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 z_index = 145
 z_as_relative = false
-offset_left = -71.0
+layout_mode = 0
+offset_left = -67.0
 offset_top = -106.0
-offset_right = 71.0
+offset_right = 69.0
 offset_bottom = 105.0
 bbcode_enabled = true
 fit_content = true
 scroll_active = false
+
+[node name="open" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_sfdvj")
+
+[node name="close" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2(1, 1)
+stream = ExtResource("3_d8gy1")
