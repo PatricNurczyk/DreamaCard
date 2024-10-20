@@ -33,6 +33,9 @@ element = "earth"
 discardable = true
 accuracy = 75
 is_attack = true
+description = "Deals 8 Earth damage to a target
++
+Increases the next outgoing Earth attack by 50%"
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)

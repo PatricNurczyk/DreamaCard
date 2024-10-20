@@ -33,6 +33,9 @@ element = "void"
 discardable = true
 accuracy = 80
 is_attack = true
+description = "Deals 5 Void damage to a target
++
+Heal 150% of the damage dealt"
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)

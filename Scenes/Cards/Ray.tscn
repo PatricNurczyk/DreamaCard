@@ -33,6 +33,7 @@ element = "light"
 discardable = true
 accuracy = 90
 is_attack = true
+description = "Deals 7 Light damage to a target"
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)

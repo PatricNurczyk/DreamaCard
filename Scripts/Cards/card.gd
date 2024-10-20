@@ -28,7 +28,7 @@ func _ready():
 	card_instance = card_script.new()
 
 func _input(event):
-	if Input.is_action_just_pressed("inspect_toggle") and mouse_in:
+	if Input.is_action_just_pressed("inspect_toggle") and mouse_in and not no_hover:
 			get_parent().focused(get_index())
 			var des_scene = DESC_SCENE.instantiate()
 			des_scene.element = element

@@ -33,6 +33,7 @@ element = "earth"
 discardable = true
 accuracy = 75
 is_attack = true
+description = "Deals 10 Earth damage to all targets"
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)

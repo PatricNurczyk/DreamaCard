@@ -31,6 +31,7 @@ SkillName = "Chill"
 element = "frost"
 discardable = true
 accuracy = 90
+description = "Decreases the next outgoing attack by 25% on a target"
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)

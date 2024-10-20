@@ -10,7 +10,7 @@ var select = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	label.text = "[center][font_size=14]\nAffinity: " + element.capitalize() + "\nMP Cost: " + str(mp_cost) + "\nAccuracy: " + str(accuracy) + "%\n\n" + description + "[/font_size][/center]"
+	label.text = "[center][font_size=12]\nAffinity: " + element.capitalize() + "\nMP Cost: " + str(mp_cost) + "\nAccuracy: " + str(accuracy) + "%\n\n" + description + "[/font_size][/center]"
 	await get_tree().create_timer(.2).timeout
 	can_close = true
 

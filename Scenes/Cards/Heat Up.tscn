@@ -29,6 +29,7 @@ card_script = ExtResource("2_tmege")
 SkillName = "Heat Up"
 element = "fire"
 discardable = true
+description = "Increases the next outgoing Fire attack by 40%"
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)
