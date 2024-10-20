@@ -6,10 +6,10 @@ func select_card(card):
 func discard():
 	print("Cant Discard")
 
-func execute_action(container):
+func execute_action(container,acc):
 	container.camera.position = container.battleground.position
 	container.camera_zoom = 4.5
-	var acc_check = await randi_range(1,100) <= container.combatants[container.currTurn].check_accuracy(100, "lightning")
+	var acc_check = randi_range(1,100) <= acc
 	if acc_check:
 		container.combatants[container.target].add_effect("modifier attack", .45, "lightning", 0)
 	else:

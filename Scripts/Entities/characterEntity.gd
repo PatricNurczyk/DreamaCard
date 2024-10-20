@@ -11,6 +11,7 @@ var can_walk = true
 var is_dead = false
 var in_combat = false
 var is_idle = true
+var is_stun = false
 
 #effects UI
 var effects : Array 
@@ -166,9 +167,12 @@ func heal(value: int):
 	HP = min(HP + value, maxHP)
 	
 func add_effect(type : String, value, element : String, turns : int, custom_icon : String = ""):
+	if is_dead:
+		return
+	var mod
 	match type:
 		"modifier attack":
-			var mod = preload("res://Scenes/GameLogic/modifier.tscn").instantiate()
+			mod = preload("res://Scenes/GameLogic/modifier.tscn").instantiate()
 			mod.element = element
 			mod.value = value
 			mod.turns = turns
@@ -182,16 +186,56 @@ func add_effect(type : String, value, element : String, turns : int, custom_icon
 				#mod.position.x += effect_offset * len($debuffs.get_children())
 				texture = load("res://Assets/Icons/attack_Bad.png")
 			mod.icon_img = texture
-			var length = len(buffs.get_children())
-			if length < 12:
-				mod.position.x = effect_offset * (length%4)
-				mod.position.y = 15 * floor(length/4)
+		"accuracy":
+			mod = preload("res://Scenes/GameLogic/modifier.tscn").instantiate()
+			mod.element = element
+			mod.value = value
+			mod.turns = turns
+			mod.type = "accuracy"
+			var texture	
+			#effects.push_back(mod)
+			if value > 0:
+				#mod.position.x += effect_offset * len($buffs.get_children())
+				texture = load("res://Assets/Icons/accuracy_Good.png")
 			else:
-				mod.position.x = effect_offset * 3 
-				mod.position.y = 15 * 2
-			$buffs.add_child(mod)
+				#mod.position.x += effect_offset * len($debuffs.get_children())
+				texture = load("res://Assets/Icons/accuracy_Bad.png")
+			mod.icon_img = texture
+		"accuracy attack":
+			mod = preload("res://Scenes/GameLogic/modifier.tscn").instantiate()
+			mod.element = element
+			mod.value = value
+			mod.turns = turns
+			mod.type = "accuracy attack"
+			var texture	
+			#effects.push_back(mod)
+			if value > 0:
+				#mod.position.x += effect_offset * len($buffs.get_children())
+				texture = load("res://Assets/Icons/accuracy_Good.png")
+			else:
+				#mod.position.x += effect_offset * len($debuffs.get_children())
+				texture = load("res://Assets/Icons/accuracy_Bad.png")
+			mod.icon_img = texture
+		"stun":
+			mod = preload("res://Scenes/GameLogic/modifier.tscn").instantiate()
+			mod.element = element
+			mod.value = value
+			mod.turns = turns
+			mod.type = "stun"
+			var texture = load("res://Assets/Icons/Stun.png")
+			mod.icon_img = texture
+	var length = len(buffs.get_children())
+	if length < 12:
+		mod.position.x = effect_offset * (length%4)
+		mod.position.y = 15 * floor(length/4)
+	else:
+		mod.position.x = effect_offset * 3 
+		mod.position.y = 15 * 2
+	$buffs.add_child(mod)
 
 func add_dot(damage : int, element: String, turns : int):
+	if is_dead:
+		return
 	var mod = preload("res://Scenes/GameLogic/dot.tscn").instantiate()
 	mod.element = element
 	mod.value = damage
@@ -207,21 +251,40 @@ func check_turn():
 			return
 	for e in buffs.get_children():
 		if e.turns > 0:
+			if e.type == "stun":
+				is_stun = true
+				var damage : int
+				var d_num = load("res://Scenes/GameLogic/damage_number.tscn")
+				d_num = d_num.instantiate()
+				d_num.number = -2
+				d_num.color = "ffffff"
+				d_num.altColor = "000000"
+				d_num.position += Vector2(0,-5)
+				add_child(d_num)
 			e.turns -= 1
+			if e.turns == 0:
+				e.fire()
 			await get_tree().create_timer(.2).timeout
 	effect_check = false
 	await get_tree().create_timer(.1).timeout
 			
-func check_accuracy(accuracy : int, element: String):
+func check_accuracy(accuracy : int, element: String, attack: bool = false):
+	while effect_check:
+		pass
 	effect_check = true
 	for e in buffs.get_children():
-		if e.type == "accuracy" and (e.element == element or e.element == "universal"):
+		if e.type == "accuracy attack" and attack and (e.element == element or e.element == "universal"):
+			accuracy += e.trigger_effect()
+			await get_tree().create_timer(.2).timeout
+		elif e.type == "accuracy" and (e.element == element or e.element == "universal"):
 			accuracy += e.trigger_effect()
 			await get_tree().create_timer(.2).timeout
 	effect_check = false
 	return accuracy
 			
 func check_effect_offense(damage: int, element: String):
+	while effect_check:
+		pass
 	effect_check = true
 	var totalMod = 1
 	for e in buffs.get_children():

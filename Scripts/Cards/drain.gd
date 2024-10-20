@@ -6,8 +6,8 @@ func select_card(card):
 func discard():
 	print("Cant Discard")
 
-func execute_action(container):
-	var acc_check = await randi_range(1,100) <= container.combatants[container.currTurn].check_accuracy(80, "void")
+func execute_action(container,acc):
+	var acc_check = randi_range(1,100) <= acc
 	if acc_check:
 		var damage = await container.combatants[container.currTurn].check_effect_offense(5, "void")
 		container.camera.position = container.combatants[container.target].position
@@ -19,7 +19,7 @@ func execute_action(container):
 		container.camera.position = container.battleground.position
 		container.camera_zoom = 4.5
 		await container.get_tree().create_timer(.3).timeout
-		container.combatants[container.currTurn].heal(damage)
+		container.combatants[container.currTurn].heal(damage * 1.5)
 	else:
 		container.camera.position = container.combatants[container.target].position
 		container.camera_zoom = 6

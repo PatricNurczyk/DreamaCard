@@ -70,7 +70,7 @@ func _ready():
 func _process(delta):
 	position.x = move_toward(position.x, new_pos.x, delta * 100)
 	position.y = move_toward(position.y, new_pos.y, delta * 100)
-	if is_repairing:
+	if is_repairing and not is_firing:
 		for s in shard_scenes:
 			#s.position = lerp(s.position, Vector2.ZERO, delta * 6.5)
 			s.position.x = move_toward(s.position.x,0,delta * 200)

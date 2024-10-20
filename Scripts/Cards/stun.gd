@@ -2,20 +2,20 @@ extends Node
 
 func select_card(card):
 	card.get_parent().get_parent().select_target(card.get_index())
-	
-func discard():
-	print("Cant Discard")
 
 func execute_action(container,acc):
 	var acc_check = randi_range(1,100) <= acc
-	container.camera.position = container.combatants[container.target].position
-	container.camera_zoom = 6
 	if acc_check:
-		var damage = await container.combatants[container.currTurn].check_effect_offense(10, "lightning")
+		var damage = await container.combatants[container.currTurn].check_effect_offense(3, "lightning")
+		container.camera.position = container.combatants[container.target].position
+		container.camera_zoom = 6
 		await container.get_tree().create_timer(.5).timeout
 		container.combatants[container.currTurn].MP -= 1
 		container.combatants[container.target].takeDamage(damage, "lightning")
+		container.combatants[container.target].add_effect("stun", 0, "lightning", 1)
 	else:
+		container.camera.position = container.combatants[container.target].position
+		container.camera_zoom = 6
 		await container.get_tree().create_timer(.5).timeout
 		var d_num = load("res://Scenes/GameLogic/damage_number.tscn")
 		d_num = d_num.instantiate()

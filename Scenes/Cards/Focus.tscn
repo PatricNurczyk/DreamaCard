@@ -1,9 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://c5jmalkm1fpag"]
+[gd_scene load_steps=9 format=3 uid="uid://dvk7rauybkp77"]
 
-[ext_resource type="Script" path="res://Scripts/Cards/card.gd" id="1_dl1a5"]
-[ext_resource type="Script" path="res://Scripts/Cards/frost.gd" id="2_tmkri"]
-[ext_resource type="Texture2D" uid="uid://yiucoa3x3ne5" path="res://Assets/Card/Frost.png" id="3_iikrn"]
-[ext_resource type="AudioStream" uid="uid://cmcelkb8gcdpl" path="res://Sounds/Sound_Effects/flipcard.wav" id="4_64npb"]
+[ext_resource type="Script" path="res://Scripts/Cards/card.gd" id="1_jtict"]
+[ext_resource type="Script" path="res://Scripts/Cards/focus.gd" id="2_ygtls"]
+[ext_resource type="Texture2D" uid="uid://d3h2osdmk6uoc" path="res://Assets/Card/Focus.png" id="3_ds462"]
+[ext_resource type="AudioStream" uid="uid://cmcelkb8gcdpl" path="res://Sounds/Sound_Effects/flipcard.wav" id="4_xx533"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4tin5"]
 
@@ -13,7 +13,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8rv6h"]
 
-[node name="Frost" type="Button"]
+[node name="Focus" type="Button"]
 offset_left = -15.495
 offset_top = -23.16
 offset_right = 15.505
@@ -24,23 +24,19 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_b5epm")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_8rv6h")
 action_mode = 0
 icon_alignment = 1
-script = ExtResource("1_dl1a5")
-card_script = ExtResource("2_tmkri")
-target_type = 1
-SkillName = "Frost"
-mpCost = 1
-element = "frost"
+script = ExtResource("1_jtict")
+card_script = ExtResource("2_ygtls")
+SkillName = "Focus"
+element = "arcane"
 discardable = true
-accuracy = 90
-is_attack = true
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)
 scale = Vector2(0.1, 0.1)
-texture = ExtResource("3_iikrn")
+texture = ExtResource("3_ds462")
 
 [node name="hover" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("4_64npb")
+stream = ExtResource("4_xx533")
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

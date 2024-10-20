@@ -9,6 +9,8 @@ var mp_cost: int = 0
 @export var mpCost : int
 @export var element : String
 @export var discardable : bool
+@export var accuracy : int = 100
+@export var is_attack : bool = false
 var discarded : bool = false
 var alpha : float = 1
 var card_instance
@@ -60,8 +62,8 @@ func color_in():
 	$Card.modulate = Color("ffffff")
 	greyed = false
 	
-func execute_action(container):
-	card_instance.execute_action(container)
+func execute_action(container,acc):
+	card_instance.execute_action(container,acc)
 	
 func _on_gui_input(event):
 	if not no_hover:
@@ -69,7 +71,7 @@ func _on_gui_input(event):
 			match event.button_index:
 				MOUSE_BUTTON_LEFT:
 					if not greyed:
-						card_instance.select_card(self)
+						get_parent().get_parent().select_target(get_index())
 				MOUSE_BUTTON_RIGHT:
 					if discardable:
 						discarded = true

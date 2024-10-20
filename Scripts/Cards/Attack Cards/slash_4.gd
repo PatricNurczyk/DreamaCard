@@ -1,14 +1,11 @@
 extends Node
 
-func select_card(card):
-	card.get_parent().get_parent().select_target(card.get_index())
-	
 func discard():
 	print("Cant Discard")
 
 
-func execute_action(container):
-	var acc_check = await randi_range(1,100) <= container.combatants[container.currTurn].check_accuracy(100, "physical")
+func execute_action(container,acc):
+	var acc_check = randi_range(1,100) <= acc
 	if acc_check:
 		var damage = await container.combatants[container.currTurn].check_effect_offense(4, "physical")
 		container.combatants[container.currTurn].MP -= 1

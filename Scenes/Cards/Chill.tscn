@@ -30,6 +30,7 @@ target_type = 1
 SkillName = "Chill"
 element = "frost"
 discardable = true
+accuracy = 90
 
 [node name="Card" type="Sprite2D" parent="."]
 position = Vector2(15.415, 23.045)
