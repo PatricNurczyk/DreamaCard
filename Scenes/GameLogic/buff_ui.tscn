@@ -1,0 +1,125 @@
+[gd_scene load_steps=6 format=3 uid="uid://cvuqantx75lhj"]
+
+[ext_resource type="Script" path="res://Scripts/GameLogic/buff_ui.gd" id="1_4tpdc"]
+
+[sub_resource type="Animation" id="Animation_ev4xp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("text:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(168.265, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("text:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 306.835)]
+}
+
+[sub_resource type="Animation" id="Animation_sq7vs"]
+resource_name = "spawn"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("text:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.233333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(168.265, 0), Vector2(168.265, 380.77)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("text:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.233333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 306.835), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_4daw1"]
+resource_name = "despawn"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("text:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.233333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(168.265, 380.77), Vector2(168.265, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("text:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.233333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 306.835)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_am4qw"]
+_data = {
+"RESET": SubResource("Animation_ev4xp"),
+"despawn": SubResource("Animation_4daw1"),
+"spawn": SubResource("Animation_sq7vs")
+}
+
+[node name="buff_ui" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 168.265
+offset_bottom = 380.77
+size_flags_horizontal = 3
+script = ExtResource("1_4tpdc")
+
+[node name="text" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_top = 306.835
+offset_right = 168.265
+offset_bottom = 306.835
+bbcode_enabled = true
+text = "buff
+buff
+buff
+buff
+buff
+buff
+buff
+buff
+buff
+buff
+buff
+"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_am4qw")
+}

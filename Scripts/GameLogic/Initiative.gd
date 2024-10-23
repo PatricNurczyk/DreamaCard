@@ -12,6 +12,8 @@ extends HBoxContainer
 @export var maxMP : int
 @export var MP : int
 const SPEED = 300
+const BUFF_UI = preload("res://Scenes/GameLogic/buff_ui.tscn")
+var character : CharacterBody2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -35,3 +37,17 @@ func changeYellow():
 	
 func changeWhite():
 	init_bar.modulate = Color("ffffff")
+
+
+func _on_gui_input(event):
+	if event is InputEventMouseButton and event.pressed:
+		match event.button_index:
+			MOUSE_BUTTON_LEFT:
+				print(global_position)
+				var buff = BUFF_UI.instantiate()
+				buff.global_position = global_position
+				print(buff.global_position)
+				get_parent().get_parent().add_child(buff)
+				
+			MOUSE_BUTTON_RIGHT:
+				print(barName + " Closed")

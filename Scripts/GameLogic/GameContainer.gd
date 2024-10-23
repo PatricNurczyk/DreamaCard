@@ -249,6 +249,7 @@ func start_combat():
 			var ui = INIT_ALLY.instantiate()
 			ui.barName = body.collider.name
 			ui.initiative = body.collider.speed
+			ui.character = body.collider
 			init_ui.push_back(ui)
 			ally_initiative.add_child(ui)
 			combatants_position.push_back(battleground.get_child(allyCount).global_position)
@@ -274,6 +275,7 @@ func start_combat():
 			var ui = INIT_ENEMY.instantiate()
 			ui.barName = body.collider.name
 			ui.initiative = body.collider.speed 
+			ui.character = body.collider
 			print(body.collider.deck)
 			body.collider.deck.shuffle()
 			body.collider.hand.clear()

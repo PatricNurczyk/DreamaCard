@@ -5,6 +5,7 @@
 [node name="inititative_ally" type="HBoxContainer"]
 offset_right = 96.11
 offset_bottom = 27.0
+theme_override_constants/separation = 15
 script = ExtResource("1_fg322")
 
 [node name="Bars" type="VBoxContainer" parent="."]
@@ -47,3 +48,5 @@ layout_mode = 2
 [node name="name" type="Label" parent="."]
 layout_mode = 2
 text = "Player"
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
