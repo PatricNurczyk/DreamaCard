@@ -111,6 +111,10 @@ func _input(event):
 						combatState = combatStates.target
 						return
 			select.play()
+			for i in init_ui:
+				if i.buff_ui:
+					i.buff_ui.despawn()
+					i.buff_ui = null
 			for c in combatants:
 				c.name_ui.visible = false
 			combatState = combatStates.animation
@@ -348,6 +352,11 @@ func next_turn():
 		print("Game Over")
 		get_tree().quit()
 	currTurn = find_next()
+	for i in range(len(init_ui)):
+		if i == currTurn:
+			init_ui[i].text.modulate = Color("00ff00")
+		else:
+			init_ui[i].text.modulate = Color("ffffff")
 	draw_card(combatants[currTurn])
 	combatants[currTurn].MP = min(combatants[currTurn].MP + 1, combatants[currTurn].maxMP)
 	camera_zoom = 5

@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" path="res://Scripts/GameLogic/Initiative.gd" id="1_ucbv5"]
 
-[node name="inititative_ally" type="HBoxContainer"]
+[node name="inititative_enemy" type="HBoxContainer"]
 offset_right = 96.11
 offset_bottom = 27.0
-theme_override_constants/separation = 0
+theme_override_constants/separation = 15
 alignment = 2
 script = ExtResource("1_ucbv5")
 
