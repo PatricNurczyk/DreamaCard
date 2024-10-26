@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://ofi60jxijtjs"]
+[gd_scene load_steps=7 format=3 uid="uid://ofi60jxijtjs"]
 
 [ext_resource type="Script" path="res://Scripts/GameLogic/mapTemplate.gd" id="1_ix6fp"]
 [ext_resource type="Texture2D" uid="uid://beo24tjxdq3vy" path="res://Assets/Tilesets/dungeon_tiles_2.png" id="2_jbwlo"]
-[ext_resource type="AudioStream" uid="uid://dgi65k307okto" path="res://Sounds/Music/Impatience.mp3" id="2_maqq8"]
 [ext_resource type="PackedScene" uid="uid://6yg55gdo1cd7" path="res://Scenes/GameLogic/TransitionEvent.tscn" id="3_3rrgj"]
 [ext_resource type="PackedScene" uid="uid://ctg0om1inbc80" path="res://Scenes/Entities/Enemies/TestEnemy/Slime.tscn" id="4_d1j5l"]
 
@@ -644,7 +643,6 @@ sources/0 = SubResource("TileSetAtlasSource_rvtxw")
 script = ExtResource("1_ix6fp")
 SpawnPoints = Array[Vector2]([Vector2(49, 142), Vector2(443, 142)])
 Directions = Array[String](["right", "left"])
-battle_music = ExtResource("2_maqq8")
 
 [node name="TileMap" type="TileMap" parent="."]
 z_as_relative = false

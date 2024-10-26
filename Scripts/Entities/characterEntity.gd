@@ -266,7 +266,7 @@ func check_turn():
 			e.turns -= 1
 			if e.turns == 0:
 				e.fire()
-			await get_tree().create_timer(.2).timeout
+				await get_tree().create_timer(.2).timeout
 	effect_check = false
 	await get_tree().create_timer(.1).timeout
 			

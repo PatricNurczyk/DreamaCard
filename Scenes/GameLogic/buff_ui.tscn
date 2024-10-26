@@ -1,13 +1,27 @@
-[gd_scene load_steps=6 format=3 uid="uid://cvuqantx75lhj"]
+[gd_scene load_steps=9 format=3 uid="uid://cvuqantx75lhj"]
 
 [ext_resource type="Script" path="res://Scripts/GameLogic/buff_ui.gd" id="1_4tpdc"]
+[ext_resource type="Texture2D" uid="uid://blpvay2j41ts3" path="res://Assets/Card/buff_ui.png" id="2_fdqn1"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_gcn8d"]
+font_size = 25
+font_color = Color(0, 0, 0, 1)
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3sjab"]
+line_spacing = 0.0
+font_size = 25
+font_color = Color(0, 0, 0, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Animation" id="Animation_ev4xp"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("text:size")
+tracks/0/path = NodePath("TextureRect:size")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -19,42 +33,62 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("text:position")
+tracks/1/path = NodePath("TextureRect:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 306.835)]
+"values": [Vector2(0, 190.615)]
 }
-
-[sub_resource type="Animation" id="Animation_4daw1"]
-resource_name = "despawn"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("text:size")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(168.265, 380.77), Vector2(168.265, 0)]
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect/buffs:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("text:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, 190.615)]
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TextureRect/HP:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TextureRect/MP:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("TextureRect/Name:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_sq7vs"]
@@ -63,19 +97,19 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("text:size")
+tracks/0/path = NodePath("TextureRect:size")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(168.265, 0), Vector2(168.265, 380.77)]
+"values": [Vector2(250, 0), Vector2(250, 380.77)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("text:position")
+tracks/1/path = NodePath("TextureRect:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -84,11 +118,135 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(0, 190.615), Vector2(0, 0)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect/buffs:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TextureRect/HP:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TextureRect/MP:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("TextureRect/Name:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_iuxm0"]
+resource_name = "despawn"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(250, 380.77), Vector2(250, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 190.615)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect/buffs:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TextureRect/HP:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TextureRect/MP:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("TextureRect/Name:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_am4qw"]
 _data = {
 "RESET": SubResource("Animation_ev4xp"),
-"despawn": SubResource("Animation_4daw1"),
+"despawn": SubResource("Animation_iuxm0"),
 "spawn": SubResource("Animation_sq7vs")
 }
 
@@ -96,21 +254,66 @@ _data = {
 layout_mode = 3
 anchors_preset = 0
 offset_top = -191.0
-offset_right = 168.265
+offset_right = 250.0
 offset_bottom = 189.77
 size_flags_horizontal = 3
 script = ExtResource("1_4tpdc")
 
-[node name="text" type="RichTextLabel" parent="."]
+[node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_top = 190.615
 offset_right = 168.265
 offset_bottom = 190.615
+texture = ExtResource("2_fdqn1")
+expand_mode = 1
+
+[node name="buffs" type="RichTextLabel" parent="TextureRect"]
+visible = false
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 13.0
+offset_top = 243.0
+offset_right = 237.0
+offset_bottom = 376.0
 bbcode_enabled = true
+
+[node name="HP" type="Label" parent="TextureRect"]
+visible = false
+layout_mode = 0
+offset_left = -44.0
+offset_top = 189.0
+offset_right = 132.0
+offset_bottom = 224.0
+label_settings = SubResource("LabelSettings_gcn8d")
+horizontal_alignment = 1
+
+[node name="MP" type="Label" parent="TextureRect"]
+visible = false
+layout_mode = 0
+offset_left = 199.0
+offset_top = 191.0
+offset_right = 229.0
+offset_bottom = 226.0
+label_settings = SubResource("LabelSettings_3sjab")
+horizontal_alignment = 1
+
+[node name="Name" type="RichTextLabel" parent="TextureRect"]
+visible = false
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 10.0
+offset_top = 11.0
+offset_right = 239.0
+offset_bottom = 55.0
+bbcode_enabled = true
+scroll_active = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_am4qw")
 }
 
+[connection signal="gui_input" from="TextureRect" to="." method="_on_texture_rect_gui_input"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

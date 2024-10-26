@@ -67,3 +67,4 @@ pitch_scale = 1.33
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="finished" from="AudioStreamPlayer2D" to="." method="_on_audio_stream_player_2d_finished"]
+[connection signal="finished" from="unstable" to="." method="_on_unstable_finished"]

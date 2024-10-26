@@ -46,3 +46,8 @@ func _on_animation_player_animation_finished(anim_name):
 
 func _on_audio_stream_player_2d_finished():
 	queue_free()
+
+
+func _on_unstable_finished():
+	unstable.pitch_scale = randf_range(1,2)
+	unstable.play()

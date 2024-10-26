@@ -114,9 +114,9 @@ func _input(event):
 			select.play()
 			battle_music.set_bus("Master")
 			for i in init_ui:
-				if i.buff_ui:
+				if is_instance_valid(i.buff_ui):
 					i.buff_ui.despawn()
-					i.buff_ui = null
+				i.buff_ui = null
 			for c in combatants:
 				c.name_ui.visible = false
 			combatState = combatStates.animation

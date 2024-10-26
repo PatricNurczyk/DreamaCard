@@ -48,11 +48,11 @@ func _on_gui_input(event):
 			MOUSE_BUTTON_LEFT:
 				if buff_ui == null:
 					for b in get_parent().get_parent().get_node("Ally Initiative").get_children():
-						if b.buff_ui:
+						if is_instance_valid(b.buff_ui):
 							b.buff_ui.despawn()
 							b.buff_ui = null
 					for b in get_parent().get_parent().get_node("Enemy Initiative").get_children():
-						if b.buff_ui:
+						if is_instance_valid(b.buff_ui):
 							b.buff_ui.despawn()
 							b.buff_ui = null
 					buff_ui = BUFF_UI.instantiate()
@@ -60,15 +60,18 @@ func _on_gui_input(event):
 						buff_ui.effects.append(b)
 					for d in character.get_node("dots").get_children():
 						buff_ui.effects.append(d)
+					buff_ui.hp = str(character.HP)
+					buff_ui.mp = str(character.MP)
+					buff_ui.nameplate = character.name
 					buff_ui.global_position.y = global_position.y
 					if character.is_in_group("Ally"):
 						#buff.global_position += Vector2(200,-60)
 						var x_offset = get_parent().get_global_rect().end.x
-						buff_ui.global_position += Vector2(x_offset,-60)
+						buff_ui.global_position += Vector2(x_offset,-100)
 					else:
 						#buff.global_position += Vector2(200,-60)
-						var x_offset = get_parent().get_global_rect().position.x - get_size().x
-						buff_ui.global_position += Vector2(x_offset,-60)
+						var x_offset = get_parent().get_global_rect().position.x - buff_ui.get_size().x
+						buff_ui.global_position += Vector2(x_offset,-100)
 					get_parent().get_parent().add_child(buff_ui)
 				else:
 					buff_ui.despawn()
