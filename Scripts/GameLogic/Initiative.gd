@@ -63,6 +63,7 @@ func _on_gui_input(event):
 					buff_ui.hp = str(character.HP)
 					buff_ui.mp = str(character.MP)
 					buff_ui.nameplate = character.name
+					buff_ui.portrait = character.portrait
 					buff_ui.global_position.y = global_position.y
 					if character.is_in_group("Ally"):
 						#buff.global_position += Vector2(200,-60)
@@ -72,6 +73,7 @@ func _on_gui_input(event):
 						#buff.global_position += Vector2(200,-60)
 						var x_offset = get_parent().get_global_rect().position.x - buff_ui.get_size().x
 						buff_ui.global_position += Vector2(x_offset,-100)
+						buff_ui.flip = true
 					get_parent().get_parent().add_child(buff_ui)
 				else:
 					buff_ui.despawn()

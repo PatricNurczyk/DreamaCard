@@ -1,7 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://cvuqantx75lhj"]
+[gd_scene load_steps=12 format=3 uid="uid://cvuqantx75lhj"]
 
 [ext_resource type="Script" path="res://Scripts/GameLogic/buff_ui.gd" id="1_4tpdc"]
+[ext_resource type="Texture2D" uid="uid://wdlkfyrwey6x" path="res://Assets/Card/buff_ui_2.png" id="2_7onq0"]
 [ext_resource type="Texture2D" uid="uid://blpvay2j41ts3" path="res://Assets/Card/buff_ui.png" id="2_fdqn1"]
+[ext_resource type="AudioStream" uid="uid://bcaqimhb22igy" path="res://Sounds/Sound_Effects/open_desc.wav" id="3_2dv5r"]
+[ext_resource type="AudioStream" uid="uid://ctuapbahnrhkd" path="res://Sounds/Sound_Effects/close_desc.mp3" id="4_i33mk"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_gcn8d"]
 font_size = 25
@@ -90,6 +93,30 @@ tracks/5/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("TextureRect:texture")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_fdqn1")]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Portrait:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_sq7vs"]
 resource_name = "spawn"
@@ -165,6 +192,44 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("open")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("TextureRect:texture")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.0666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("2_fdqn1"), ExtResource("2_7onq0")]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Portrait:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0.0333333, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_iuxm0"]
@@ -242,6 +307,44 @@ tracks/5/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("close")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Portrait:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0.0333333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("TextureRect:texture")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.0333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("2_7onq0"), ExtResource("2_fdqn1")]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_am4qw"]
 _data = {
@@ -258,6 +361,15 @@ offset_right = 250.0
 offset_bottom = 189.77
 size_flags_horizontal = 3
 script = ExtResource("1_4tpdc")
+
+[node name="Portrait" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 7.665
+offset_top = 65.77
+offset_right = 249.45
+offset_bottom = 240.84
+expand_mode = 1
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
@@ -314,6 +426,14 @@ scroll_active = false
 libraries = {
 "": SubResource("AnimationLibrary_am4qw")
 }
+
+[node name="open" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_2dv5r")
+pitch_scale = 1.5
+
+[node name="close" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_i33mk")
+pitch_scale = 1.5
 
 [connection signal="gui_input" from="TextureRect" to="." method="_on_texture_rect_gui_input"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

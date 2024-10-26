@@ -58,6 +58,7 @@ signal action_completed
 func _input(event):
 	if Input.is_action_just_pressed("Cancel") and combatState == combatStates.target:
 		shatter.queue_free()
+		shatter = null
 		pass_ui.cancel()
 		for c in hand_ui:
 			c.cancel()
@@ -467,8 +468,9 @@ func select_target(node_index):
 	card_ui.add_child(shatter)
 	await get_tree().create_timer(.2).timeout
 	battle_music.set_bus("Muffle")
-	await shatter.shatter_ready
-	hand_ui[card_select].modulate = Color("ffffff00")
+	if is_instance_valid(shatter):
+		await shatter.shatter_ready
+		hand_ui[card_select].modulate = Color("ffffff00")
 
 func pass_turn():
 	combatState = combatStates.animation

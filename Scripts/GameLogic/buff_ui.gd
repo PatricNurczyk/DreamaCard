@@ -6,15 +6,22 @@ var effects = []
 @onready var hp_text = $TextureRect/HP
 @onready var mp_text = $TextureRect/MP
 @onready var nameplate_text = $TextureRect/Name
+@onready var portrait_img = $Portrait
 var hp : String
 var mp : String
 var nameplate : String
+var portrait : Texture2D
+var flip : bool = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	animation_player.play("spawn")
 	nameplate_text.text = "[center][b][font_size=30]" + nameplate + "[/font_size][/b][/center]"
 	hp_text.text = hp
 	mp_text.text = mp
+	portrait_img.texture = portrait
+	if flip:
+		portrait_img.flip_h = true
 	for e in effects:
 		
 		#dot

@@ -48,6 +48,9 @@ var MP : int
 @export var lightResist : int
 @export var defense : int
 
+@export_category("Portrait")
+@export var portrait : Texture2D
+
 var deck : Array[String]
 var hand : Array[String]
 func _ready():

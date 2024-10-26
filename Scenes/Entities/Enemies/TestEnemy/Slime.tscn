@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://ctg0om1inbc80"]
+[gd_scene load_steps=8 format=3 uid="uid://ctg0om1inbc80"]
 
 [ext_resource type="Script" path="res://Scripts/Entities/slime.gd" id="1_67kb8"]
 [ext_resource type="SpriteFrames" uid="uid://dimxiwpq5r6og" path="res://Assets/SpriteFrames/slime.tres" id="2_6mysm"]
+[ext_resource type="Texture2D" uid="uid://b4ayf4d517mes" path="res://Assets/Portaits/Slime.png" id="2_6unky"]
 [ext_resource type="AudioStream" uid="uid://cqplmnuvjfh7d" path="res://Sounds/Sound_Effects/hitHurt.wav" id="3_j5qpx"]
 [ext_resource type="FontFile" uid="uid://ctyag1opnfvyl" path="res://Assets/Fonts/name_font.fnt" id="4_kklxn"]
 
@@ -22,6 +23,7 @@ maxMP = 1
 speed = 5
 fireResist = -5
 frostResist = 5
+portrait = ExtResource("2_6unky")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -6)
