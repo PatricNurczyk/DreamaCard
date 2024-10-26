@@ -9,6 +9,7 @@ var shard_color : Color = Color(1,1,1,1)
 var invert = false
 signal shatter_ready
 signal done
+@onready var unstable = $unstable
 
 
 func _ready():
@@ -26,12 +27,14 @@ func _ready():
 		shard_scenes.push_back(shard)
 	polygon_2d.queue_free()
 	$AnimationPlayer.play("fade")
+	unstable.play()
 	
 func _process(delta):
 	pass
 	
 func fire():
 	shatter_ready.emit()
+	unstable.stop()
 	$AudioStreamPlayer2D.play()
 	for s in shard_scenes:
 		s.shoot()

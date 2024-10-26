@@ -72,6 +72,7 @@ func _input(event):
 		text_combat = ""
 		combatants[currTurn].is_idle = true
 		combatState = combatStates.allyTurn
+		battle_music.set_bus("Master")
 	if Input.is_action_just_pressed("Click") and combatState == combatStates.target:
 		var nearest_distance = 20
 		var mouse = get_local_mouse_position()
@@ -111,6 +112,7 @@ func _input(event):
 						combatState = combatStates.target
 						return
 			select.play()
+			battle_music.set_bus("Master")
 			for i in init_ui:
 				if i.buff_ui:
 					i.buff_ui.despawn()
@@ -463,6 +465,8 @@ func select_target(node_index):
 			shatter.shard_color = Color("#4fffbe")
 	shatter.position = UI_READYBREAK + Vector2(15.5,23)
 	card_ui.add_child(shatter)
+	await get_tree().create_timer(.2).timeout
+	battle_music.set_bus("Muffle")
 	await shatter.shatter_ready
 	hand_ui[card_select].modulate = Color("ffffff00")
 
