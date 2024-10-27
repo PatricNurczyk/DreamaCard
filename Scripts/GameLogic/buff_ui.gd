@@ -39,7 +39,7 @@ func _ready():
 				"defense":
 					buffs.text += "Block " + ("+" if e.value >= 0 else "") + str(e.value * 100) + "% " + ("next " if e.turns < 0 else "") + (("Attack" if e.turns < 0 else "of all Attack") if e.element == "universal" else e.element.capitalize() + " Attack") + ("s for " + str(e.turns) + (" turns" if e.turns != 1 else " turn") if e.turns > 0 else "") + "\n"
 				"stun":
-					buffs.text += "Stunned for " + str(e.turns) + (" turns\n" if e.turns > 1 else " turn\n") 
+					buffs.text += "Stunned for " + str(e.turns) + (" turns\n" if e.turns != 1 else " turn\n") 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
