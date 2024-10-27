@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dnybuylj7rpch"]
+[gd_scene load_steps=7 format=3 uid="uid://dnybuylj7rpch"]
 
 [ext_resource type="Script" path="res://Scripts/GameLogic/shattered.gd" id="1_0o0eu"]
 [ext_resource type="AudioStream" uid="uid://cbnkxanfcovqh" path="res://Sounds/Sound_Effects/shatter.mp3" id="2_ujby4"]
+[ext_resource type="AudioStream" uid="uid://c7n20x1qechk" path="res://Sounds/Sound_Effects/unstable.mp3" id="3_3dfe5"]
 
 [sub_resource type="Animation" id="Animation_anf3q"]
 length = 0.001
@@ -59,5 +60,11 @@ libraries = {
 stream = ExtResource("2_ujby4")
 volume_db = -6.753
 
+[node name="unstable" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_3dfe5")
+volume_db = -2.0
+pitch_scale = 1.33
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="finished" from="AudioStreamPlayer2D" to="." method="_on_audio_stream_player_2d_finished"]
+[connection signal="finished" from="unstable" to="." method="_on_unstable_finished"]

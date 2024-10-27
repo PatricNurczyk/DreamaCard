@@ -29,10 +29,12 @@ func cancel():
 	cardscale = .1
 	disabled = false
 	
+func execute_action():
+	get_parent().get_parent().pass_turn()
 	
 func _on_gui_input(event):
 	if not no_hover:
 		if event is InputEventMouseButton and event.pressed:
 			match event.button_index:
 				MOUSE_BUTTON_LEFT:
-					get_parent().get_parent().pass_turn()
+					execute_action()

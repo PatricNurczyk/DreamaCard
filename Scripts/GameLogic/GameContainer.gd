@@ -6,7 +6,7 @@ const INIT_ENEMY = preload("res://Scenes/GameLogic/Initiative_enemy.tscn")
 const SHATTER = preload("res://Scenes/GameLogic/shattered.tscn")
 const UI_POSITIONS = [Vector2(50,-58),Vector2(30,-65),Vector2(5,-70),Vector2(-15,-70),Vector2(-35,-65),Vector2(-60,-58),Vector2(-80,-48)]
 const UI_ROTATIONS = [25.0,17.5,10.0,0,-10.0,-17.5,-25.0]
-const UI_PASS = Vector2(-50,10)
+const UI_PASS = Vector2(-53,10)
 const UI_READYBREAK = Vector2(10,-30)
 const ENEMY_UI_READYBREAK = Vector2(-37.5,-25)
 @onready var ally_initiative = $"Initiative Tracker/Ally Initiative"
@@ -58,6 +58,7 @@ signal action_completed
 func _input(event):
 	if Input.is_action_just_pressed("Cancel") and combatState == combatStates.target:
 		shatter.queue_free()
+		shatter = null
 		pass_ui.cancel()
 		for c in hand_ui:
 			c.cancel()
@@ -72,6 +73,7 @@ func _input(event):
 		text_combat = ""
 		combatants[currTurn].is_idle = true
 		combatState = combatStates.allyTurn
+		battle_music.set_bus("Master")
 	if Input.is_action_just_pressed("Click") and combatState == combatStates.target:
 		var nearest_distance = 20
 		var mouse = get_local_mouse_position()
@@ -111,6 +113,11 @@ func _input(event):
 						combatState = combatStates.target
 						return
 			select.play()
+			battle_music.set_bus("Master")
+			for i in init_ui:
+				if is_instance_valid(i.buff_ui):
+					i.buff_ui.despawn()
+				i.buff_ui = null
 			for c in combatants:
 				c.name_ui.visible = false
 			combatState = combatStates.animation
@@ -249,6 +256,7 @@ func start_combat():
 			var ui = INIT_ALLY.instantiate()
 			ui.barName = body.collider.name
 			ui.initiative = body.collider.speed
+			ui.character = body.collider
 			init_ui.push_back(ui)
 			ally_initiative.add_child(ui)
 			combatants_position.push_back(battleground.get_child(allyCount).global_position)
@@ -274,6 +282,7 @@ func start_combat():
 			var ui = INIT_ENEMY.instantiate()
 			ui.barName = body.collider.name
 			ui.initiative = body.collider.speed 
+			ui.character = body.collider
 			print(body.collider.deck)
 			body.collider.deck.shuffle()
 			body.collider.hand.clear()
@@ -346,6 +355,11 @@ func next_turn():
 		print("Game Over")
 		get_tree().quit()
 	currTurn = find_next()
+	for i in range(len(init_ui)):
+		if i == currTurn:
+			init_ui[i].text.modulate = Color("00ff00")
+		else:
+			init_ui[i].text.modulate = Color("ffffff")
 	draw_card(combatants[currTurn])
 	combatants[currTurn].MP = min(combatants[currTurn].MP + 1, combatants[currTurn].maxMP)
 	camera_zoom = 5
@@ -452,8 +466,11 @@ func select_target(node_index):
 			shatter.shard_color = Color("#4fffbe")
 	shatter.position = UI_READYBREAK + Vector2(15.5,23)
 	card_ui.add_child(shatter)
-	await shatter.shatter_ready
-	hand_ui[card_select].modulate = Color("ffffff00")
+	await get_tree().create_timer(.2).timeout
+	battle_music.set_bus("Muffle")
+	if is_instance_valid(shatter):
+		await shatter.shatter_ready
+		hand_ui[card_select].modulate = Color("ffffff00")
 
 func pass_turn():
 	combatState = combatStates.animation
@@ -465,6 +482,10 @@ func pass_turn():
 	hand_ui = []
 	init_ui[currTurn].changeWhite()
 	text_combat = ""
+	for i in init_ui:
+		if is_instance_valid(i.buff_ui):
+			i.buff_ui.despawn()
+		i.buff_ui = null
 	next_turn()
 
 func enemy_turn():

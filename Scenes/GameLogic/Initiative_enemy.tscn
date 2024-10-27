@@ -2,9 +2,10 @@
 
 [ext_resource type="Script" path="res://Scripts/GameLogic/Initiative.gd" id="1_ucbv5"]
 
-[node name="inititative_ally" type="HBoxContainer"]
+[node name="inititative_enemy" type="HBoxContainer"]
 offset_right = 96.11
 offset_bottom = 27.0
+theme_override_constants/separation = 15
 alignment = 2
 script = ExtResource("1_ucbv5")
 
@@ -49,3 +50,5 @@ vertical_alignment = 1
 [node name="init_bar" type="ProgressBar" parent="Bars"]
 custom_minimum_size = Vector2(127.405, 0)
 layout_mode = 2
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

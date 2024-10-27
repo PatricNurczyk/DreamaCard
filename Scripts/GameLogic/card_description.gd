@@ -22,7 +22,7 @@ func _ready():
 func _input(event):
 	if event is InputEventMouseButton:
 		var mouse = get_global_mouse_position()
-		if abs(global_position.x - mouse.x) <= 26 or abs(global_position.y - mouse.y) <= 40 and event.pressed:
+		if abs(global_position.x - mouse.x) <= 26 and abs(global_position.y - mouse.y) <= 40 and event.pressed:
 			if Input.is_action_just_pressed("Click"):
 				if not get_parent().greyed and not lock:
 					lock = true

@@ -18,7 +18,7 @@ func execute_action(container,acc):
 		await container.get_tree().create_timer(.5).timeout
 		container.camera.position = container.battleground.position
 		container.camera_zoom = 4.5
-		container.combatants[container.currTurn].add_effect("modifier attack", .5, "earth", 0)
+		container.combatants[container.currTurn].add_effect("modifier attack", .5, "earth", -1)
 	else:
 		container.camera.position = container.combatants[container.target].position
 		container.camera_zoom = 6

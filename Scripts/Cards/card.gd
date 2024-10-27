@@ -71,6 +71,7 @@ func cancel():
 	cardscale = .1
 	disabled = false
 	z_index = 0
+	mouse_in = false
 	
 func grey_out():
 	$Card.modulate = Color("3b3b3b")
