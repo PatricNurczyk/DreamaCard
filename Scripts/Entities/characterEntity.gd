@@ -267,9 +267,9 @@ func check_turn():
 				d_num.position += Vector2(0,-5)
 				add_child(d_num)
 			e.turns -= 1
-			if e.turns == 0:
-				e.fire()
-				await get_tree().create_timer(.2).timeout
+		elif e.turns == 0:
+			e.fire()
+			await get_tree().create_timer(.2).timeout
 	effect_check = false
 	await get_tree().create_timer(.1).timeout
 			

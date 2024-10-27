@@ -11,9 +11,9 @@ func execute_action(container,acc):
 	container.camera_zoom = 4.5
 	var acc_check = randi_range(1,100) <= acc
 	if acc_check:
-		container.combatants[container.target].add_effect("accuracy attack", 30, "universal", 0)
+		container.combatants[container.target].add_effect("accuracy attack", 30, "universal", -1)
 		await container.get_tree().create_timer(.2).timeout
-		container.combatants[container.target].add_effect("modifier attack", .25, "universal", 0)
+		container.combatants[container.target].add_effect("modifier attack", .25, "universal", -1)
 	else:
 		var d_num = load("res://Scenes/GameLogic/damage_number.tscn")
 		d_num = d_num.instantiate()

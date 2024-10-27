@@ -6,7 +6,7 @@ var player_name = "Patty"
 
 #Character Data
 var playerData = {
-	"Patty": {
+	player_name: {
 		"MaxHP" : 100,
 		"MaxMP" : 2,
 		"Speed" : 10,

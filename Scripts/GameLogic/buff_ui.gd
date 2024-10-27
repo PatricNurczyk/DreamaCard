@@ -26,18 +26,20 @@ func _ready():
 		
 		#dot
 		if e.has_method("flare"):
-			buffs.text += str(e.value) + " " + e.element.capitalize() + " Damage over " + str(e.turns) + " turn" + ("s" if e.turns > 1 else "") + "\n\n"
+			buffs.text += str(e.value) + " " + e.element.capitalize() + " Damage over " + str(e.turns) + " turn" + ("s" if e.turns > 1 else "") + "\n"
 		#modifier
 		else:
 			match(e.type):
 				"offense":
-					buffs.text += ("+" if e.value >= 0 else "") + str(e.value * 100) + "% " + ("next " if e.turns == 0 else "") + (("Attack" if e.turns == 0 else "to all Attacks") if e.element == "universal" else e.element.capitalize() + " Attack") + (" for " + str(e.turns) + (" turns" if e.turns > 1 else " turn") if e.turns > 0 else "") + "\n\n"
+					buffs.text += ("+" if e.value >= 0 else "") + str(e.value * 100) + "% " + ("next " if e.turns < 0 else "") + (("Attack" if e.turns < 0 else "to all Attacks") if e.element == "universal" else e.element.capitalize() + " Attack") + (" for " + str(e.turns) + (" turns" if e.turns != 1 else " turn") if e.turns > 0 else "") + "\n"
 				"accuracy attack":
-					buffs.text += ("+" if e.value >= 0 else "") + str(e.value) + "% Accuracy " + ("next " if e.turns == 0 else "") + (("Attack" if e.turns == 0 else "to all Attacks") if e.element == "universal" else e.element.capitalize() + " Attack") + (" for " + str(e.turns) + (" turns" if e.turns > 1 else " turn") if e.turns > 0 else "") + "\n\n"
+					buffs.text += ("+" if e.value >= 0 else "") + str(e.value) + "% Accuracy " + ("next " if e.turns < 0 else "") + (("Attack" if e.turns < 0 else "to all Attacks") if e.element == "universal" else e.element.capitalize() + " Attack") + (" for " + str(e.turns) + (" turns" if e.turns != 1 else " turn") if e.turns > 0 else "") + "\n"
 				"accuracy":
-					buffs.text += ("+" if e.value >= 0 else "") + str(e.value) + "% Accuracy " + ("next " if e.turns == 0 else "") + (("Card" if e.turns == 0 else "") if e.element == "universal" else e.element.capitalize() + " Card") + (" for " + str(e.turns) + (" turns" if e.turns > 1 else " turn") if e.turns > 0 else "") + "\n\n"
+					buffs.text += ("+" if e.value >= 0 else "") + str(e.value) + "% Accuracy " + ("next " if e.turns < 0 else "") + (("Card" if e.turns < 0 else "") if e.element == "universal" else e.element.capitalize() + " Card") + (" for " + str(e.turns) + (" turns" if e.turns != 1 else " turn") if e.turns > 0 else "") + "\n"
 				"defense":
-					buffs.text += "Block " + ("+" if e.value >= 0 else "") + str(e.value * 100) + "% " + ("next " if e.turns == 0 else "") + (("Attack" if e.turns == 0 else "of all Attack") if e.element == "universal" else e.element.capitalize() + " Attack") + ("s for " + str(e.turns) + (" turns" if e.turns > 1 else " turn") if e.turns > 0 else "") + "\n\n"
+					buffs.text += "Block " + ("+" if e.value >= 0 else "") + str(e.value * 100) + "% " + ("next " if e.turns < 0 else "") + (("Attack" if e.turns < 0 else "of all Attack") if e.element == "universal" else e.element.capitalize() + " Attack") + ("s for " + str(e.turns) + (" turns" if e.turns != 1 else " turn") if e.turns > 0 else "") + "\n"
+				"stun":
+					buffs.text += "Stunned for " + str(e.turns) + (" turns\n" if e.turns > 1 else " turn\n") 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass

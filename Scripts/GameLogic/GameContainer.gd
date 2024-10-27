@@ -6,7 +6,7 @@ const INIT_ENEMY = preload("res://Scenes/GameLogic/Initiative_enemy.tscn")
 const SHATTER = preload("res://Scenes/GameLogic/shattered.tscn")
 const UI_POSITIONS = [Vector2(50,-58),Vector2(30,-65),Vector2(5,-70),Vector2(-15,-70),Vector2(-35,-65),Vector2(-60,-58),Vector2(-80,-48)]
 const UI_ROTATIONS = [25.0,17.5,10.0,0,-10.0,-17.5,-25.0]
-const UI_PASS = Vector2(-50,10)
+const UI_PASS = Vector2(-53,10)
 const UI_READYBREAK = Vector2(10,-30)
 const ENEMY_UI_READYBREAK = Vector2(-37.5,-25)
 @onready var ally_initiative = $"Initiative Tracker/Ally Initiative"
@@ -482,6 +482,10 @@ func pass_turn():
 	hand_ui = []
 	init_ui[currTurn].changeWhite()
 	text_combat = ""
+	for i in init_ui:
+		if is_instance_valid(i.buff_ui):
+			i.buff_ui.despawn()
+		i.buff_ui = null
 	next_turn()
 
 func enemy_turn():

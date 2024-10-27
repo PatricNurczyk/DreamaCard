@@ -22,7 +22,7 @@ var type
 var icon_img
 
 func trigger_effect():
-	if turns <= 0:
+	if turns < 0:
 		fire()
 	return value
 

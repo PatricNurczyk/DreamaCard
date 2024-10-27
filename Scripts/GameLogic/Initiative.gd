@@ -68,11 +68,11 @@ func _on_gui_input(event):
 					if character.is_in_group("Ally"):
 						#buff.global_position += Vector2(200,-60)
 						var x_offset = get_parent().get_global_rect().end.x
-						buff_ui.global_position += Vector2(x_offset,-100)
+						buff_ui.global_position += Vector2(x_offset,-150)
 					else:
 						#buff.global_position += Vector2(200,-60)
 						var x_offset = get_parent().get_global_rect().position.x - buff_ui.get_size().x
-						buff_ui.global_position += Vector2(x_offset,-100)
+						buff_ui.global_position += Vector2(x_offset,-150)
 						buff_ui.flip = true
 					get_parent().get_parent().add_child(buff_ui)
 				else:
