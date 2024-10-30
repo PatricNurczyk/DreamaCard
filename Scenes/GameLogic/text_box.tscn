@@ -1,11 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://bxro3u6hrmm8t"]
+[gd_scene load_steps=5 format=3 uid="uid://bxro3u6hrmm8t"]
 
 [ext_resource type="Texture2D" uid="uid://dy87dekx8r8oh" path="res://Assets/Character Sprites/text_box.png" id="1_c7djh"]
 [ext_resource type="Script" path="res://Scripts/GameLogic/text_box.gd" id="1_ujt1m"]
+[ext_resource type="FontFile" uid="uid://ctyag1opnfvyl" path="res://Assets/Fonts/name_font.fnt" id="3_txp6l"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_pnrew"]
+font = ExtResource("3_txp6l")
+font_size = 8
+font_color = Color(0, 0, 0, 1)
 
 [node name="MarginContainer" type="MarginContainer"]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 32.0
+offset_bottom = 33.0
 script = ExtResource("1_ujt1m")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
@@ -27,6 +33,7 @@ theme_override_constants/margin_bottom = 8
 [node name="Label" type="Label" parent="MarginContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+label_settings = SubResource("LabelSettings_pnrew")
 vertical_alignment = 1
 
 [node name="LetterDisplayTimer" type="Timer" parent="."]

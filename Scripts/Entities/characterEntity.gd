@@ -3,6 +3,7 @@ class_name EntityCharacter
 
 @export var WALK = 60.0
 @export var SPRINT = 90.0
+@export var keepAfterDeath = false
 
 @onready var sprite = $AnimatedSprite2D
 var SPEED = 30.0
@@ -323,3 +324,17 @@ func _on_animation_finished():
 		is_idle = true
 	if sprite.animation == "hurt":
 		is_idle = true
+
+
+func check_nearby_player():
+	var space := get_world_2d().direct_space_state
+	var search = PhysicsShapeQueryParameters2D.new()
+	search.transform = global_transform
+	var shape = CircleShape2D.new()
+	shape.radius = 8
+	search.shape = shape
+	var bodies = space.intersect_shape(search)
+	for b in bodies:
+		if b.collider.is_in_group("Player"):
+			return true
+	return false

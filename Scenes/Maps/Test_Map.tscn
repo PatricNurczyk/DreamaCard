@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://ofi60jxijtjs"]
+[gd_scene load_steps=8 format=3 uid="uid://ofi60jxijtjs"]
 
 [ext_resource type="Script" path="res://Scripts/GameLogic/mapTemplate.gd" id="1_ix6fp"]
 [ext_resource type="Texture2D" uid="uid://beo24tjxdq3vy" path="res://Assets/Tilesets/dungeon_tiles_2.png" id="2_jbwlo"]
 [ext_resource type="PackedScene" uid="uid://6yg55gdo1cd7" path="res://Scenes/GameLogic/TransitionEvent.tscn" id="3_3rrgj"]
 [ext_resource type="PackedScene" uid="uid://ctg0om1inbc80" path="res://Scenes/Entities/Enemies/TestEnemy/Slime.tscn" id="4_d1j5l"]
+[ext_resource type="PackedScene" uid="uid://dui1tu81udeeh" path="res://Scenes/Entities/Enemies/TestEnemy/SlimeKingNPC.tscn" id="5_pfdr5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rvtxw"]
 texture = ExtResource("2_jbwlo")
@@ -655,7 +656,7 @@ position = Vector2(464, 143)
 map = "Test_Map2"
 
 [node name="Slime" parent="." instance=ExtResource("4_d1j5l")]
-position = Vector2(152, 70)
+position = Vector2(240, 53)
 
 [node name="Slime3" parent="." instance=ExtResource("4_d1j5l")]
 position = Vector2(363, 190)
@@ -665,3 +666,8 @@ position = Vector2(367, 128)
 
 [node name="Slime6" parent="." instance=ExtResource("4_d1j5l")]
 position = Vector2(227, 248)
+
+[node name="King Slime" parent="." instance=ExtResource("5_pfdr5")]
+position = Vector2(52, 68)
+deck_template = Array[String](["Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Chill", "Chill", "Chill", "Chill", "Chill", "Cooldown", "Cooldown", "Cooldown", "Cooldown", "Cooldown", "Cooldown", "Cooldown", "Cooldown", "Cooldown"])
+maxHP = 10

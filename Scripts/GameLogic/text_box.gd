@@ -3,14 +3,22 @@ extends MarginContainer
 @onready var label = $MarginContainer/Label
 
 const MAX_WIDTH : int = 256
+const SPEEDUP : int = 2
 
 var text : String= ""
 var letter_index = 0
 var letter_time = 0.03
 var space_time = 0.06
 var punct_time = 0.2
+var is_held : bool = false
 
 signal finished
+
+func _process(delta):
+	if Input.is_action_pressed("advance_dialogue"):
+		is_held = true
+	else:
+		is_held = false
 
 func display_text(text_display : String):
 	text = text_display
@@ -33,16 +41,17 @@ func display_text(text_display : String):
 func display_letter():
 	label.text += text[letter_index]
 	letter_index += 1
+	print(str(letter_index) + "/" + str(len(text)))
 	if letter_index >= len(text):
 		finished.emit()
 		return
 	match(text[letter_index]):
 		".","!",",","?":
-			timer.wait_time = punct_time
+			timer.wait_time = punct_time / (SPEEDUP if is_held else 1)
 		" ":
-			timer.wait_time = space_time
+			timer.wait_time = space_time / (SPEEDUP if is_held else 1)
 		_:
-			timer.wait_time = letter_time
+			timer.wait_time = letter_time / (SPEEDUP if is_held else 1)
 	timer.start()
 	await timer.timeout
 	display_letter()
