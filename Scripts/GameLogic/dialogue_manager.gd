@@ -13,6 +13,16 @@ var game_container
 enum gameStates {explore, combat, cutscene, transition}
 var currState = gameStates.explore
 
+var state_tracker = {
+	1: 0,
+	2: false,
+	3: false
+}
+
+#SIGNAL LIST
+signal slimes_beaten
+
+
 
 
 var dialogue = {
@@ -42,9 +52,12 @@ var dialogue = {
 		{ "position" : null, "line" : "Alright, well good luck, I got a lot of HP cause the developer is too lazy to properly balance"},
 		{ "position" : null, "line" : init_combat, "parameters": null},
 		{ "position" : null, "line" : "Nice You won, thanks for playing!!!"},
-		]
+	],
+	3 : [
+		{ "position" : null, "line" : "........"},
+		{ "position" : null, "line" : "Bro...you already won, I can't help you"},
+	]
 }
-
 
 
 func _unhandled_input(event):
@@ -102,8 +115,13 @@ func init_combat():
 		game_container.start_combat()
 	
 func _on_combat_finished():
-	if curr_line_index >= len(dialogue[char_lines]):
-		currState = gameStates.explore
+	if char_lines > 0:
+		if curr_line_index >= len(dialogue[char_lines]):
+			game_container.combat_completed.disconnect(_on_combat_finished)
+			currState = gameStates.explore
+		else:
+			currState = gameStates.cutscene
+			advance()
 	else:
-		currState = gameStates.cutscene
-		advance()
+		game_container.combat_completed.disconnect(_on_combat_finished)
+		currState = gameStates.explore

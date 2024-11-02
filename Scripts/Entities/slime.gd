@@ -61,3 +61,11 @@ func enemy_choice(combatants):
 	if discard >= 0:
 		hand.pop_at(discard)
 	return choice
+	
+func on_death_battle():
+	DialogueManager.state_tracker[1] += 1
+
+
+func on_death_post_battle():
+	if DialogueManager.state_tracker[1] == 4:
+		DialogueManager.slimes_beaten.emit()

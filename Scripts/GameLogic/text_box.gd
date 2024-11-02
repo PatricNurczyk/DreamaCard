@@ -23,7 +23,8 @@ func _process(delta):
 func display_text(text_display : String):
 	text = text_display
 	label.text = text_display
-	await resized
+	if label.text.length() > 8:
+		await resized
 	custom_minimum_size.x = min(size.x, MAX_WIDTH)
 	
 	if size.x > MAX_WIDTH:

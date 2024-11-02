@@ -562,12 +562,11 @@ func end_combat(enemies):
 	camera.position = battleground.position
 	camera_zoom = 5
 	await get_tree().create_timer(.5).timeout
-	for e in enemies:
-		if not e.keepAfterDeath:
-			combatants.erase(e)
-			e.queue_free()
 	for i in init_ui:
 		i.queue_free()
+	for e in enemies:
+		if not e.keepAfterDeath:
+			e.visible = false
 	init_ui.clear()
 	combatants_position.clear()
 	for p in past_positions:
@@ -587,3 +586,8 @@ func end_combat(enemies):
 	battleground.queue_free()
 	combat_completed.emit()
 	pause_position = battle_music.get_playback_position()
+	for e in enemies:
+		e.on_death_post_battle()
+		combatants.erase(e)
+		if not e.keepAfterDeath:
+			e.queue_free()

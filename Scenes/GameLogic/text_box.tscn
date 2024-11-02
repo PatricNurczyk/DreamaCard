@@ -1,13 +1,12 @@
 [gd_scene load_steps=5 format=3 uid="uid://bxro3u6hrmm8t"]
 
-[ext_resource type="Texture2D" uid="uid://dy87dekx8r8oh" path="res://Assets/Character Sprites/text_box.png" id="1_c7djh"]
 [ext_resource type="Script" path="res://Scripts/GameLogic/text_box.gd" id="1_ujt1m"]
+[ext_resource type="Texture2D" uid="uid://ctftyng04wg45" path="res://Assets/Character Sprites/text_box_dream.png" id="2_3vkru"]
 [ext_resource type="FontFile" uid="uid://ctyag1opnfvyl" path="res://Assets/Fonts/name_font.fnt" id="3_txp6l"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_pnrew"]
 font = ExtResource("3_txp6l")
 font_size = 8
-font_color = Color(0, 0, 0, 1)
 
 [node name="MarginContainer" type="MarginContainer"]
 offset_right = 32.0
@@ -16,7 +15,7 @@ script = ExtResource("1_ujt1m")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 layout_mode = 2
-texture = ExtResource("1_c7djh")
+texture = ExtResource("2_3vkru")
 region_rect = Rect2(0, 0, 48, 48)
 patch_margin_left = 16
 patch_margin_top = 16

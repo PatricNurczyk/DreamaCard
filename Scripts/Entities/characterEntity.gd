@@ -157,6 +157,7 @@ func takeDamage(value: int, element: String):
 	is_idle = false
 	if HP == 0:
 		is_dead = true
+		on_death_battle()
 		sprite.play("death") 
 		for e in buffs.get_children():
 			e.fire()
@@ -338,3 +339,10 @@ func check_nearby_player():
 		if b.collider.is_in_group("Player"):
 			return true
 	return false
+
+
+func on_death_battle():
+	pass
+	
+func on_death_post_battle():
+	pass
