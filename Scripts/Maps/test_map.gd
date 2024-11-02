@@ -13,6 +13,15 @@ func _ready():
 		$Slime4.queue_free()
 		$Slime6.queue_free()
 	DialogueManager.slimes_beaten.connect(_on_slimes_beaten)
+	if not DialogueManager.state_tracker["map_first_load"]:
+		DialogueManager.state_tracker["map_first_load"] = true
+		await get_tree().create_timer(1).timeout
+		DialogueManager.play_dialog($"King Slime", 4)
+		await DialogueManager.finished
+		DialogueManager.currState = DialogueManager.gameStates.cutscene
+		get_parent().camera.position = Vector2(51,62)
+		await get_tree().create_timer(1).timeout
+		DialogueManager.play_dialog($"King Slime", 5)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

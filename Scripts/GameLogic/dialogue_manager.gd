@@ -12,8 +12,11 @@ var can_advance : bool = false
 var game_container
 enum gameStates {explore, combat, cutscene, transition}
 var currState = gameStates.explore
+var loaded_battle_theme = null
+signal finished
 
 var state_tracker = {
+	"map_first_load" : false,
 	1: 0,
 	2: false,
 	3: false
@@ -50,12 +53,20 @@ var dialogue = {
 	2 : [
 		{ "position" : null, "line" : "Oh...well that was fast...guess its my turn."},
 		{ "position" : null, "line" : "Alright, well good luck, I got a lot of HP cause the developer is too lazy to properly balance"},
-		{ "position" : null, "line" : init_combat, "parameters": null},
+		{ "position" : null, "line" : init_combat, "parameters": ["res://Sounds/Music/DECISIVE BATTLE.mp3"]},
 		{ "position" : null, "line" : "Nice You won, thanks for playing!!!"},
 	],
 	3 : [
 		{ "position" : null, "line" : "........"},
 		{ "position" : null, "line" : "Bro...you already won, I can't help you"},
+	],
+	4 : [
+		{ "position" : Vector2(49,143), "line" : "Hey, how did you get here?"},
+	],
+	5 : [
+		{ "position" : null, "line" : "Wait a minute, you're not like the rest of us."},
+		{ "position" : null, "line" : "NahNahNahNahNahNahNahNahNahNahNahNahNahNahNahNahNahNahNahNah"},
+		{ "position" : null, "line" : "No you're different, come over here and talk to me by pressing [SPACE]"},
 	]
 }
 
@@ -66,7 +77,7 @@ func _unhandled_input(event):
 		advance()
 
 
-func play_dialog(c : CharacterBody2D, lines_id: int):
+func play_dialog(c : CharacterBody2D, lines_id : int):
 	if is_dialog:
 		return
 	is_dialog = true
@@ -106,15 +117,23 @@ func advance():
 		char_lines = -1
 		curr_line_index = 0
 		currState = gameStates.explore
+		finished.emit()
 		return
 	show_text()
 	
-func init_combat():
+func init_combat(parameters = null):
+	if parameters:
+		loaded_battle_theme = game_container.battle_music.stream
+		game_container.battle_music.stream = load(parameters[0])
+		game_container.pause_position = 0
 	if game_container:
 		game_container.combat_completed.connect(_on_combat_finished)
 		game_container.start_combat()
 	
 func _on_combat_finished():
+	if loaded_battle_theme:
+		game_container.battle_music.stream = loaded_battle_theme
+		game_container.pause_position = 0
 	if char_lines > 0:
 		if curr_line_index >= len(dialogue[char_lines]):
 			game_container.combat_completed.disconnect(_on_combat_finished)

@@ -3,7 +3,7 @@ extends EntityCharacter
 @export var deck_template : Array[String]
 
 func _unhandled_input(event):
-	if Input.is_action_just_pressed("Interact") and check_nearby_player():
+	if Input.is_action_just_pressed("Interact") and check_nearby_player(12):
 		if DialogueManager.state_tracker[3]:
 			DialogueManager.play_dialog(self, 3)
 		elif DialogueManager.state_tracker[2]:

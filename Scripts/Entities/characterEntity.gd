@@ -327,12 +327,12 @@ func _on_animation_finished():
 		is_idle = true
 
 
-func check_nearby_player():
+func check_nearby_player(size : int):
 	var space := get_world_2d().direct_space_state
 	var search = PhysicsShapeQueryParameters2D.new()
 	search.transform = global_transform
 	var shape = CircleShape2D.new()
-	shape.radius = 8
+	shape.radius = size
 	search.shape = shape
 	var bodies = space.intersect_shape(search)
 	for b in bodies:

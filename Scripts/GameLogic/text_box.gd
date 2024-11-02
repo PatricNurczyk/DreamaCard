@@ -2,7 +2,7 @@ extends MarginContainer
 @onready var timer = $LetterDisplayTimer
 @onready var label = $MarginContainer/Label
 
-const MAX_WIDTH : int = 256
+const MAX_WIDTH : int = 200
 const SPEEDUP : int = 2
 
 var text : String= ""
@@ -11,6 +11,7 @@ var letter_time = 0.03
 var space_time = 0.06
 var punct_time = 0.2
 var is_held : bool = false
+@onready var tone = $tone
 
 signal finished
 
@@ -28,7 +29,11 @@ func display_text(text_display : String):
 	custom_minimum_size.x = min(size.x, MAX_WIDTH)
 	
 	if size.x > MAX_WIDTH:
-		label.autowrap_mode = TextServer.AUTOWRAP_WORD
+		var test = text_display.split(" ")
+		if test.size() < 2:
+			label.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
+		else:
+			label.autowrap_mode = TextServer.AUTOWRAP_WORD
 		await resized
 		await resized
 		custom_minimum_size.y = size.y
@@ -40,9 +45,9 @@ func display_text(text_display : String):
 	display_letter()
 	
 func display_letter():
+	tone.play()
 	label.text += text[letter_index]
 	letter_index += 1
-	print(str(letter_index) + "/" + str(len(text)))
 	if letter_index >= len(text):
 		finished.emit()
 		return

@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bxro3u6hrmm8t"]
+[gd_scene load_steps=6 format=3 uid="uid://bxro3u6hrmm8t"]
 
 [ext_resource type="Script" path="res://Scripts/GameLogic/text_box.gd" id="1_ujt1m"]
 [ext_resource type="Texture2D" uid="uid://ctftyng04wg45" path="res://Assets/Character Sprites/text_box_dream.png" id="2_3vkru"]
 [ext_resource type="FontFile" uid="uid://ctyag1opnfvyl" path="res://Assets/Fonts/name_font.fnt" id="3_txp6l"]
+[ext_resource type="AudioStream" uid="uid://ccldwgefe2ihv" path="res://Sounds/Sound_Effects/tone.wav" id="4_vdfox"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_pnrew"]
 font = ExtResource("3_txp6l")
@@ -37,3 +38,8 @@ vertical_alignment = 1
 
 [node name="LetterDisplayTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="tone" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(8, 12)
+stream = ExtResource("4_vdfox")
+volume_db = -5.45

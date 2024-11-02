@@ -169,7 +169,8 @@ func _process(delta):
 	elif DialogueManager.currState == DialogueManager.gameStates.cutscene:
 		if player:
 			player.can_walk = false
-			player.velocity = Vector2.ZERO	
+			player.velocity = Vector2.ZERO
+		battle_music.volume_db = move_toward(battle_music.volume_db, -60, 40 * delta)
 	elif DialogueManager.currState == DialogueManager.gameStates.combat:
 		battle_music.volume_db = move_toward(battle_music.volume_db, -15, 40 * delta)
 		for i in range(len(combatants)):

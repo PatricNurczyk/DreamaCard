@@ -663,7 +663,7 @@ spawn_point = 1
 [node name="TankySlime" parent="." instance=ExtResource("4_wf8wd")]
 position = Vector2(491, 42)
 script = ExtResource("6_uo815")
-deck_template = Array[String]([])
+deck_template = Array[String](["Frost", "Frost", "Frost", "Frost", "Frost", "Cooldown", "Cooldown", "Cooldown", "Chill", "Chill"])
 maxHP = 30
 fireResist = -10
 frostResist = 10

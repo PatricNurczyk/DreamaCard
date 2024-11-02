@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://ofi60jxijtjs"]
+[gd_scene load_steps=14 format=3 uid="uid://ofi60jxijtjs"]
 
 [ext_resource type="Script" path="res://Scripts/Maps/test_map.gd" id="1_08xdb"]
+[ext_resource type="AudioStream" uid="uid://dgi65k307okto" path="res://Sounds/Music/Impatience.mp3" id="2_7r77m"]
 [ext_resource type="Texture2D" uid="uid://beo24tjxdq3vy" path="res://Assets/Tilesets/dungeon_tiles_2.png" id="2_jbwlo"]
 [ext_resource type="PackedScene" uid="uid://6yg55gdo1cd7" path="res://Scenes/GameLogic/TransitionEvent.tscn" id="3_3rrgj"]
 [ext_resource type="PackedScene" uid="uid://ctg0om1inbc80" path="res://Scenes/Entities/Enemies/TestEnemy/Slime.tscn" id="4_d1j5l"]
@@ -1414,6 +1415,7 @@ _data = {
 script = ExtResource("1_08xdb")
 SpawnPoints = Array[Vector2]([Vector2(24, 134), Vector2(440, 143)])
 Directions = Array[String](["right", "left"])
+battle_music = ExtResource("2_7r77m")
 
 [node name="TileMap" type="TileMap" parent="."]
 z_as_relative = false
@@ -1442,7 +1444,7 @@ position = Vector2(227, 248)
 [node name="King Slime" parent="." instance=ExtResource("5_pfdr5")]
 position = Vector2(52, 68)
 deck_template = Array[String](["Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Chill", "Chill", "Chill", "Chill", "Chill", "Cooldown", "Cooldown", "Cooldown", "Cooldown", "Cooldown", "Cooldown", "Cooldown", "Cooldown", "Cooldown"])
-maxHP = 10
+maxHP = 50
 
 [node name="TileMap2" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_xmdtw")
