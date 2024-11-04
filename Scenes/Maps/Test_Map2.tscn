@@ -659,7 +659,7 @@ position = Vector2(288, -15)
 map = "Test_Map"
 spawn_point = 1
 
-[node name="TankySlime" parent="." instance=ExtResource("4_wf8wd")]
+[node name="Prince Slime" parent="." instance=ExtResource("4_wf8wd")]
 position = Vector2(491, 42)
 deck_template = Array[String](["Frost", "Frost", "Frost", "Cooldown", "Chill", "Chill", "Cooldown", "Frost", "Frost"])
 maxHP = 30
