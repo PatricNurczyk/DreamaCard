@@ -1,6 +1,7 @@
 extends EntityCharacter
 
 @export var deck_template : Array[String]
+var has_talked = false
 
 func _unhandled_input(event):
 	if Input.is_action_just_pressed("Interact") and check_nearby_player(12):
@@ -10,7 +11,11 @@ func _unhandled_input(event):
 			add_to_group("Enemy")
 			DialogueManager.play_dialog(self, 2)
 		else:
-			DialogueManager.play_dialog(self, 1)
+			if not has_talked:
+				DialogueManager.play_dialog(self, 1)
+				has_talked = true
+			else:
+				DialogueManager.play_dialog(self, 6)
 
 
 

@@ -52,7 +52,7 @@ var dialogue = {
 	],
 	2 : [
 		{ "position" : null, "line" : "Oh...well that was fast...guess its my turn."},
-		{ "position" : null, "line" : "Alright, well good luck, I got a lot of HP cause the developer is too lazy to properly balance"},
+		{ "position" : null, "line" : "Alright, well good luck, I'm not like the rest of them"},
 		{ "position" : null, "line" : init_combat, "parameters": ["res://Sounds/Music/DECISIVE BATTLE.mp3"]},
 		{ "position" : null, "line" : "Nice You won, thanks for playing!!!"},
 	],
@@ -61,12 +61,16 @@ var dialogue = {
 		{ "position" : null, "line" : "Bro...you already won, I can't help you"},
 	],
 	4 : [
-		{ "position" : Vector2(49,143), "line" : "Hey, how did you get here?"},
+		{ "position" : Vector2(100,153), "line" : "Hey, how did you get here?"},
 	],
 	5 : [
 		{ "position" : null, "line" : "Wait a minute, you're not like the rest of us."},
 		{ "position" : null, "line" : "NahNahNahNahNahNahNahNahNahNahNahNahNahNahNahNahNahNahNahNah"},
-		{ "position" : null, "line" : "No you're different, come over here and talk to me by pressing [SPACE]"},
+		{ "position" : null, "line" : "No you're different"},
+		{ "position" : null, "line" : "come over here and talk to me by pressing [SPACE]"}
+	],
+	6 : [
+		{ "position" : null, "line" : "chop chop, and don't come back till the prince has been defeated"}
 	]
 }
 
