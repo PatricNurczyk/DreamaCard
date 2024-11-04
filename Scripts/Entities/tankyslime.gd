@@ -63,9 +63,8 @@ func enemy_choice(combatants):
 	return choice
 	
 func on_death_battle():
-	DialogueManager.state_tracker[1] += 1
+	pass
 
 
 func on_death_post_battle():
-	if DialogueManager.state_tracker[1] == 4:
-		DialogueManager.slimes_beaten.emit()
+	DialogueManager.state_tracker[2] = true

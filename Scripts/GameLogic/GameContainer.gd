@@ -28,8 +28,8 @@ var camera_speed : float = 3
 @onready var select = $select
 @onready var battle_music = $battleMusic
 
-enum gameStates {explore, combat, cutscene, transition}
-var currState = gameStates.explore
+#enum gameStates {explore, combat, cutscene, transition}
+#var currState = gameStates.explore
 
 
 #Combat variables
@@ -54,6 +54,7 @@ var acc_result
 var pause_position  : float = 0
 # Called when the node enters the scene tree for the first time.
 signal action_completed
+signal combat_completed
 
 func _input(event):
 	if Input.is_action_just_pressed("Cancel") and combatState == combatStates.target:
@@ -142,6 +143,7 @@ func _input(event):
 			text_combat = ""
 			next_turn()
 func _ready():
+	DialogueManager.game_container = self
 	load_map()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -157,14 +159,19 @@ func _process(delta):
 		init_ui[c].maxMP = combatants[c].maxMP
 		init_ui[c].HP = combatants[c].HP
 		init_ui[c].MP = combatants[c].MP
-	if currState == gameStates.explore:
+	if DialogueManager.currState == DialogueManager.gameStates.explore:
 		camera.position = player.position
 		player.can_walk = true
 		battle_music.volume_db = move_toward(battle_music.volume_db, -60, 40 * delta)
-	elif currState == gameStates.transition:
+	elif DialogueManager.currState == DialogueManager.gameStates.transition:
 		if player:
 			player.can_walk = false
-	elif currState == gameStates.combat:
+	elif DialogueManager.currState == DialogueManager.gameStates.cutscene:
+		if player:
+			player.can_walk = false
+			player.velocity = Vector2.ZERO
+		battle_music.volume_db = move_toward(battle_music.volume_db, -60, 40 * delta)
+	elif DialogueManager.currState == DialogueManager.gameStates.combat:
 		battle_music.volume_db = move_toward(battle_music.volume_db, -15, 40 * delta)
 		for i in range(len(combatants)):
 			var t = delta * SPEED
@@ -200,9 +207,9 @@ func _process(delta):
 	
 	
 func load_map():
-	if currState == gameStates.transition:
+	if DialogueManager.currState == DialogueManager.gameStates.transition:
 		return
-	currState = gameStates.transition
+	DialogueManager.currState = DialogueManager.gameStates.transition
 	screen_dim.play("dim_in")
 	await get_tree().create_timer(.5).timeout
 	if map:
@@ -226,15 +233,15 @@ func load_map():
 	player.velocity = Vector2.ZERO
 	await get_tree().create_timer(.5).timeout
 	screen_dim.play("dim_out")
-	currState = gameStates.explore
+	DialogueManager.currState = DialogueManager.gameStates.explore
 	
 	
 func start_combat():
 	allyCount = 0
 	enemyCount = 0
-	if currState == gameStates.combat:
+	if DialogueManager.currState == DialogueManager.gameStates.combat:
 		return
-	currState = gameStates.combat
+	DialogueManager.currState = DialogueManager.gameStates.combat
 	battleground = COMBATCREATOR.instantiate()
 	battleground.position = player.position
 	add_child(battleground)
@@ -246,8 +253,8 @@ func start_combat():
 	search.shape = shape
 	var bodies = space.intersect_shape(search)
 	for body in bodies:
-		body.collider.z_index = 2
 		if body.collider.is_in_group("Ally"):
+			body.collider.z_index = 2
 			body.collider.can_walk = false
 			body.collider.velocity = Vector2.ZERO
 			body.collider.HP = body.collider.maxHP
@@ -273,6 +280,7 @@ func start_combat():
 			past_positions.push_back(combatants[-1].position)
 			combatants[-1].get_node("CollisionShape2D").visible = false
 		elif body.collider.is_in_group("Enemy"):
+			body.collider.z_index = 2
 			if enemyCount >= 5:
 				body.collider.queue_free()
 				continue
@@ -290,6 +298,7 @@ func start_combat():
 			init_ui.push_back(ui)
 			combatants_position.push_back(battleground.get_child(enemyCount + 4).global_position)
 			enemyCount += 1
+			past_positions.push_back(combatants[-1].position)
 			body.collider.direction = "left"
 	camera.position = battleground.position
 	battle_veil_on()
@@ -554,11 +563,11 @@ func end_combat(enemies):
 	camera.position = battleground.position
 	camera_zoom = 5
 	await get_tree().create_timer(.5).timeout
-	for e in enemies:
-		combatants.erase(e)
-		e.queue_free()
 	for i in init_ui:
 		i.queue_free()
+	for e in enemies:
+		if not e.keepAfterDeath:
+			e.visible = false
 	init_ui.clear()
 	combatants_position.clear()
 	for p in past_positions:
@@ -576,5 +585,10 @@ func end_combat(enemies):
 	past_positions.clear()
 	combatants_position.clear()
 	battleground.queue_free()
-	currState = gameStates.explore
+	combat_completed.emit()
 	pause_position = battle_music.get_playback_position()
+	for e in enemies:
+		e.on_death_post_battle()
+		combatants.erase(e)
+		if not e.keepAfterDeath:
+			e.queue_free()

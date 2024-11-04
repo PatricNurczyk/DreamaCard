@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://c8yiujlxx4c7v"]
+[gd_scene load_steps=9 format=3 uid="uid://c8yiujlxx4c7v"]
 
 [ext_resource type="Script" path="res://Scripts/GameLogic/mapTemplate.gd" id="1_drwgu"]
 [ext_resource type="Texture2D" uid="uid://beo24tjxdq3vy" path="res://Assets/Tilesets/dungeon_tiles_2.png" id="2_w1bbl"]
 [ext_resource type="AudioStream" uid="uid://be3vltovp3j63" path="res://Sounds/Music/Boss Theme.mp3" id="2_w7o0t"]
 [ext_resource type="PackedScene" uid="uid://6yg55gdo1cd7" path="res://Scenes/GameLogic/TransitionEvent.tscn" id="3_ipjbk"]
 [ext_resource type="PackedScene" uid="uid://ctg0om1inbc80" path="res://Scenes/Entities/Enemies/TestEnemy/Slime.tscn" id="4_wf8wd"]
+[ext_resource type="Script" path="res://Scripts/Entities/tankyslime.gd" id="6_uo815"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3u0hm"]
 texture = ExtResource("2_w1bbl")
@@ -661,5 +662,9 @@ spawn_point = 1
 
 [node name="Prince Slime" parent="." instance=ExtResource("4_wf8wd")]
 position = Vector2(491, 42)
-deck_template = Array[String](["Frost", "Frost", "Frost", "Cooldown", "Chill", "Chill", "Cooldown", "Frost", "Frost"])
+script = ExtResource("6_uo815")
+deck_template = Array[String](["Frost", "Frost", "Frost", "Frost", "Frost", "Cooldown", "Cooldown", "Cooldown", "Chill", "Chill"])
 maxHP = 30
+fireResist = -10
+frostResist = 10
+portrait = null

@@ -1,0 +1,60 @@
+[gd_scene load_steps=7 format=3 uid="uid://dui1tu81udeeh"]
+
+[ext_resource type="Script" path="res://Scripts/Entities/slime_king.gd" id="1_krc2q"]
+[ext_resource type="SpriteFrames" uid="uid://dw5f7wep3s247" path="res://Assets/SpriteFrames/king_slime.tres" id="3_minva"]
+[ext_resource type="AudioStream" uid="uid://cqplmnuvjfh7d" path="res://Sounds/Sound_Effects/hitHurt.wav" id="4_exc6s"]
+[ext_resource type="FontFile" uid="uid://ctyag1opnfvyl" path="res://Assets/Fonts/name_font.fnt" id="5_ncxi8"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3m0yw"]
+radius = 9.0
+height = 18.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lc8u8"]
+radius = 3.0
+height = 14.0
+
+[node name="King Slime" type="CharacterBody2D" groups=["NPC"]]
+z_as_relative = false
+script = ExtResource("1_krc2q")
+deck_template = Array[String](["Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Cooldown", "Chill", "Chill", "Chill", "Chill", "Chill", "Cooldown", "Cooldown", "Cooldown", "Cooldown"])
+keepAfterDeath = true
+maxHP = 100
+maxMP = 3
+speed = 24
+damageBoost = 5
+fireResist = -20
+frostResist = 20
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -22)
+sprite_frames = ExtResource("3_minva")
+animation = &"hurt"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="MoveCollision" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -4)
+shape = SubResource("CapsuleShape2D_3m0yw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_lc8u8")
+
+[node name="hurt" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_exc6s")
+
+[node name="buffs" type="Node2D" parent="."]
+position = Vector2(-6.665, 10.965)
+
+[node name="dots" type="Node2D" parent="."]
+
+[node name="name" type="RichTextLabel" parent="."]
+visible = false
+offset_left = -52.0
+offset_top = -27.0
+offset_right = 52.0
+offset_bottom = -13.0
+theme_override_fonts/normal_font = ExtResource("5_ncxi8")
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
