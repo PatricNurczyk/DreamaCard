@@ -1,6 +1,23 @@
 extends EntityCharacter
 
 @export var deck_template : Array[String]
+var has_talked = false
+
+func _unhandled_input(event):
+	if Input.is_action_just_pressed("Interact") and check_nearby_player(12):
+		if DialogueManager.state_tracker[3]:
+			DialogueManager.play_dialog(self, 3)
+		elif DialogueManager.state_tracker[2]:
+			add_to_group("Enemy")
+			DialogueManager.play_dialog(self, 2)
+		else:
+			if not has_talked:
+				DialogueManager.play_dialog(self, 1)
+				has_talked = true
+			else:
+				DialogueManager.play_dialog(self, 6)
+
+
 
 func _ready():
 	super._ready()
@@ -62,10 +79,5 @@ func enemy_choice(combatants):
 		hand.pop_at(discard)
 	return choice
 	
-func on_death_battle():
-	DialogueManager.state_tracker[1] += 1
-
-
 func on_death_post_battle():
-	if DialogueManager.state_tracker[1] == 4:
-		DialogueManager.slimes_beaten.emit()
+	DialogueManager.state_tracker[3] = true

@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://bxro3u6hrmm8t"]
+
+[ext_resource type="Script" path="res://Scripts/GameLogic/text_box.gd" id="1_ujt1m"]
+[ext_resource type="Texture2D" uid="uid://ctftyng04wg45" path="res://Assets/Character Sprites/text_box_dream.png" id="2_3vkru"]
+[ext_resource type="FontFile" uid="uid://ctyag1opnfvyl" path="res://Assets/Fonts/name_font.fnt" id="3_txp6l"]
+[ext_resource type="AudioStream" uid="uid://ccldwgefe2ihv" path="res://Sounds/Sound_Effects/tone.wav" id="4_vdfox"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_pnrew"]
+font = ExtResource("3_txp6l")
+font_size = 8
+
+[node name="MarginContainer" type="MarginContainer"]
+offset_right = 32.0
+offset_bottom = 33.0
+script = ExtResource("1_ujt1m")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_3vkru")
+region_rect = Rect2(0, 0, 48, 48)
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+label_settings = SubResource("LabelSettings_pnrew")
+vertical_alignment = 1
+
+[node name="LetterDisplayTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="tone" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(8, 12)
+stream = ExtResource("4_vdfox")
+volume_db = -5.45

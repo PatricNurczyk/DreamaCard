@@ -22,7 +22,8 @@ func _physics_process(delta):
 			velocity.y = direction_Y * SPEED
 		else:
 			velocity.y = move_toward(velocity.y, 0, SPEED)
-			
+	else:
+		velocity = Vector2.ZERO
 	handle_animation()
 
 	move_and_slide()
@@ -32,4 +33,4 @@ func _on_area_2d_area_entered(area):
 	if area.is_in_group("Enemy"):
 		velocity = Vector2.ZERO
 		sprite.speed_scale = 1
-		get_parent().start_combat()
+		DialogueManager.init_combat()

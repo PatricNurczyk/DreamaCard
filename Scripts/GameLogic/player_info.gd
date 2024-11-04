@@ -7,7 +7,7 @@ var player_name = "Patty"
 #Character Data
 var playerData = {
 	player_name: {
-		"MaxHP" : 100,
+		"MaxHP" : 30,
 		"MaxMP" : 2,
 		"Speed" : 10,
 		"Deck" : ["Focus","Focus","Burn","Dark","Heal","Heal", "Frost","Stone","Quake", "Heat Up","Antimatter","Cooldown","Growth","Heat Up","Shard","Stun","Drain"],
