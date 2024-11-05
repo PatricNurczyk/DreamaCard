@@ -28,7 +28,8 @@ frostResist = 20
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -22)
 sprite_frames = ExtResource("3_minva")
-animation = &"hurt"
+animation = &"move_down"
+frame_progress = 0.918634
 
 [node name="Area2D" type="Area2D" parent="."]
 
