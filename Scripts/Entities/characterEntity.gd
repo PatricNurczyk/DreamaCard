@@ -112,7 +112,6 @@ func handle_animation():
 
 
 func takeDamage(value: int, element: String):
-	$hurt.play()
 	var damage : int
 	var d_num = load("res://Scenes/GameLogic/damage_number.tscn")
 	d_num = d_num.instantiate()
@@ -153,7 +152,12 @@ func takeDamage(value: int, element: String):
 	d_num.position += Vector2(0,-5)
 	add_child(d_num)
 	HP = max(HP - damage, 0)
-	sprite.play("hurt")
+	if damage > 0:
+		sprite.play("hurt")
+		$hurt.play()
+	else:
+		sprite.play("guard")
+		$guard.play()
 	is_idle = false
 	if HP == 0:
 		is_dead = true

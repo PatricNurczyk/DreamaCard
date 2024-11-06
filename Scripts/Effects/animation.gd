@@ -7,6 +7,7 @@ var damage = 0
 var damage_reduction = 1
 var bad_roll = false
 var target_name = "One"
+var has_blocked = false
 signal finished
 
 # Called when the node enters the scene tree for the first time.

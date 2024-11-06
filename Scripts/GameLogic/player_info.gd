@@ -12,6 +12,7 @@ var playerData = {
 		"Speed" : 10,
 		"Deck" : ["Focus","Focus","Burn","Dark","Heal","Heal", "Frost","Stone","Quake", "Heat Up","Antimatter","Cooldown","Growth","Heat Up","Shard","Stun","Drain"],
 		#"Deck" : ["Drain","Shard","Shard","Burn","Burn","Antimatter","Antimatter","Stun","Stun"],
+		#"Deck" : ["Frost","Frost","Frost","Frost"],
 		#"Deck" : ["Ember","Dark","Frost","Stone", "Heat Up","Heat Up", "Heat Up","Heat Up", "Heat Up","Heat Up", "Heat Up","Heat Up", "Heat Up","Heat Up", "Heat Up","Heat Up"],
 		"AltDeck" : [],
 		"WeaponTypes": "Shortsword",
