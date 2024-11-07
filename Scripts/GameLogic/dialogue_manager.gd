@@ -138,6 +138,7 @@ func _on_combat_finished():
 	if loaded_battle_theme:
 		game_container.battle_music.stream = loaded_battle_theme
 		game_container.pause_position = 0
+		loaded_battle_theme = null
 	if char_lines > 0:
 		if curr_line_index >= len(dialogue[char_lines]):
 			game_container.combat_completed.disconnect(_on_combat_finished)

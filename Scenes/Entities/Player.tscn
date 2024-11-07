@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://jrkrfd6041tn"]
+[gd_scene load_steps=13 format=3 uid="uid://jrkrfd6041tn"]
 
 [ext_resource type="SpriteFrames" uid="uid://cb8rvv4yb7tn2" path="res://Assets/SpriteFrames/player.tres" id="1_rt0qv"]
 [ext_resource type="Script" path="res://Scripts/Entities/Player.gd" id="1_sqg0c"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://cqplmnuvjfh7d" path="res://Sounds/Sound_Effects/hitHurt.wav" id="3_aw5ii"]
 [ext_resource type="FontFile" uid="uid://ctyag1opnfvyl" path="res://Assets/Fonts/name_font.fnt" id="4_5vl7h"]
 [ext_resource type="AudioStream" uid="uid://bj0y64s5takwk" path="res://Sounds/Sound_Effects/shield-guard-6963.mp3" id="6_u7p4k"]
+[ext_resource type="AudioStream" uid="uid://dsy7qudh8nrwr" path="res://Sounds/Sound_Effects/Outrage_part_2.mp3" id="7_w6xi7"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i50t4"]
 radius = 5.33
@@ -14,6 +15,21 @@ height = 22.69
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yokoc"]
 radius = 3.0
 height = 12.0
+
+[sub_resource type="Animation" id="Animation_mmkki"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -17)]
+}
 
 [sub_resource type="Animation" id="Animation_hec5f"]
 resource_name = "dodge"
@@ -50,20 +66,19 @@ tracks/1/keys = {
 "method": &"create_after_image"
 }]
 }
-
-[sub_resource type="Animation" id="Animation_mmkki"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("dodge")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, -17)]
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mhf38"]
@@ -121,5 +136,9 @@ stream = ExtResource("6_u7p4k")
 libraries = {
 "": SubResource("AnimationLibrary_mhf38")
 }
+
+[node name="dodge" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_w6xi7")
+pitch_scale = 2.17
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

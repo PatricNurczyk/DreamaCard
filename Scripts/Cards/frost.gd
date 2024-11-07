@@ -32,6 +32,7 @@ func execute_action(container,acc):
 		#d_num.altColor = "000000"
 		animation.bad_roll = true
 		container.combatants[container.target].add_child(animation)
+		animation.damage = 7
 		await animation.finished
 	await container.get_tree().create_timer(.5).timeout
 	container.acc_result = acc_check
