@@ -4,6 +4,7 @@ class_name EntityCharacter
 @export var WALK = 60.0
 @export var SPRINT = 90.0
 @export var keepAfterDeath = false
+@onready var animation_player = $AnimationPlayer
 
 @onready var sprite = $AnimatedSprite2D
 var SPEED = 30.0
@@ -350,3 +351,15 @@ func on_death_battle():
 	
 func on_death_post_battle():
 	pass
+
+
+func dodge_animation():
+	animation_player.play("dodge")
+
+func create_after_image():
+	var afterimage = sprite.duplicate()
+	afterimage.modulate = Color("ffffff59")
+	afterimage.position = sprite.position
+	add_child(afterimage)
+	await get_tree().create_timer(.2).timeout
+	afterimage.queue_free()
