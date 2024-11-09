@@ -2,6 +2,7 @@ extends EntityCharacter
 
 @export var deck_template : Array[String]
 var has_talked = false
+var prioritize
 
 func _unhandled_input(event):
 	if Input.is_action_just_pressed("Interact") and check_nearby_player(12):
@@ -35,6 +36,11 @@ func enemy_choice(combatants):
 	#Choosing Card
 	for c in range(len(hand)):
 		match(hand[c]):
+			"Ice Shard":
+				if MP > 1:
+					choice["action"] = "Ice Shard"
+					discard = c
+					break
 			"Chill":
 				if randi()%2 == 0:
 					choice["action"] = "Chill"
@@ -53,7 +59,7 @@ func enemy_choice(combatants):
 	
 	#Choosing Target
 	match(choice["action"]):
-		"Frost":
+		"Frost","Ice Shard":
 			for c in range(len(combatants)):
 				#Enemy will find the character with the highest HP and attack them
 				var highHP = 0

@@ -4,6 +4,7 @@ extends AttackAnimation
 func _unhandled_input(event):
 	if target_node.is_in_group("Ally"):
 		if Input.is_action_just_pressed("Char_" + target_name + "_Guard") and can_block and not has_blocked:
+			print("Block Pressed")
 			can_block = false
 			$Timer.start()
 			var frame = $AnimatedSprite2D.frame

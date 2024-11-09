@@ -87,9 +87,9 @@ _data = {
 [node name="King Slime" type="CharacterBody2D" groups=["NPC"]]
 z_as_relative = false
 script = ExtResource("1_krc2q")
-deck_template = Array[String](["Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Cooldown", "Chill", "Chill", "Chill", "Chill", "Chill", "Cooldown", "Cooldown", "Cooldown", "Cooldown"])
+deck_template = Array[String](["Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Ice Shard", "Ice Shard", "Ice Shard", "Ice Shard", "Ice Shard", "Cooldown", "Chill", "Chill", "Chill", "Chill", "Chill", "Cooldown", "Cooldown", "Cooldown", "Cooldown"])
 keepAfterDeath = true
-maxHP = 100
+maxHP = 50
 maxMP = 3
 speed = 24
 damageBoost = 5

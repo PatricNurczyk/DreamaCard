@@ -1,0 +1,133 @@
+[gd_scene load_steps=9 format=3 uid="uid://cyflnf32sl0xy"]
+
+[ext_resource type="Script" path="res://Scripts/Effects/ice_shard_anim.gd" id="1_vreko"]
+[ext_resource type="SpriteFrames" uid="uid://me6hawx0yaxq" path="res://Assets/SpriteFrames/Ice Shard.tres" id="2_8fk3n"]
+[ext_resource type="AudioStream" uid="uid://bqytsgvpj8etu" path="res://Sounds/Sound_Effects/Ice_Shard_part_1.mp3" id="3_to7cs"]
+[ext_resource type="AudioStream" uid="uid://dsndk408qqi1w" path="res://Sounds/Sound_Effects/break.mp3" id="4_lqnyd"]
+[ext_resource type="AudioStream" uid="uid://bhqovyy55gd0d" path="res://Sounds/Sound_Effects/enchant.ogg" id="5_4ss51"]
+
+[sub_resource type="Animation" id="Animation_5mmgy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(40, -40)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_5jbtd"]
+resource_name = "play_attack"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(40, -40), Vector2(0, -10), Vector2(-60, 60)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.0333333, 0.0666667, 0.1, 0.133333, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"create_after_image"
+}, {
+"args": [],
+"method": &"create_after_image"
+}, {
+"args": [],
+"method": &"create_after_image"
+}, {
+"args": [],
+"method": &"create_after_image"
+}, {
+"args": [],
+"method": &"_on_hit"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tjorh"]
+_data = {
+"RESET": SubResource("Animation_5mmgy"),
+"play_attack": SubResource("Animation_5jbtd")
+}
+
+[node name="IceShard 2" type="Node2D"]
+script = ExtResource("1_vreko")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(40, -40)
+scale = Vector2(0.5, 0.5)
+sprite_frames = ExtResource("2_8fk3n")
+animation = &"prep"
+autoplay = "prep"
+frame = 18
+frame_progress = 1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tjorh")
+}
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_to7cs")
+pitch_scale = 1.13
+
+[node name="shoot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_to7cs")
+pitch_scale = 1.3
+
+[node name="build" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_lqnyd")
+
+[node name="shine" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_4ss51")
+pitch_scale = 1.5
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
