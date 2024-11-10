@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dui1tu81udeeh"]
+[gd_scene load_steps=12 format=3 uid="uid://dui1tu81udeeh"]
 
 [ext_resource type="Script" path="res://Scripts/Entities/slime_king.gd" id="1_krc2q"]
 [ext_resource type="SpriteFrames" uid="uid://dw5f7wep3s247" path="res://Assets/SpriteFrames/king_slime.tres" id="3_minva"]
@@ -38,7 +38,7 @@ tracks/0/path = NodePath("AnimatedSprite2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.166667),
+"times": PackedFloat32Array(0, 0.1333, 0.166667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(0, -24), Vector2(20.915, -24), Vector2(0, -24)]
@@ -50,9 +50,64 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.0666667),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "values": [{
+"args": [],
+"method": &"create_after_image"
+}, {
+"args": [],
+"method": &"create_after_image"
+}, {
+"args": [],
+"method": &"create_after_image"
+}, {
+"args": [],
+"method": &"create_after_image"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("dodge")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_et3bg"]
+resource_name = "dodge_2"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1333, 0.166667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -24), Vector2(-20, -24), Vector2(0, -24)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"create_after_image"
+}, {
 "args": [],
 "method": &"create_after_image"
 }, {
@@ -81,7 +136,8 @@ tracks/2/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1ok4e"]
 _data = {
 "RESET": SubResource("Animation_txlnf"),
-"dodge": SubResource("Animation_gwsmq")
+"dodge": SubResource("Animation_gwsmq"),
+"dodge_2": SubResource("Animation_et3bg")
 }
 
 [node name="King Slime" type="CharacterBody2D" groups=["NPC"]]

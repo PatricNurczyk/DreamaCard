@@ -16,9 +16,9 @@ var loaded_battle_theme = null
 signal finished
 
 var state_tracker = {
-	"map_first_load" : false,
+	"map_first_load" : true,
 	1: 0,
-	2: false,
+	2: true,
 	3: false
 }
 

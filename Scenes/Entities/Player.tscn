@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://jrkrfd6041tn"]
+[gd_scene load_steps=14 format=3 uid="uid://jrkrfd6041tn"]
 
 [ext_resource type="SpriteFrames" uid="uid://cb8rvv4yb7tn2" path="res://Assets/SpriteFrames/player.tres" id="1_rt0qv"]
 [ext_resource type="Script" path="res://Scripts/Entities/Player.gd" id="1_sqg0c"]
@@ -81,10 +81,61 @@ tracks/2/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_3h0qf"]
+resource_name = "dodge_2"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -17), Vector2(26, -17), Vector2(0, -17)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"create_after_image"
+}, {
+"args": [],
+"method": &"create_after_image"
+}, {
+"args": [],
+"method": &"create_after_image"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("dodge")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mhf38"]
 _data = {
 "RESET": SubResource("Animation_mmkki"),
-"dodge": SubResource("Animation_hec5f")
+"dodge": SubResource("Animation_hec5f"),
+"dodge_2": SubResource("Animation_3h0qf")
 }
 
 [node name="Player" type="CharacterBody2D" groups=["Ally", "Player"]]
@@ -140,7 +191,7 @@ libraries = {
 
 [node name="dodge" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_w6xi7")
-pitch_scale = 2.17
+pitch_scale = 3.04
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

@@ -363,7 +363,11 @@ func on_death_post_battle():
 
 
 func dodge_animation():
-	animation_player.play("dodge")
+	animation_player.stop()
+	if (randi()%2 == 0):
+		animation_player.play("dodge")
+	else:
+		animation_player.play("dodge_2")
 
 func create_after_image():
 	var afterimage = sprite.duplicate()

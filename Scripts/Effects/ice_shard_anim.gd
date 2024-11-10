@@ -92,6 +92,10 @@ func create_after_image():
 	afterimage.play("default")
 	await get_tree().create_timer(.1).timeout
 	afterimage.queue_free()
+	
+func hit_effect():
+	$AnimatedSprite2D2.visible = true
+	$AnimatedSprite2D2.play("default")
 
 func _on_animation_player_animation_finished(anim_name):
 	finished.emit()

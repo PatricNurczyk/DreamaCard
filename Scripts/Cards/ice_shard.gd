@@ -21,23 +21,25 @@ func execute_action(container,acc):
 		container.combatants[container.currTurn].MP -= 2
 		animation.damage = damage / 2
 		animation2.damage = damage / 2
+		animation.rotation = randi_range(1,180)
+		animation.rotation = randi_range(181,360)
 		container.combatants[container.target].add_child(animation)
-		await container.get_tree().create_timer(randf_range(.3,.5)).timeout
+		await container.get_tree().create_timer(.3).timeout
 		container.combatants[container.target].add_child(animation2)
-		await animation.finished
 		await animation2.finished
 	else:
 		container.camera.position = container.combatants[container.target].position
 		container.camera_zoom = 6
-		await container.get_tree().create_timer(.5).timeout
+		await container.get_tree().create_timer(.3).timeout
 		animation.bad_roll = true
 		animation2.bad_roll = true
 		animation.damage = 6
 		animation2.damage = 6
+		animation.rotation = randi_range(1,180)
+		animation.rotation = randi_range(181,360)
 		container.combatants[container.target].add_child(animation)
-		await container.get_tree().create_timer(.5).timeout
+		await container.get_tree().create_timer(.3).timeout
 		container.combatants[container.target].add_child(animation2)
-		await animation.finished
 		await animation2.finished
 		
 	await container.get_tree().create_timer(.3).timeout
