@@ -58,6 +58,8 @@ func _deal_damage():
 		target_node.add_child(d_num)
 	else:
 		damage *= damage_reduction
+		if damage_reduction < 1:
+			target_node.sprite.play("guard")
 		target_node.takeDamage(damage, "frost")
 
 func _on_animated_sprite_2d_animation_finished():

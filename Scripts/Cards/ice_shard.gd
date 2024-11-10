@@ -22,7 +22,7 @@ func execute_action(container,acc):
 		animation.damage = damage / 2
 		animation2.damage = damage / 2
 		container.combatants[container.target].add_child(animation)
-		await container.get_tree().create_timer(.3).timeout
+		await container.get_tree().create_timer(randf_range(.3,.5)).timeout
 		container.combatants[container.target].add_child(animation2)
 		await animation.finished
 		await animation2.finished
@@ -35,7 +35,7 @@ func execute_action(container,acc):
 		animation.damage = 6
 		animation2.damage = 6
 		container.combatants[container.target].add_child(animation)
-		await container.get_tree().create_timer(.3).timeout
+		await container.get_tree().create_timer(.5).timeout
 		container.combatants[container.target].add_child(animation2)
 		await animation.finished
 		await animation2.finished

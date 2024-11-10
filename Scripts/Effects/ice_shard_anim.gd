@@ -57,6 +57,9 @@ func _deal_damage():
 	else:
 		damage *= damage_reduction
 		print(name)
+		if damage_reduction < 1:
+			target_node.sprite.stop()
+			target_node.sprite.play("guard")
 		target_node.takeDamage(damage, "frost")
 
 func _on_animated_sprite_2d_animation_finished():

@@ -90,6 +90,7 @@ _data = {
 
 [node name="Slime" type="CharacterBody2D" groups=["Enemy"]]
 z_as_relative = false
+y_sort_enabled = true
 script = ExtResource("1_67kb8")
 deck_template = Array[String](["Frost", "Frost", "Frost", "Cooldown", "Chill", "Chill", "Cooldown"])
 maxHP = 5
@@ -100,6 +101,7 @@ frostResist = 5
 portrait = ExtResource("2_6unky")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
 position = Vector2(0, -8)
 sprite_frames = ExtResource("2_6mysm")
 animation = &"attack_break"

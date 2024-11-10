@@ -5,6 +5,7 @@ class_name EntityCharacter
 @export var SPRINT = 90.0
 @export var keepAfterDeath = false
 @onready var animation_player = $AnimationPlayer
+@onready var collision = $CollisionShape2D
 
 @onready var sprite = $AnimatedSprite2D
 var SPEED = 30.0
@@ -74,9 +75,16 @@ func _process(delta):
 
 func handle_animation():
 	if in_combat:
+		collision.set_deferred("disabled", true)
+		if direction == "right":
+			sprite.flip_h = false
+		elif direction == "left":
+			sprite.flip_h = true
 		if is_idle and not is_dead:
 			sprite.play("idle_side")
 		return
+	else:
+		collision.set_deferred("disabled", false)
 	if velocity.x > 0:
 		direction = "right"
 	elif velocity.x < 0:
@@ -157,7 +165,6 @@ func takeDamage(value: int, element: String):
 		sprite.play("hurt")
 		$hurt.play()
 	else:
-		sprite.play("guard")
 		$guard.play()
 	is_idle = false
 	if HP == 0:
@@ -329,6 +336,8 @@ func _on_animation_finished():
 	if sprite.animation == "attack_break":
 		is_idle = true
 	if sprite.animation == "hurt":
+		is_idle = true
+	if sprite.animation == "guard":
 		is_idle = true
 
 

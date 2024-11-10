@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=51 format=3 uid="uid://cb8rvv4yb7tn2"]
+[gd_resource type="SpriteFrames" load_steps=50 format=3 uid="uid://cb8rvv4yb7tn2"]
 
 [ext_resource type="Texture2D" uid="uid://b1xjm86g8jffc" path="res://Assets/Character Sprites/player.png" id="1_kelct"]
 
@@ -37,10 +37,6 @@ region = Rect2(96, 432, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_0qcb1"]
 atlas = ExtResource("1_kelct")
 region = Rect2(0, 336, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_48gtn"]
-atlas = ExtResource("1_kelct")
-region = Rect2(48, 48, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ou8ew"]
 atlas = ExtResource("1_kelct")
@@ -237,16 +233,10 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0qcb1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0qcb1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_48gtn")
 }],
 "loop": false,
 "name": &"guard",
-"speed": 5.0
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,

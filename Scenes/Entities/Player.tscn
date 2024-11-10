@@ -14,7 +14,7 @@ height = 22.69
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yokoc"]
 radius = 3.0
-height = 12.0
+height = 16.0
 
 [sub_resource type="Animation" id="Animation_mmkki"]
 length = 0.001
@@ -89,14 +89,15 @@ _data = {
 
 [node name="Player" type="CharacterBody2D" groups=["Ally", "Player"]]
 z_as_relative = false
+y_sort_enabled = true
 script = ExtResource("1_sqg0c")
 portrait = ExtResource("2_16od7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
 position = Vector2(0, -17)
 sprite_frames = ExtResource("1_rt0qv")
 animation = &"guard"
-frame = 2
 frame_progress = 1.0
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -141,4 +142,5 @@ libraries = {
 stream = ExtResource("7_w6xi7")
 pitch_scale = 2.17
 
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

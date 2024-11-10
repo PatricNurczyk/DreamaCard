@@ -86,6 +86,7 @@ _data = {
 
 [node name="King Slime" type="CharacterBody2D" groups=["NPC"]]
 z_as_relative = false
+y_sort_enabled = true
 script = ExtResource("1_krc2q")
 deck_template = Array[String](["Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Ice Shard", "Ice Shard", "Ice Shard", "Ice Shard", "Ice Shard", "Cooldown", "Chill", "Chill", "Chill", "Chill", "Chill", "Cooldown", "Cooldown", "Cooldown", "Cooldown"])
 keepAfterDeath = true
@@ -97,6 +98,7 @@ fireResist = -20
 frostResist = 20
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
 position = Vector2(0, -24)
 sprite_frames = ExtResource("3_minva")
 animation = &"move_down"
@@ -123,9 +125,9 @@ position = Vector2(-6.665, 10.965)
 [node name="name" type="RichTextLabel" parent="."]
 visible = false
 offset_left = -52.0
-offset_top = -27.0
+offset_top = -39.855
 offset_right = 52.0
-offset_bottom = -13.0
+offset_bottom = -23.855
 theme_override_fonts/normal_font = ExtResource("5_ncxi8")
 bbcode_enabled = true
 fit_content = true

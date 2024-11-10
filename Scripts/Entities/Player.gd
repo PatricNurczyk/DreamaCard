@@ -2,7 +2,7 @@ extends EntityCharacter
 
 
 func _physics_process(delta):	
-	if can_walk:
+	if DialogueManager.currState == DialogueManager.gameStates.explore:
 		if Input.is_action_pressed("Sprint"):
 			SPEED = SPRINT
 			sprite.speed_scale = 1.5
@@ -34,3 +34,7 @@ func _on_area_2d_area_entered(area):
 		velocity = Vector2.ZERO
 		sprite.speed_scale = 1
 		DialogueManager.init_combat()
+
+
+func _on_animated_sprite_2d_animation_finished():
+	pass # Replace with function body.

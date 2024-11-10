@@ -16,9 +16,9 @@ var loaded_battle_theme = null
 signal finished
 
 var state_tracker = {
-	"map_first_load" : true,
+	"map_first_load" : false,
 	1: 0,
-	2: true,
+	2: false,
 	3: false
 }
 
@@ -51,8 +51,20 @@ var dialogue = {
 		{ "position" : null, "line" : "Alright, now you know, so uh now ram your head into as many slimes as possible"},
 	],
 	2 : [
-		{ "position" : null, "line" : "Oh...well that was fast...guess its my turn."},
-		{ "position" : null, "line" : "Alright, well good luck, I'm not like the rest of them"},
+		#{ "position" : null, "line" : "Hello, and welcome"},
+		#{ "position" : null, "line" : "It appears you have fallen into the greatest trap of all"},
+		#{ "position" : null, "line" : "being my test subject"},
+		#{ "position" : null, "line" : "Well I guess it really isn't exactly a trap, you're supposed to be having fun"},
+		#{ "position" : null, "line" : "Anyway this means you need to fight me, and not die immediately"},
+		#{ "position" : null, "line" : "How might one do this, well I will give you a basic jist"},
+		#{ "position" : null, "line" : "This is a card game, Each player on the field has 6 cards from their deck, and a weapon card"},
+		#{ "position" : null, "line" : "You can [Left Click] to select a card, and [Right Click] to discard it, but you can't [Right Click] your weapon card"},
+		#{ "position" : null, "line" : "If all the crypid ass symbols make absolutely no sense, you can hover over a card, and press [TAB] to get more info on what it does"},
+		#{ "position" : null, "line" : "I will try to pelt you to death with Frost spells, which fortunately you can guard"},
+		#{ "position" : null, "line" : "Pressing [1] will guard against attacks targeted towards you, since you are the 1st party member"},
+		#{ "position" : null, "line" : "Timing is super important, so hitting [1] at the right time can completely negate all damage"},
+		#{ "position" : null, "line" : "Ok, thats about it, better get ready, I'm really fast, I gave you a basic deck to start with"},
+		{ "position" : null, "line" : "HAAVVEEE FUNNN", "autocontinue" : true},
 		{ "position" : null, "line" : init_combat, "parameters": ["res://Sounds/Music/DECISIVE BATTLE.mp3"]},
 		{ "position" : null, "line" : "Nice You won, thanks for playing!!!"},
 	],

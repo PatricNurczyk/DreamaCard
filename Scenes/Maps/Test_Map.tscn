@@ -1464,6 +1464,10 @@ libraries = {
 
 [node name="King Slime" parent="." instance=ExtResource("5_pfdr5")]
 position = Vector2(52, 69)
-deck_template = Array[String](["Ice Shard", "Ice Shard", "Ice Shard", "Ice Shard", "Ice Shard", "Ice Shard", "Ice Shard", "Ice Shard", "Ice Shard", "Ice Shard"])
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(0, -1, 447, -1, 448, 128, 468, 128, 468, 160, 448, 160, 448, 303, 0, 304, 0, -8, -21, 27, -21, 42, -63, 343, 68, 377, 374, 365, 509, 321, 518, 139, 489, -12, 361, -84, 168, -59, 73, -53, 9, -18, 0, -2)
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
