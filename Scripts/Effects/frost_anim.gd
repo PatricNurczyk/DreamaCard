@@ -1,6 +1,10 @@
 extends AttackAnimation
 
 
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	animation_player.play("play_attack")
+
 func _unhandled_input(event):
 	if target_node.is_in_group("Ally"):
 		if Input.is_action_just_pressed("Char_" + target_name + "_Guard") and can_block and not has_blocked:
@@ -10,7 +14,7 @@ func _unhandled_input(event):
 			var frame = $AnimatedSprite2D.frame
 
 			match frame:
-				12,16:
+				11,12,16:
 					damage_reduction = .66
 					has_blocked = true
 					_deal_damage()
@@ -49,6 +53,10 @@ func _on_timer_timeout():
 func _deal_damage():
 	if bad_roll and damage_reduction < 1:
 		target_node.dodge_animation()
+		var frame = $AnimatedSprite2D.frame
+		var progress = $AnimatedSprite2D.frame_progress
+		$AnimatedSprite2D.play("miss")
+		$AnimatedSprite2D.set_frame_and_progress(frame,progress)
 		var d_num = load("res://Scenes/GameLogic/damage_number.tscn")
 		d_num = d_num.instantiate()
 		d_num.number = -1

@@ -7,7 +7,7 @@ extends MapTemplate
 func _ready():
 	if DialogueManager.state_tracker[1] == 4:
 		$TileMap2.visible = false
-		transition1.visible = true
+		transition1.toggle_enabled()
 		$Slime.queue_free()
 		$Slime3.queue_free()
 		$Slime4.queue_free()

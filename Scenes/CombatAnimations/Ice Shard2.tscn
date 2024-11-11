@@ -13,19 +13,19 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/path = NodePath("Swivel/AnimatedSprite2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(40, -40)]
+"values": [Vector2(45, -45)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:modulate")
+tracks/1/path = NodePath("Swivel/AnimatedSprite2D:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -41,23 +41,23 @@ length = 0.7
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/path = NodePath("Swivel/AnimatedSprite2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.133333, 0.3),
+"times": PackedFloat32Array(0, 0.2, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(40, -40), Vector2(0, -10), Vector2(-60, 60)]
+"values": [Vector2(45, -45), Vector2(0, 0), Vector2(-60, 60)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:modulate")
+tracks/1/path = NodePath("Swivel/AnimatedSprite2D:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.15, 0.3),
+"times": PackedFloat32Array(0.2, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -69,8 +69,8 @@ tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.0333333, 0.0666667, 0.1, 0.133333, 0.133433, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0.0333333, 0.0666667, 0.1, 0.133333, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "values": [{
 "args": [],
 "method": &"create_after_image"
@@ -83,9 +83,6 @@ tracks/2/keys = {
 }, {
 "args": [],
 "method": &"create_after_image"
-}, {
-"args": [],
-"method": &"hit_effect"
 }, {
 "args": [],
 "method": &"_on_hit"
@@ -144,19 +141,11 @@ animations = [{
 [node name="IceShard 2" type="Node2D"]
 script = ExtResource("1_vreko")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(40, -40)
-scale = Vector2(0.5, 0.5)
-sprite_frames = ExtResource("2_8fk3n")
-animation = &"prep"
-autoplay = "prep"
-frame = 18
-frame_progress = 1.0
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_tjorh")
 }
+speed_scale = 0.9
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5
@@ -176,13 +165,25 @@ stream = ExtResource("4_lqnyd")
 stream = ExtResource("5_4ss51")
 pitch_scale = 1.5
 
-[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+[node name="Swivel" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Swivel"]
+position = Vector2(45, -45)
+scale = Vector2(0.5, 0.5)
+sprite_frames = ExtResource("2_8fk3n")
+animation = &"prep"
+autoplay = "prep"
+frame = 18
+frame_progress = 1.0
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Swivel"]
+visible = false
 position = Vector2(14, -25)
 rotation = 0.698132
 sprite_frames = SubResource("SpriteFrames_5v8r5")
 frame = 4
 frame_progress = 1.0
 
-[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="animation_finished" from="Swivel/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

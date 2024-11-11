@@ -1,7 +1,8 @@
-[gd_scene load_steps=26 format=3 uid="uid://b0i6idiv2giqk"]
+[gd_scene load_steps=48 format=3 uid="uid://b0i6idiv2giqk"]
 
 [ext_resource type="Script" path="res://Scripts/Effects/frost_anim.gd" id="1_a0vxq"]
 [ext_resource type="Texture2D" uid="uid://njojeiy8vrc4" path="res://Assets/Effects/Frost_2.png" id="1_bpnse"]
+[ext_resource type="Texture2D" uid="uid://cldt06jeub4bh" path="res://Assets/Effects/Frost_Attack.png" id="3_hmmdp"]
 [ext_resource type="AudioStream" uid="uid://bqytsgvpj8etu" path="res://Sounds/Sound_Effects/Ice_Shard_part_1.mp3" id="3_y5bpl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hwbkt"]
@@ -80,6 +81,86 @@ region = Rect2(1088, 0, 64, 64)
 atlas = ExtResource("1_bpnse")
 region = Rect2(576, 0, 144, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_fsyyi"]
+atlas = ExtResource("1_bpnse")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gdxex"]
+atlas = ExtResource("1_bpnse")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wbqtb"]
+atlas = ExtResource("1_bpnse")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xyc7o"]
+atlas = ExtResource("1_bpnse")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_30kci"]
+atlas = ExtResource("1_bpnse")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mohu4"]
+atlas = ExtResource("1_bpnse")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_54c2a"]
+atlas = ExtResource("1_bpnse")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w52ay"]
+atlas = ExtResource("1_bpnse")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ta8se"]
+atlas = ExtResource("1_bpnse")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o3w5g"]
+atlas = ExtResource("1_bpnse")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eiism"]
+atlas = ExtResource("1_bpnse")
+region = Rect2(640, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_25tlq"]
+atlas = ExtResource("1_bpnse")
+region = Rect2(704, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oxsgs"]
+atlas = ExtResource("1_bpnse")
+region = Rect2(768, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_efe0x"]
+atlas = ExtResource("1_bpnse")
+region = Rect2(832, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g5s5r"]
+atlas = ExtResource("1_bpnse")
+region = Rect2(704, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1et7h"]
+atlas = ExtResource("3_hmmdp")
+region = Rect2(960, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hg51u"]
+atlas = ExtResource("3_hmmdp")
+region = Rect2(1088, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m1hyt"]
+atlas = ExtResource("3_hmmdp")
+region = Rect2(1152, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e0tn2"]
+atlas = ExtResource("3_hmmdp")
+region = Rect2(1216, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7blu3"]
+atlas = ExtResource("3_hmmdp")
+region = Rect2(672, 0, 336, 16)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_o08ix"]
 animations = [{
 "frames": [{
@@ -148,7 +229,103 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fsyyi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gdxex")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbqtb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xyc7o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_30kci")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mohu4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_54c2a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w52ay")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ta8se")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o3w5g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eiism")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_25tlq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oxsgs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_efe0x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g5s5r")
+}, {
+"duration": 0.7,
+"texture": SubResource("AtlasTexture_1et7h")
+}, {
+"duration": 0.7,
+"texture": SubResource("AtlasTexture_hg51u")
+}, {
+"duration": 0.7,
+"texture": SubResource("AtlasTexture_m1hyt")
+}, {
+"duration": 0.7,
+"texture": SubResource("AtlasTexture_e0tn2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7blu3")
+}],
+"loop": false,
+"name": &"miss",
+"speed": 20.0
 }]
+
+[sub_resource type="Animation" id="Animation_kqegv"]
+resource_name = "miss"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [&"miss", 1.0, false],
+"method": &"play"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.3],
+"method": &"play"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_5jbtd"]
 resource_name = "play_attack"
@@ -183,6 +360,7 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tjorh"]
 _data = {
+"miss": SubResource("Animation_kqegv"),
 "play_attack": SubResource("Animation_5jbtd")
 }
 
@@ -192,9 +370,9 @@ script = ExtResource("1_a0vxq")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -32)
 sprite_frames = SubResource("SpriteFrames_o08ix")
-animation = &"attack"
+animation = &"miss"
 autoplay = "default"
-frame = 18
+frame = 19
 frame_progress = 1.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

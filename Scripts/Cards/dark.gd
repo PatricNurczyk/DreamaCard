@@ -7,15 +7,17 @@ func discard():
 	print("Cant Discard")
 
 func execute_action(container,acc):
-	container.camera.position = container.combatants[container.target].position
-	container.camera_zoom = 6
 	var acc_check = randi_range(1,100) <= acc
 	if acc_check:
-		var damage = await container.combatants[container.currTurn].check_effect_offense(8, "void")	
+		var damage = await container.combatants[container.currTurn].check_effect_offense(8, "void")
+		container.camera.position = container.combatants[container.target].position
+		container.camera_zoom = 6	
 		await container.get_tree().create_timer(.5).timeout
 		container.combatants[container.currTurn].MP -= 1
 		container.combatants[container.target].takeDamage(damage, "void")
 	else:
+		container.camera.position = container.combatants[container.target].position
+		container.camera_zoom = 6
 		await container.get_tree().create_timer(.5).timeout
 		var d_num = load("res://Scenes/GameLogic/damage_number.tscn")
 		d_num = d_num.instantiate()
