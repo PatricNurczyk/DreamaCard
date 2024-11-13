@@ -370,10 +370,8 @@ script = ExtResource("1_a0vxq")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -32)
 sprite_frames = SubResource("SpriteFrames_o08ix")
-animation = &"miss"
+animation = &"attack"
 autoplay = "default"
-frame = 19
-frame_progress = 1.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

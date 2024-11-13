@@ -8,8 +8,8 @@
 [ext_resource type="AudioStream" uid="uid://dsy7qudh8nrwr" path="res://Sounds/Sound_Effects/Outrage_part_2.mp3" id="6_vi48k"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3m0yw"]
-radius = 9.0
-height = 18.0
+radius = 11.0
+height = 22.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lc8u8"]
 radius = 3.0
@@ -157,7 +157,8 @@ portrait = ExtResource("2_6unky")
 y_sort_enabled = true
 position = Vector2(0, -8)
 sprite_frames = ExtResource("2_6mysm")
-animation = &"attack_break"
+animation = &"idle_side"
+frame_progress = 0.9785
 
 [node name="Area2D" type="Area2D" parent="." groups=["Enemy"]]
 

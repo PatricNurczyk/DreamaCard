@@ -14,15 +14,15 @@ func _unhandled_input(event):
 			var frame = $AnimatedSprite2D.frame
 
 			match frame:
-				10,11,16:
+				16,17,24:
 					damage_reduction = .66
 					has_blocked = true
 					_deal_damage()
-				12,15:
+				18,19,22,23:
 					damage_reduction = .33
 					has_blocked = true
 					_deal_damage()
-				13,14:
+				20,21:
 					damage_reduction = 0
 					has_blocked = true
 					_deal_damage()
@@ -31,7 +31,7 @@ func _unhandled_input(event):
 
 	
 func _process(delta):
-	if target_node.is_in_group("Enemy") and $AnimatedSprite2D.frame == 14 and not has_blocked:
+	if target_node.is_in_group("Enemy") and $AnimatedSprite2D.frame == 20 and not has_blocked:
 		has_blocked = true
 		if bad_roll:
 			target_node.dodge_animation()
@@ -43,7 +43,7 @@ func _process(delta):
 			d_num.altColor = "000000"
 			target_node.add_child(d_num)
 		else:
-			target_node.takeDamage(damage, "frost")
+			target_node.takeDamage(damage, "void")
 
 
 func _on_timer_timeout():
@@ -68,10 +68,13 @@ func _deal_damage():
 		damage *= damage_reduction
 		if damage_reduction < 1:
 			target_node.sprite.play("guard")
-		target_node.takeDamage(damage, "frost")
+		target_node.takeDamage(damage, "void")
 
 func _on_animated_sprite_2d_animation_finished():
 	if not has_blocked:
 		_deal_damage()
 	finished.emit()
+
+
+func _on_audio_stream_player_2d_finished():
 	queue_free()

@@ -1,5 +1,4 @@
 extends Node
-var ANIM = load("res://Scenes/CombatAnimations/Frost.tscn")
 
 func select_card(card):
 	card.get_parent().get_parent().select_target(card.get_index())
@@ -24,12 +23,6 @@ func execute_action(container,acc):
 		container.camera.position = container.combatants[container.target].position
 		container.camera_zoom = 6
 		await container.get_tree().create_timer(.5).timeout
-		#var d_num = load("res://Scenes/GameLogic/damage_number.tscn")
-		#d_num = d_num.instantiate()
-		#d_num.number = -1
-		#d_num.position += Vector2(0,-5)
-		#d_num.color = "ffffff"
-		#d_num.altColor = "000000"
 		animation.bad_roll = true
 		container.combatants[container.target].add_child(animation)
 		animation.damage = 7
