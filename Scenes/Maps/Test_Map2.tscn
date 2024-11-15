@@ -668,3 +668,8 @@ maxHP = 30
 fireResist = -10
 frostResist = 10
 portrait = null
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(17, 0, 272, 0, 273, -24, 280, -30, 299, -29, 305, -18, 305, 0, 556, 0, 556, 90, 555, 93, 4, 93, 4, -1, 35, 0, 21, -39, -40, -27, -42, 79, -28, 130, 132, 145, 384, 145, 578, 133, 576, -81, 188, -87, 47, -57)

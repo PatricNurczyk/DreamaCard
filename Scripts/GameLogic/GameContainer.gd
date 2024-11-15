@@ -55,6 +55,7 @@ var pause_position  : float = 0
 # Called when the node enters the scene tree for the first time.
 signal action_completed
 signal combat_completed
+signal map_loaded
 
 func _input(event):
 	if Input.is_action_just_pressed("Cancel") and combatState == combatStates.target:
@@ -234,6 +235,8 @@ func load_map():
 	await get_tree().create_timer(.5).timeout
 	screen_dim.play("dim_out")
 	DialogueManager.currState = DialogueManager.gameStates.explore
+	map_loaded.emit()
+	
 	
 	
 func start_combat():
@@ -254,6 +257,7 @@ func start_combat():
 	var bodies = space.intersect_shape(search)
 	for body in bodies:
 		if body.collider.is_in_group("Ally"):
+			body.collider.in_combat = true
 			body.collider.z_index = 2
 			body.collider.can_walk = false
 			body.collider.velocity = Vector2.ZERO
@@ -278,8 +282,8 @@ func start_combat():
 			combatants[-1].hand.clear()
 			combatants[-1].MP = 0
 			past_positions.push_back(combatants[-1].position)
-			combatants[-1].get_node("CollisionShape2D").visible = false
 		elif body.collider.is_in_group("Enemy"):
+			body.collider.in_combat = true
 			body.collider.z_index = 2
 			if enemyCount >= 5:
 				body.collider.queue_free()
@@ -305,8 +309,6 @@ func start_combat():
 	camera_zoom = 3.5
 	battle_music.play(pause_position)
 	await get_tree().create_timer(1.5).timeout
-	for c in combatants:
-		c.in_combat = true
 	next_turn()
 	
 	
@@ -579,7 +581,7 @@ func end_combat(enemies):
 	for c in combatants:
 		c.z_index = 0
 		c.in_combat = false
-		c.get_node("CollisionShape2D").visible = true
+		#c.get_node("CollisionShape2D").visible = true
 	combatants.clear()
 	initiative.clear()
 	past_positions.clear()

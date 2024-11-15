@@ -1441,11 +1441,6 @@ position = Vector2(367, 128)
 [node name="Slime6" parent="." instance=ExtResource("4_d1j5l")]
 position = Vector2(227, 248)
 
-[node name="King Slime" parent="." instance=ExtResource("5_pfdr5")]
-position = Vector2(52, 68)
-deck_template = Array[String](["Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Chill", "Chill", "Chill", "Chill", "Chill", "Cooldown", "Cooldown", "Cooldown", "Cooldown", "Cooldown", "Cooldown", "Cooldown", "Cooldown", "Cooldown"])
-maxHP = 50
-
 [node name="TileMap2" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_xmdtw")
 format = 2
@@ -1466,5 +1461,13 @@ layer_3/tile_data = PackedInt32Array(524316, 262144, 12, 589852, 262144, 12)
 libraries = {
 "": SubResource("AnimationLibrary_b3e2n")
 }
+
+[node name="King Slime" parent="." instance=ExtResource("5_pfdr5")]
+position = Vector2(52, 69)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(0, -1, 447, -1, 448, 128, 468, 128, 468, 160, 448, 160, 448, 303, 0, 304, 0, -8, -21, 27, -21, 42, -63, 343, 68, 377, 374, 365, 509, 321, 518, 139, 489, -12, 361, -84, 168, -59, 73, -53, 9, -18, 0, -2)
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

@@ -2,8 +2,14 @@ extends Node2D
 
 @export var map : String
 @export var spawn_point : int
-
-
+var enabled = true
+func toggle_enabled():
+	if enabled:
+		$Area2D/CollisionShape2D.set_deferred("disabled", true)
+		enabled = false
+	else:
+		$Area2D/CollisionShape2D.set_deferred("disabled", false)
+		enabled = true
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if map == null:

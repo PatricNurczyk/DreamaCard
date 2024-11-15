@@ -7,7 +7,7 @@ extends MapTemplate
 func _ready():
 	if DialogueManager.state_tracker[1] == 4:
 		$TileMap2.visible = false
-		transition1.visible = true
+		transition1.toggle_enabled()
 		$Slime.queue_free()
 		$Slime3.queue_free()
 		$Slime4.queue_free()
@@ -15,6 +15,7 @@ func _ready():
 	DialogueManager.slimes_beaten.connect(_on_slimes_beaten)
 	if not DialogueManager.state_tracker["map_first_load"]:
 		DialogueManager.state_tracker["map_first_load"] = true
+		await get_parent().map_loaded
 		await get_tree().create_timer(.5).timeout
 		DialogueManager.play_dialog($"King Slime", 4)
 		await DialogueManager.finished

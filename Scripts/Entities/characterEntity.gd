@@ -4,6 +4,8 @@ class_name EntityCharacter
 @export var WALK = 60.0
 @export var SPRINT = 90.0
 @export var keepAfterDeath = false
+@onready var animation_player = $AnimationPlayer
+@onready var collision = $CollisionShape2D
 
 @onready var sprite = $AnimatedSprite2D
 var SPEED = 30.0
@@ -73,9 +75,16 @@ func _process(delta):
 
 func handle_animation():
 	if in_combat:
+		collision.set_deferred("disabled", true)
+		if direction == "right":
+			sprite.flip_h = false
+		elif direction == "left":
+			sprite.flip_h = true
 		if is_idle and not is_dead:
 			sprite.play("idle_side")
 		return
+	else:
+		collision.set_deferred("disabled", false)
 	if velocity.x > 0:
 		direction = "right"
 	elif velocity.x < 0:
@@ -112,7 +121,6 @@ func handle_animation():
 
 
 func takeDamage(value: int, element: String):
-	$hurt.play()
 	var damage : int
 	var d_num = load("res://Scenes/GameLogic/damage_number.tscn")
 	d_num = d_num.instantiate()
@@ -153,7 +161,11 @@ func takeDamage(value: int, element: String):
 	d_num.position += Vector2(0,-5)
 	add_child(d_num)
 	HP = max(HP - damage, 0)
-	sprite.play("hurt")
+	if damage > 0:
+		sprite.play("hurt")
+		$hurt.play()
+	else:
+		$guard.play()
 	is_idle = false
 	if HP == 0:
 		is_dead = true
@@ -325,6 +337,8 @@ func _on_animation_finished():
 		is_idle = true
 	if sprite.animation == "hurt":
 		is_idle = true
+	if sprite.animation == "guard":
+		is_idle = true
 
 
 func check_nearby_player(size : int):
@@ -346,3 +360,19 @@ func on_death_battle():
 	
 func on_death_post_battle():
 	pass
+
+
+func dodge_animation():
+	animation_player.stop()
+	if (randi()%2 == 0):
+		animation_player.play("dodge")
+	else:
+		animation_player.play("dodge_2")
+
+func create_after_image():
+	var afterimage = sprite.duplicate()
+	afterimage.modulate = Color("ffffff59")
+	afterimage.position = sprite.position
+	add_child(afterimage)
+	await get_tree().create_timer(.2).timeout
+	afterimage.queue_free()
