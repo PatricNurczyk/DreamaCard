@@ -8,7 +8,6 @@ func execute_action(container,acc):
 	var acc_check = randi_range(1,100) <= acc
 	if acc_check:
 		var damage = await container.combatants[container.currTurn].check_effect_offense(4, "physical")
-		container.combatants[container.currTurn].MP -= 1
 		container.combatants[container.target].takeDamage(damage, "physical")
 	else:
 		await container.get_tree().create_timer(.5).timeout

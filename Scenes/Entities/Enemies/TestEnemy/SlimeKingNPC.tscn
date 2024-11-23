@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dui1tu81udeeh"]
+[gd_scene load_steps=12 format=3 uid="uid://dui1tu81udeeh"]
 
 [ext_resource type="Script" path="res://Scripts/Entities/slime_king.gd" id="1_krc2q"]
 [ext_resource type="SpriteFrames" uid="uid://dw5f7wep3s247" path="res://Assets/SpriteFrames/king_slime.tres" id="3_minva"]
 [ext_resource type="AudioStream" uid="uid://cqplmnuvjfh7d" path="res://Sounds/Sound_Effects/hitHurt.wav" id="4_exc6s"]
 [ext_resource type="FontFile" uid="uid://ctyag1opnfvyl" path="res://Assets/Fonts/name_font.fnt" id="5_ncxi8"]
+[ext_resource type="AudioStream" uid="uid://dsy7qudh8nrwr" path="res://Sounds/Sound_Effects/Outrage_part_2.mp3" id="5_qx503"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3m0yw"]
 radius = 9.0
@@ -13,12 +14,139 @@ height = 18.0
 radius = 3.0
 height = 14.0
 
+[sub_resource type="Animation" id="Animation_txlnf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -24)]
+}
+
+[sub_resource type="Animation" id="Animation_gwsmq"]
+resource_name = "dodge"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1333, 0.166667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -24), Vector2(20.915, -24), Vector2(0, -24)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"create_after_image"
+}, {
+"args": [],
+"method": &"create_after_image"
+}, {
+"args": [],
+"method": &"create_after_image"
+}, {
+"args": [],
+"method": &"create_after_image"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("dodge")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_et3bg"]
+resource_name = "dodge_2"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1333, 0.166667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -24), Vector2(-20, -24), Vector2(0, -24)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"create_after_image"
+}, {
+"args": [],
+"method": &"create_after_image"
+}, {
+"args": [],
+"method": &"create_after_image"
+}, {
+"args": [],
+"method": &"create_after_image"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("dodge")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1ok4e"]
+_data = {
+"RESET": SubResource("Animation_txlnf"),
+"dodge": SubResource("Animation_gwsmq"),
+"dodge_2": SubResource("Animation_et3bg")
+}
+
 [node name="King Slime" type="CharacterBody2D" groups=["NPC"]]
 z_as_relative = false
+y_sort_enabled = true
 script = ExtResource("1_krc2q")
-deck_template = Array[String](["Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Cooldown", "Chill", "Chill", "Chill", "Chill", "Chill", "Cooldown", "Cooldown", "Cooldown", "Cooldown"])
+deck_template = Array[String](["Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Frost", "Ice Shard", "Ice Shard", "Ice Shard", "Ice Shard", "Ice Shard", "Cooldown", "Chill", "Chill", "Chill", "Chill", "Chill", "Cooldown", "Cooldown", "Cooldown", "Cooldown"])
 keepAfterDeath = true
-maxHP = 100
+maxHP = 50
 maxMP = 3
 speed = 24
 damageBoost = 5
@@ -26,9 +154,11 @@ fireResist = -20
 frostResist = 20
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -22)
+y_sort_enabled = true
+position = Vector2(0, -24)
 sprite_frames = ExtResource("3_minva")
-animation = &"hurt"
+animation = &"move_down"
+frame_progress = 0.918634
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -51,10 +181,19 @@ position = Vector2(-6.665, 10.965)
 [node name="name" type="RichTextLabel" parent="."]
 visible = false
 offset_left = -52.0
-offset_top = -27.0
+offset_top = -39.855
 offset_right = 52.0
-offset_bottom = -13.0
+offset_bottom = -23.855
 theme_override_fonts/normal_font = ExtResource("5_ncxi8")
 bbcode_enabled = true
 fit_content = true
 scroll_active = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_1ok4e")
+}
+
+[node name="dodge" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_qx503")
+pitch_scale = 2.17
