@@ -99,7 +99,7 @@ _data = {
 script = ExtResource("1_jh12l")
 
 [node name="Camera" type="Camera2D" parent="."]
-zoom = Vector2(8.22, 8.22)
+zoom = Vector2(10.985, 10.985)
 process_callback = 0
 position_smoothing_enabled = true
 

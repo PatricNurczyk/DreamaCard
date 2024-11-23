@@ -6,6 +6,7 @@ class_name EntityCharacter
 @export var keepAfterDeath = false
 @onready var animation_player = $AnimationPlayer
 @onready var collision = $CollisionShape2D
+var is_running = false
 
 @onready var sprite = $AnimatedSprite2D
 var SPEED = 30.0
@@ -111,13 +112,15 @@ func handle_animation():
 				sprite.play("idle_side")
 				
 			else:
-				sprite.play("move_side")
+				if is_running : sprite.play("run_side") 
+				else: sprite.play("move_side")
 		"right":
 			sprite.flip_h = false
 			if velocity == Vector2(0,0):
 				sprite.play("idle_side")
 			else:
-				sprite.play("move_side")
+				if is_running : sprite.play("run_side") 
+				else: sprite.play("move_side")
 
 
 func takeDamage(value: int, element: String):

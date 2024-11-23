@@ -147,9 +147,10 @@ portrait = ExtResource("2_16od7")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 position = Vector2(0, -17)
+scale = Vector2(0.745, 0.745)
 sprite_frames = ExtResource("1_rt0qv")
-animation = &"guard"
-frame_progress = 1.0
+animation = &"run_side"
+frame_progress = 0.427533
 
 [node name="Area2D" type="Area2D" parent="."]
 

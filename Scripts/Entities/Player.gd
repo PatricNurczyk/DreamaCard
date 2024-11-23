@@ -4,9 +4,11 @@ extends EntityCharacter
 func _physics_process(delta):	
 	if DialogueManager.currState == DialogueManager.gameStates.explore:
 		if Input.is_action_pressed("Sprint"):
+			is_running = true
 			SPEED = SPRINT
 			sprite.speed_scale = 1.5
 		else:
+			is_running = false
 			SPEED = WALK
 			sprite.speed_scale = 1
 		# Get the input direction and handle the movement/deceleration.

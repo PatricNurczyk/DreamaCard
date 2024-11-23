@@ -4,7 +4,7 @@ const COMBATCREATOR = preload("res://Scenes/GameLogic/CombatCreator.tscn")
 const INIT_ALLY = preload("res://Scenes/GameLogic/Initiative_ally.tscn")
 const INIT_ENEMY = preload("res://Scenes/GameLogic/Initiative_enemy.tscn")
 const SHATTER = preload("res://Scenes/GameLogic/shattered.tscn")
-const UI_POSITIONS = [Vector2(50,-63),Vector2(30,-70),Vector2(5,-75),Vector2(-15,-75),Vector2(-35,-70),Vector2(-60,-63),Vector2(-80,-53)]
+const UI_POSITIONS = [Vector2(50,-68),Vector2(30,-75),Vector2(5,-80),Vector2(-15,-80),Vector2(-35,-75),Vector2(-60,-68),Vector2(-80,-58)]
 const UI_ROTATIONS = [25.0,17.5,10.0,0,-10.0,-17.5,-25.0]
 const UI_PASS = Vector2(-53,10)
 const UI_READYBREAK = Vector2(10,-30)
@@ -19,7 +19,7 @@ const SPEED = 7.0
 var text_combat : String = ""
 var player : CharacterBody2D
 var map : MapTemplate
-var camera_zoom : float = 5
+var camera_zoom : float = 6
 var camera_pos : Vector2
 var camera_speed : float = 3
 @onready var card_ui = $Cards
@@ -306,7 +306,7 @@ func start_combat():
 			body.collider.direction = "left"
 	camera.position = battleground.position
 	battle_veil_on()
-	camera_zoom = 3.5
+	camera_zoom = 4.5
 	battle_music.play(pause_position)
 	await get_tree().create_timer(1.5).timeout
 	next_turn()
@@ -563,8 +563,8 @@ func enemy_turn():
 
 func end_combat(enemies):
 	camera.position = battleground.position
-	camera_zoom = 5
 	await get_tree().create_timer(.5).timeout
+	camera_zoom = 6
 	for i in init_ui:
 		i.queue_free()
 	for e in enemies:
