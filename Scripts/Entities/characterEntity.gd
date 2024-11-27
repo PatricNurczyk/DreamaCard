@@ -81,8 +81,8 @@ func handle_animation():
 			sprite.flip_h = false
 		elif direction == "left":
 			sprite.flip_h = true
-		if is_idle and not is_dead:
-			sprite.play("idle_side")
+		if is_idle and not is_dead and not sprite.animation == "prep_battle":
+			sprite.play("battle_idle")
 		return
 	else:
 		collision.set_deferred("disabled", false)
