@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=49 format=3 uid="uid://dimxiwpq5r6og"]
+[gd_resource type="SpriteFrames" load_steps=52 format=3 uid="uid://dimxiwpq5r6og"]
 
 [ext_resource type="Texture2D" uid="uid://bm0sqmu2451oh" path="res://Assets/Character Sprites/slime.png" id="1_svkmt"]
 
@@ -189,6 +189,18 @@ region = Rect2(96, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_33xpc"]
 atlas = ExtResource("1_svkmt")
 region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6xcpd"]
+atlas = ExtResource("1_svkmt")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vobfm"]
+atlas = ExtResource("1_svkmt")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8lr8d"]
+atlas = ExtResource("1_svkmt")
+region = Rect2(32, 96, 32, 32)
 
 [resource]
 animations = [{
@@ -399,4 +411,18 @@ animations = [{
 "loop": false,
 "name": &"prep_attack",
 "speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6xcpd")
+}, {
+"duration": 6.0,
+"texture": SubResource("AtlasTexture_vobfm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8lr8d")
+}],
+"loop": false,
+"name": &"prep_battle",
+"speed": 10.0
 }]

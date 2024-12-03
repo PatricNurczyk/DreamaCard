@@ -157,7 +157,9 @@ portrait = ExtResource("2_6unky")
 y_sort_enabled = true
 position = Vector2(0, -8)
 sprite_frames = ExtResource("2_6mysm")
-animation = &"battle_idle"
+animation = &"prep_battle"
+frame = 2
+frame_progress = 1.0
 
 [node name="Area2D" type="Area2D" parent="." groups=["Enemy"]]
 

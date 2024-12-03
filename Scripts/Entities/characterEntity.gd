@@ -81,8 +81,6 @@ func handle_animation():
 			sprite.flip_h = false
 		elif direction == "left":
 			sprite.flip_h = true
-		if is_idle and not is_dead and not sprite.animation == "prep_battle":
-			sprite.play("battle_idle")
 		return
 	else:
 		collision.set_deferred("disabled", false)
@@ -337,11 +335,15 @@ func clean_effects():
 	
 func _on_animation_finished():
 	if sprite.animation == "attack_break":
-		is_idle = true
+		sprite.play("battle_idle")
 	if sprite.animation == "hurt":
-		is_idle = true
+		sprite.play("battle_idle")
 	if sprite.animation == "guard":
-		is_idle = true
+		sprite.play("battle_idle")
+	if sprite.animation == "prep_battle":
+		sprite.play("battle_idle")
+	if sprite.animation == "attack_break":
+		sprite.play("battle_idle")
 
 
 func check_nearby_player(size : int):

@@ -4,7 +4,7 @@ const COMBATCREATOR = preload("res://Scenes/GameLogic/CombatCreator.tscn")
 const INIT_ALLY = preload("res://Scenes/GameLogic/Initiative_ally.tscn")
 const INIT_ENEMY = preload("res://Scenes/GameLogic/Initiative_enemy.tscn")
 const SHATTER = preload("res://Scenes/GameLogic/shattered.tscn")
-const UI_POSITIONS = [Vector2(50,-68),Vector2(30,-75),Vector2(5,-80),Vector2(-15,-80),Vector2(-35,-75),Vector2(-60,-68),Vector2(-80,-58)]
+const UI_POSITIONS = [Vector2(50,-73),Vector2(30,-80),Vector2(5,-85),Vector2(-15,-85),Vector2(-35,-80),Vector2(-60,-73),Vector2(-80,-63)]
 const UI_ROTATIONS = [25.0,17.5,10.0,0,-10.0,-17.5,-25.0]
 const UI_PASS = Vector2(-53,10)
 const UI_READYBREAK = Vector2(10,-30)
@@ -75,6 +75,7 @@ func _input(event):
 		text_combat = ""
 		combatants[currTurn].is_idle = true
 		combatState = combatStates.allyTurn
+		combatants[currTurn].sprite.play("thinking")
 		battle_music.set_bus("Master")
 	if Input.is_action_just_pressed("Click") and combatState == combatStates.target:
 		var nearest_distance = 20
@@ -152,7 +153,7 @@ func _process(delta):
 
 	combat_text.text = "[center][font_size=60]" + text_combat + "[/font_size][/center]"
 	camera.zoom = camera.zoom.lerp(Vector2(camera_zoom,camera_zoom), 3 * delta)
-	battle_veil.scale = battle_veil.scale.lerp(Vector2(veilSize,veilSize), 10 * delta)
+	battle_veil.scale = battle_veil.scale.lerp(Vector2(veilSize,veilSize), 7 * delta)
 	for c in combatants:
 		c.velocity = Vector2.ZERO
 	for c in range(len(init_ui)):
@@ -282,6 +283,7 @@ func start_combat():
 			combatants[-1].hand.clear()
 			combatants[-1].MP = 0
 			past_positions.push_back(combatants[-1].position)
+			body.collider.sprite.play("prep_battle")
 		elif body.collider.is_in_group("Enemy"):
 			body.collider.in_combat = true
 			body.collider.z_index = 2
@@ -304,6 +306,7 @@ func start_combat():
 			enemyCount += 1
 			past_positions.push_back(combatants[-1].position)
 			body.collider.direction = "left"
+			body.collider.sprite.play("prep_battle")
 	camera.position = battleground.position
 	battle_veil_on()
 	camera_zoom = 4.5
@@ -316,7 +319,7 @@ func start_combat():
 #COMBAT FUNCTIONS
 func battle_veil_on():
 	battle_veil.position = player.position
-	veilSize = 10
+	veilSize = 7
 func battle_veil_off():
 	veilSize = 0
 func find_next():
@@ -375,7 +378,7 @@ func next_turn():
 	combatants[currTurn].MP = min(combatants[currTurn].MP + 1, combatants[currTurn].maxMP)
 	camera_zoom = 5
 	if combatants[currTurn].is_in_group("Ally"):
-		camera.position = combatants[currTurn].position + Vector2(0,-20)
+		camera.position = combatants[currTurn].position + Vector2(0,-30)
 		await combatants[currTurn].check_turn()
 		if combatants[currTurn].is_dead:
 			next_turn()
@@ -401,6 +404,7 @@ func draw_card(character):
 	while len(character.deck) > 0 and len(character.hand) < 6:
 		character.hand.push_back(character.deck.pop_front())
 func ally_turn():
+	combatants[currTurn].sprite.play("thinking")
 	pass_ui.cancel()
 	combatState = combatStates.allyTurn
 	card_ui.position = combatants[currTurn].position

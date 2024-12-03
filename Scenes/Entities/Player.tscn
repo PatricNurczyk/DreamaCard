@@ -150,8 +150,6 @@ position = Vector2(0, -17)
 scale = Vector2(0.745, 0.745)
 sprite_frames = ExtResource("1_rt0qv")
 animation = &"prep_battle"
-frame = 16
-frame_progress = 1.0
 
 [node name="Area2D" type="Area2D" parent="."]
 

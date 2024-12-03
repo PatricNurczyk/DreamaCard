@@ -36,7 +36,6 @@ func _on_area_2d_area_entered(area):
 		velocity = Vector2.ZERO
 		sprite.speed_scale = 1
 		DialogueManager.init_combat()
-		sprite.play("prep_battle")
 
 
 
