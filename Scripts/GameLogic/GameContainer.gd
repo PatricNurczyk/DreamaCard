@@ -7,7 +7,7 @@ const SHATTER = preload("res://Scenes/GameLogic/shattered.tscn")
 const UI_POSITIONS = [Vector2(50,-73),Vector2(30,-80),Vector2(5,-85),Vector2(-15,-85),Vector2(-35,-80),Vector2(-60,-73),Vector2(-80,-63)]
 const UI_ROTATIONS = [25.0,17.5,10.0,0,-10.0,-17.5,-25.0]
 const UI_PASS = Vector2(-53,10)
-const UI_READYBREAK = Vector2(10,-30)
+const UI_READYBREAK = Vector2(10,-35)
 const ENEMY_UI_READYBREAK = Vector2(-37.5,-25)
 @onready var ally_initiative = $"Initiative Tracker/Ally Initiative"
 @onready var enemy_initiative = $"Initiative Tracker/Enemy Initiative"
@@ -125,8 +125,9 @@ func _input(event):
 				c.name_ui.visible = false
 			combatState = combatStates.animation
 			text_combat = hand_ui[card_select].SkillName
+			combatants[currTurn].get_node("AnimationPlayer").play("attack")
+			await get_tree().create_timer(.02).timeout
 			shatter.fire()
-			combatants[currTurn].sprite.play("attack_break")
 			await shatter.done
 			var accuracy = await combatants[currTurn].check_accuracy(hand_ui[card_select].accuracy, hand_ui[card_select].element, hand_ui[card_select].is_attack)
 			hand_ui[card_select].execute_action(self, accuracy)
@@ -501,6 +502,7 @@ func pass_turn():
 		if is_instance_valid(i.buff_ui):
 			i.buff_ui.despawn()
 		i.buff_ui = null
+	combatants[currTurn].sprite.play("battle_idle")
 	next_turn()
 
 func enemy_turn():

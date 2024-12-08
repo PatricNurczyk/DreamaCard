@@ -334,8 +334,8 @@ func clean_effects():
 		d.fire()
 	
 func _on_animation_finished():
-	if sprite.animation == "attack_break":
-		sprite.play("battle_idle")
+	#if sprite.animation == "attack_break":
+	#	sprite.play("battle_idle")
 	if sprite.animation == "hurt":
 		sprite.play("battle_idle")
 	if sprite.animation == "guard":
