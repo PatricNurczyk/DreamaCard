@@ -31,6 +31,38 @@ tracks/0/keys = {
 "values": [Vector2(0, -12)]
 }
 
+[sub_resource type="Animation" id="Animation_bb1tg"]
+resource_name = "attack"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.633333),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [&"attack_break", 1.0, false],
+"method": &"play"
+}, {
+"args": [&"battle_idle", 1.0, false],
+"method": &"play"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.02, 0.5, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, -12), Vector2(12.13, -12), Vector2(12.13, -12), Vector2(0, -12)]
+}
+
 [sub_resource type="Animation" id="Animation_hec5f"]
 resource_name = "dodge"
 length = 0.5
@@ -131,38 +163,6 @@ tracks/2/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_bb1tg"]
-resource_name = "attack"
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.633333),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [&"attack_break", 1.0, false],
-"method": &"play"
-}, {
-"args": [&"battle_idle", 1.0, false],
-"method": &"play"
-}]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.02, 0.5, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(1, -12), Vector2(12.13, -12), Vector2(12.13, -12), Vector2(0, -12)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mhf38"]
 _data = {
 "RESET": SubResource("Animation_mmkki"),
@@ -182,9 +182,8 @@ y_sort_enabled = true
 position = Vector2(0, -12)
 scale = Vector2(0.745, 0.745)
 sprite_frames = ExtResource("1_rt0qv")
-animation = &"guard"
-frame = 1
-frame_progress = 1.0
+animation = &"move_up"
+frame_progress = 0.763886
 
 [node name="Area2D" type="Area2D" parent="."]
 

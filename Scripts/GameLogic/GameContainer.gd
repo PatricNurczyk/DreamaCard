@@ -544,7 +544,7 @@ func enemy_turn():
 		await combatants[currTurn].sprite.animation_finished
 		card.get_node("Card").modulate = Color("ffffff00")
 		shatter.fire()
-		combatants[currTurn].sprite.play("attack_break")
+		combatants[currTurn].get_node("AnimationPlayer").play("attack")
 		await shatter.done
 		text_combat = choice["action"]
 		var t_type = card.target_type
