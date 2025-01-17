@@ -2,7 +2,7 @@ extends EntityCharacter
 
 
 func _physics_process(delta):	
-	if DialogueManager.currState == DialogueManager.gameStates.explore:
+	if DialogueManager.currState == DialogueManager.gameStates.explore and not DialogueManager.in_menu:
 		if Input.is_action_pressed("Sprint"):
 			is_running = true
 			SPEED = SPRINT

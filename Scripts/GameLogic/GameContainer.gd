@@ -151,7 +151,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-
 	combat_text.text = "[center][font_size=60]" + text_combat + "[/font_size][/center]"
 	camera.zoom = camera.zoom.lerp(Vector2(camera_zoom,camera_zoom), 3 * delta)
 	battle_veil.scale = battle_veil.scale.lerp(Vector2(veilSize,veilSize), 7 * delta)
@@ -163,7 +162,12 @@ func _process(delta):
 		init_ui[c].HP = combatants[c].HP
 		init_ui[c].MP = combatants[c].MP
 	if DialogueManager.currState == DialogueManager.gameStates.explore:
-		camera.position = player.position
+		if DialogueManager.in_menu:
+			camera.position = player.position - Vector2(0,30)
+			camera_zoom = 6.5
+		else:
+			camera.position = player.position
+			camera_zoom = 5
 		player.can_walk = true
 		battle_music.volume_db = move_toward(battle_music.volume_db, -60, 40 * delta)
 	elif DialogueManager.currState == DialogueManager.gameStates.transition:

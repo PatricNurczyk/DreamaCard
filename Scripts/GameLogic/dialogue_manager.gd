@@ -9,6 +9,7 @@ var text_box : Node
 var text_box_pos : Vector2
 var is_dialog : bool = false
 var can_advance : bool = false
+var in_menu : bool = false
 var game_container
 enum gameStates {explore, combat, cutscene, transition}
 var currState = gameStates.explore
@@ -91,6 +92,9 @@ func _unhandled_input(event):
 	if Input.is_action_just_pressed("advance_dialogue") and is_dialog and can_advance:
 		text_box.queue_free()
 		advance()
+	if Input.is_action_just_pressed("char_menu") and currState == gameStates.explore:
+		if game_container:
+			in_menu = false if in_menu else true
 
 
 func play_dialog(c : CharacterBody2D, lines_id : int):
