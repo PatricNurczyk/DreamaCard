@@ -4,9 +4,11 @@ extends EntityCharacter
 func _physics_process(delta):	
 	if DialogueManager.currState == DialogueManager.gameStates.explore:
 		if Input.is_action_pressed("Sprint"):
+			is_running = true
 			SPEED = SPRINT
 			sprite.speed_scale = 1.5
 		else:
+			is_running = false
 			SPEED = WALK
 			sprite.speed_scale = 1
 		# Get the input direction and handle the movement/deceleration.
@@ -30,11 +32,13 @@ func _physics_process(delta):
 
 
 func _on_area_2d_area_entered(area):
-	if area.is_in_group("Enemy"):
+	if area.is_in_group("Enemy") and DialogueManager.currState != DialogueManager.gameStates.combat:
 		velocity = Vector2.ZERO
 		sprite.speed_scale = 1
 		DialogueManager.init_combat()
 
 
+
 func _on_animated_sprite_2d_animation_finished():
-	pass # Replace with function body.
+	if sprite.animation == "prep_battle":
+		sprite.play("battle_idle")

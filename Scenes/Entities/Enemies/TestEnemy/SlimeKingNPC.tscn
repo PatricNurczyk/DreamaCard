@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dui1tu81udeeh"]
+[gd_scene load_steps=13 format=3 uid="uid://dui1tu81udeeh"]
 
 [ext_resource type="Script" path="res://Scripts/Entities/slime_king.gd" id="1_krc2q"]
 [ext_resource type="SpriteFrames" uid="uid://dw5f7wep3s247" path="res://Assets/SpriteFrames/king_slime.tres" id="3_minva"]
@@ -27,6 +27,27 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0, -24)]
+}
+
+[sub_resource type="Animation" id="Animation_taywn"]
+resource_name = "attack"
+length = 0.8
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [&"attack_break", 1.0, false],
+"method": &"play"
+}, {
+"args": [&"battle_idle", 1.0, false],
+"method": &"play"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_gwsmq"]
@@ -136,6 +157,7 @@ tracks/2/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1ok4e"]
 _data = {
 "RESET": SubResource("Animation_txlnf"),
+"attack": SubResource("Animation_taywn"),
 "dodge": SubResource("Animation_gwsmq"),
 "dodge_2": SubResource("Animation_et3bg")
 }
@@ -157,8 +179,9 @@ frostResist = 20
 y_sort_enabled = true
 position = Vector2(0, -24)
 sprite_frames = ExtResource("3_minva")
-animation = &"move_down"
-frame_progress = 0.918634
+animation = &"attack_break"
+frame = 5
+frame_progress = 1.0
 
 [node name="Area2D" type="Area2D" parent="."]
 

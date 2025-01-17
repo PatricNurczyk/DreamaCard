@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ctg0om1inbc80"]
+[gd_scene load_steps=14 format=3 uid="uid://ctg0om1inbc80"]
 
 [ext_resource type="Script" path="res://Scripts/Entities/slime.gd" id="1_67kb8"]
 [ext_resource type="SpriteFrames" uid="uid://dimxiwpq5r6og" path="res://Assets/SpriteFrames/slime.tres" id="2_6mysm"]
@@ -28,6 +28,26 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0, -8)]
+}
+
+[sub_resource type="Animation" id="Animation_hbbk6"]
+resource_name = "attack"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [&"attack_break", 1.0, false],
+"method": &"play"
+}, {
+"args": [&"battle_idle", 1.0, false],
+"method": &"play"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_6ofjn"]
@@ -137,6 +157,7 @@ tracks/2/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gxk0p"]
 _data = {
 "RESET": SubResource("Animation_yntm8"),
+"attack": SubResource("Animation_hbbk6"),
 "dodge": SubResource("Animation_6ofjn"),
 "dodge_2": SubResource("Animation_c62pc")
 }
@@ -157,8 +178,7 @@ portrait = ExtResource("2_6unky")
 y_sort_enabled = true
 position = Vector2(0, -8)
 sprite_frames = ExtResource("2_6mysm")
-animation = &"idle_side"
-frame_progress = 0.9785
+animation = &"battle_idle"
 
 [node name="Area2D" type="Area2D" parent="." groups=["Enemy"]]
 

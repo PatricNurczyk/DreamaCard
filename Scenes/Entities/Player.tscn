@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://jrkrfd6041tn"]
+[gd_scene load_steps=15 format=3 uid="uid://jrkrfd6041tn"]
 
 [ext_resource type="SpriteFrames" uid="uid://cb8rvv4yb7tn2" path="res://Assets/SpriteFrames/player.tres" id="1_rt0qv"]
 [ext_resource type="Script" path="res://Scripts/Entities/Player.gd" id="1_sqg0c"]
@@ -28,7 +28,39 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, -17)]
+"values": [Vector2(0, -12)]
+}
+
+[sub_resource type="Animation" id="Animation_bb1tg"]
+resource_name = "attack"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.633333),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [&"attack_break", 1.0, false],
+"method": &"play"
+}, {
+"args": [&"battle_idle", 1.0, false],
+"method": &"play"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.02, 0.5, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, -12), Vector2(12.13, -12), Vector2(12.13, -12), Vector2(0, -12)]
 }
 
 [sub_resource type="Animation" id="Animation_hec5f"]
@@ -44,7 +76,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, -17), Vector2(-26.855, -17), Vector2(0, -17)]
+"values": [Vector2(0, -12), Vector2(-26.855, -12), Vector2(0, -12)]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -94,7 +126,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, -17), Vector2(26, -17), Vector2(0, -17)]
+"values": [Vector2(0, -12), Vector2(26, -12), Vector2(0, -12)]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -134,6 +166,7 @@ tracks/2/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mhf38"]
 _data = {
 "RESET": SubResource("Animation_mmkki"),
+"attack": SubResource("Animation_bb1tg"),
 "dodge": SubResource("Animation_hec5f"),
 "dodge_2": SubResource("Animation_3h0qf")
 }
@@ -146,10 +179,11 @@ portrait = ExtResource("2_16od7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
-position = Vector2(0, -17)
+position = Vector2(0, -12)
+scale = Vector2(0.745, 0.745)
 sprite_frames = ExtResource("1_rt0qv")
-animation = &"guard"
-frame_progress = 1.0
+animation = &"move_up"
+frame_progress = 0.763886
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -172,9 +206,9 @@ position = Vector2(-14, 9.555)
 [node name="name" type="RichTextLabel" parent="."]
 visible = false
 offset_left = -45.0
-offset_top = -34.0
+offset_top = -42.0
 offset_right = 45.0
-offset_bottom = -20.0
+offset_bottom = -28.0
 theme_override_fonts/normal_font = ExtResource("4_5vl7h")
 bbcode_enabled = true
 fit_content = true

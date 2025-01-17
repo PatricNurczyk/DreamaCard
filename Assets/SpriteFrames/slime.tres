@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=49 format=3 uid="uid://dimxiwpq5r6og"]
+[gd_resource type="SpriteFrames" load_steps=52 format=3 uid="uid://dimxiwpq5r6og"]
 
 [ext_resource type="Texture2D" uid="uid://bm0sqmu2451oh" path="res://Assets/Character Sprites/slime.png" id="1_svkmt"]
 
@@ -25,6 +25,22 @@ region = Rect2(128, 64, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_wy7qj"]
 atlas = ExtResource("1_svkmt")
 region = Rect2(160, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3gucv"]
+atlas = ExtResource("1_svkmt")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1rtnk"]
+atlas = ExtResource("1_svkmt")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t8x8f"]
+atlas = ExtResource("1_svkmt")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m8ldl"]
+atlas = ExtResource("1_svkmt")
+region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0uwa1"]
 atlas = ExtResource("1_svkmt")
@@ -71,22 +87,6 @@ atlas = ExtResource("1_svkmt")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1jym5"]
-atlas = ExtResource("1_svkmt")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3gucv"]
-atlas = ExtResource("1_svkmt")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1rtnk"]
-atlas = ExtResource("1_svkmt")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_t8x8f"]
-atlas = ExtResource("1_svkmt")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m8ldl"]
 atlas = ExtResource("1_svkmt")
 region = Rect2(96, 0, 32, 32)
 
@@ -190,6 +190,18 @@ region = Rect2(96, 0, 32, 32)
 atlas = ExtResource("1_svkmt")
 region = Rect2(0, 64, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_6xcpd"]
+atlas = ExtResource("1_svkmt")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vobfm"]
+atlas = ExtResource("1_svkmt")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8lr8d"]
+atlas = ExtResource("1_svkmt")
+region = Rect2(32, 96, 32, 32)
+
 [resource]
 animations = [{
 "frames": [{
@@ -214,6 +226,23 @@ animations = [{
 "loop": false,
 "name": &"attack_break",
 "speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3gucv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1rtnk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t8x8f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m8ldl")
+}],
+"loop": true,
+"name": &"battle_idle",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -382,4 +411,18 @@ animations = [{
 "loop": false,
 "name": &"prep_attack",
 "speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6xcpd")
+}, {
+"duration": 6.0,
+"texture": SubResource("AtlasTexture_vobfm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8lr8d")
+}],
+"loop": false,
+"name": &"prep_battle",
+"speed": 10.0
 }]

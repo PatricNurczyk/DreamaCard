@@ -6,6 +6,7 @@ class_name EntityCharacter
 @export var keepAfterDeath = false
 @onready var animation_player = $AnimationPlayer
 @onready var collision = $CollisionShape2D
+var is_running = false
 
 @onready var sprite = $AnimatedSprite2D
 var SPEED = 30.0
@@ -80,8 +81,6 @@ func handle_animation():
 			sprite.flip_h = false
 		elif direction == "left":
 			sprite.flip_h = true
-		if is_idle and not is_dead:
-			sprite.play("idle_side")
 		return
 	else:
 		collision.set_deferred("disabled", false)
@@ -111,13 +110,15 @@ func handle_animation():
 				sprite.play("idle_side")
 				
 			else:
-				sprite.play("move_side")
+				if is_running : sprite.play("run_side") 
+				else: sprite.play("move_side")
 		"right":
 			sprite.flip_h = false
 			if velocity == Vector2(0,0):
 				sprite.play("idle_side")
 			else:
-				sprite.play("move_side")
+				if is_running : sprite.play("run_side") 
+				else: sprite.play("move_side")
 
 
 func takeDamage(value: int, element: String):
@@ -333,12 +334,16 @@ func clean_effects():
 		d.fire()
 	
 func _on_animation_finished():
-	if sprite.animation == "attack_break":
-		is_idle = true
+	#if sprite.animation == "attack_break":
+	#	sprite.play("battle_idle")
 	if sprite.animation == "hurt":
-		is_idle = true
+		sprite.play("battle_idle")
 	if sprite.animation == "guard":
-		is_idle = true
+		sprite.play("battle_idle")
+	if sprite.animation == "prep_battle":
+		sprite.play("battle_idle")
+	if sprite.animation == "attack_break":
+		sprite.play("battle_idle")
 
 
 func check_nearby_player(size : int):
